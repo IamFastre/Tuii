@@ -64,7 +64,6 @@ export default function HomePage() : React.JSX.Element {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.homeContainer}
-        overScrollMode='never'
         refreshControl={
           <RefreshControl
             progressViewOffset={Platform.OS === "android" ? 0 : 15}
@@ -93,7 +92,7 @@ export default function HomePage() : React.JSX.Element {
               {/* Temperature */}
               <View>
                 <T style={styles.weatherTempT} selectable>
-                  {Math.round((weather?.main.temp ?? 0)).toString()}°
+                  <B>{Math.round((weather?.main.temp ?? 0)).toString()}</B>°
                 </T>
                 {/* Temperature unit */}
                 <T style={{...styles.weatherSubtextT, color: colors.main_2, ...styles.weatherUnit, right: -unitWidth}} onLayout={(event) => setUnitWidth(event.nativeEvent.layout.width)}>
