@@ -4,6 +4,7 @@ import { useColors } from '@/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { T } from './T';
 import general from '@/constants/general';
+import { isHexColor } from '@/src/general/funcs';
 
 export type ButtonIcon = {
   name: string;
@@ -29,6 +30,7 @@ export interface ButtonProps {
 export function Button(props: ButtonProps): React.JSX.Element {
   const colors = useColors();
   const [isPressed, setIsPressed] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const self = StyleSheet.create({
     view: {
@@ -43,7 +45,7 @@ export function Button(props: ButtonProps): React.JSX.Element {
       paddingHorizontal: props.style?.width ? undefined : 20,
       ...props.style
     },
-    
+  
     text: {
       textDecorationLine: props.disabled ? "line-through" : "none",
       textAlign: "center",
@@ -63,12 +65,21 @@ export function Button(props: ButtonProps): React.JSX.Element {
 
   return (
     <Pressable
-      style={[self.view, isPressed ? { borderColor: colors.main_2 } : { }]}
+      style={[
+        self.view,
+        isPressed ? { borderColor: colors.main_2 } :
+        isHovered ? { backgroundColor: isHexColor(self.view.borderColor)
+                                     ? self.view.borderColor as string + "33"
+                                     : colors.main_2 }
+        : { }
+      ]}
       onPress={props.onPress}
       onLongPress={props.onLongPress}
       delayLongPress={props.delayLongPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
+      onHoverIn={() => setIsHovered(true)}
+      onHoverOut={() => setIsHovered(false)}
       disabled={props.disabled}
     >
       {

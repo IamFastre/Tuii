@@ -65,3 +65,7 @@ export function updateFullscreen(fullscreen: boolean) {
     NavigationBar.setBehaviorAsync("overlay-swipe");
   }
 }
+
+export function isHexColor(value:any) {
+  return typeof value === "string" && (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/).test(value);
+}
