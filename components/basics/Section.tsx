@@ -18,7 +18,6 @@ export interface SectionProps {
 
 export function Section(props:SectionProps) : React.JSX.Element {
   const colors = useColors();
-  const [titleDim, setTitleDim] = useState<LayoutRectangle | undefined>(undefined);
 
   const self = StyleSheet.create({
     screen: {
@@ -37,43 +36,59 @@ export function Section(props:SectionProps) : React.JSX.Element {
       ...props.containerStyle
     },
 
-    header: {
+    headerView: {
       position: "absolute",
       alignSelf: props.centered ? "center" : "flex-start",
-      marginLeft: 30,
+      marginTop: props.isCard ? -13 : -2.5,
+      marginLeft: props.isCard ? 0 : 30,
       justifyContent: "center",
       alignContent: "center",
+      zIndex: 2,
+      fontFamily: colors.others.fonts.L,
+      fontSize: 20,
+      ...props.titleStyle,
+    },
+
+    header: {
+      justifyContent: "center",
+      alignContent: "center",
+      fontFamily: colors.others.fonts.L,
+      fontSize: 20,
       ...props.titleStyle,
     },
   });
 
   return (
     <View style={self.screen} onLayout={props.onLayout}>
-      <View style={self.container}>
-        {props.children}
-      </View>
       { props.title
       ? <View
-          style={[self.header, { top: self.container.margin as number -(titleDim?.height??0) / 2 }]}
-          onLayout={e => setTitleDim(e.nativeEvent.layout)}
+          style={{
+            ...self.headerView,
+            height: self.header.fontSize * 4 / 3,
+          }}  
         >
           <View
             style={{
               position: "absolute",
-              width: "110%",
-              left: "-5%",
-              height: self.container.borderWidth * 2.5,
+              height: self.container.borderWidth * 2,
+              width: "105%",
+              left: "-2.5%",
+              top: self.header.fontSize * 2 / 3 - self.container.borderWidth,
               backgroundColor: props.bg ?? self.screen.backgroundColor,
+              zIndex: 1,
             }}
           />
           <T
-            style={{ fontFamily: colors.others.fonts.L, fontSize: 21, color: self.header.color ?? self.container.borderColor }}
+            style={[self.header, { zIndex: 2, lineHeight: self.header.fontSize * 4 / 3, color: self.header.color ?? self.container.borderColor }]}
             numberOfLines={1}
           >
             {props.title}
           </T>
         </View>
       : null }
+      <View style={self.container}>
+        {props.children}
+      </View>
     </View>
   );
 }
