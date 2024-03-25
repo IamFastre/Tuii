@@ -233,11 +233,13 @@ export default function SettingsPage() {
 const styles = StyleSheet.create({
   homeContainer: {
     paddingTop: 5,
-    alignItems: "center"
+    alignItems: "stretch"
   },
 
   reset: {
     marginTop: 60,
+    alignSelf: "center",
+    width: "50%",
   },
 
   footer: {
