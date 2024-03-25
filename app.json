@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "Tuii",
+    "slug": "Tuii",
+    "scheme": "tuii",
+    "version": "0.2",
+    "orientation": "portrait",
+    "icon": "./assets/icons/icon.png",
+    "primaryColor": "#121212",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+  
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.neRIA.Tuii",
+      "splash": {
+        "image": "./assets/icons/splash-light.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#eeeeee",
+        "dark": {
+          "image": "./assets/icons/splash-dark.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#121212"
+        }
+      }
+    },
+  
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "backgroundColor": "#121212"
+      },
+      "package": "com.neRIA.Tuii",
+      "splash": {
+        "image": "./assets/icons/splash-light.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#eeeeee",
+        "dark": {
+          "image": "./assets/icons/splash-dark.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#121212"
+        }
+      }
+    },
+  
+    "web": {
+      "favicon": "./assets/icons/favicon.png"
+    },
+  
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ad32410e-a535-4942-8506-fd8562e13d6b"
+      }
+    }
+  }
+}

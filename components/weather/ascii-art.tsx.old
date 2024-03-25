@@ -1,0 +1,146 @@
+import { T } from "@/components/basics";
+import { colors } from "@/constants/colors";
+import { StyleSheet, View } from "react-native";
+
+const Y = ({children, size}:{children:string, size:number}) => (
+  <T style={{...styles.text, fontSize:size, fontVariant: ["tabular-nums"], color: colors.yellow}}>{children}</T>
+)
+
+export const WeatherIcons = {
+  ClearDay: ({size}:{size:number}) => (
+    <View style={styles.icon}>
+      <T style={{fontSize: size, color: colors.yellow}}>
+        {"        *       *       *\n"}
+        {"            *   *   *\n"}
+        {"    *     *     *     *     *\n"}
+        {"      *     # # # # #     *\n"}
+        {" *        #           #        *\n"}
+        {"    *   #               #   *\n"}
+        {"       #                 #\n"}
+        {"      #                   #\n"}
+        {"* * * #                   # * * *\n"}
+        {"      #                   #\n"}
+        {"       #                 # \n"}
+        {"    *   #               #   *\n"}
+        {" *        #           #        *\n"}
+        {"      *     # # # # #     *\n"}
+        {"    *     *     *     *     *\n"}
+        {"            *   *   *   \n"}
+        {"        *       *       *"}
+      </T>
+    </View>
+  ),
+
+  ClearNight: ({size}:{size:number}) => (
+    <View style={styles.icon}>
+      <T style={{fontSize: size}}>
+        {"          # # # # # #\n"}
+        {"       # ###*       *  #\n"}
+        {"     #  #######    *##   #\n"}
+        {"   # ########*      ###    #\n"}
+        {"  # ##########    ####      #\n"}
+        {"  # *###########*           #\n"}
+        {" #  ###########              #\n"}
+        {" #    ##########       ##    #\n"}
+        {" #  ###########    *    ##   #\n"}
+        {"  #  ######                 #\n"}
+        {"  #    *#####               #\n"}
+        {"   #            #     *    #\n"}
+        {"     #        *  #       #\n"}
+        {"       #               #\n"}
+        {"          # # # # # #"}
+      </T>
+    </View>
+  ),
+
+  FewCloudsDay: ({size}:{size:number}) => (
+    <View style={styles.icon}>
+      <T style={{fontSize: size}}>
+        {"                  "}<Y size={size}>########</Y>{"\n"}
+        {"                "}<Y size={size}>############</Y>{"\n"}
+        {"         ••••••"}<Y size={size}>###############</Y>{"\n"}
+        {"       ••••••••••"}<Y size={size}>##############</Y>{"\n"}
+        {"      ••••••••••••"}<Y size={size}>##############</Y>{"\n"}
+        {"     ••••••••••••••••••"}<Y size={size}>#########</Y>{"\n"}
+        {"  ••••••••••••••••••••••"}<Y size={size}>########</Y>{"\n"}
+        {" ••••••••••••••••••••••••••"}<Y size={size}>####</Y>{"\n"}
+        {"•••••••••••••••••••••••••••••\n"}
+        {"•••••••••••••••••••••••••••••\n"}
+        {" ••••••••••••••••••••••••••••\n"}
+        {"   ••••••••••••••••••••••••\n"}
+      </T>
+    </View>
+  ),
+
+  FewCloudsNight: ({size}:{size:number}) => (
+    <View style={styles.icon}>
+      <T style={{fontSize: size}}>
+        {"                   # # # #\n"}
+        {"                #  ##  #  *#\n"}
+        {"         ••••••  ######      #\n"}
+        {"       ••••••••••########  ##  #\n"}
+        {"      ••••••••••••#####        #\n"}
+        {"     ••••••••••••••••••#    *  #\n"}
+        {"  ••••••••••••••••••••••  *    #\n"}
+        {" ••••••••••••••••••••••••••*  #\n"}
+        {"•••••••••••••••••••••••••••••\n"}
+        {"•••••••••••••••••••••••••••••\n"}
+        {" ••••••••••••••••••••••••••••\n"}
+        {"   ••••••••••••••••••••••••\n"}
+      </T>
+    </View>
+  ),
+
+  Cloudy: ({size}:{size:number}) => (
+    <View style={styles.icon}>
+      <T style={{...styles.text, fontSize: size}}>
+        {"                .......\n"}
+        {"          #####..........\n"}
+        {"       ##########............\n"}
+        {"      ############............\n"}
+        {"     ##################..........\n"}
+        {"  ######################..........\n"}
+        {" ##########################.......\n"}
+        {"############################.....\n"}
+        {"#############################\n"}
+        {" ############################\n"}
+        {"   ########################"}
+      </T>
+    </View>
+  ),
+
+  Thunderstorm: ({size}:{size:number}) => (
+    <View style={styles.icon}>
+      <T style={{...styles.text, fontSize: size}}>
+        {"                .......\n"}
+        {"          #####..........\n"}
+        {"       ##########............\n"}
+        {"      ############............\n"}
+        {"     ##################..........\n"}
+        {"  ######################..........\n"}
+        {" ##########################.......\n"}
+        {"############################.....\n"}
+        {"##########"}<Y size={size}>vvvv</Y>{"###############\n"}
+        {" ########"}<Y size={size}>vvvv</Y>{"################\n"}
+        {"   #####"}<Y size={size}>vvvvvvv</Y>{"############\n"}
+        {"       "}<Y size={size}>vvvvvv</Y>{"\n"}
+        {"         "}<Y size={size}>vvv</Y>{"\n"}
+        {"        "}<Y size={size}>vv</Y>
+      </T>
+    </View>
+  ),
+}
+
+const styles = StyleSheet.create({
+  icon: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 250,
+    height: 200,
+    marginVertical: 25,
+  },
+
+  text: {
+    textAlignVertical: "center"
+  }
+}); 
