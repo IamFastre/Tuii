@@ -17,7 +17,7 @@ const theme = {
 
   icon: "flower-outline",
   statusbar: "light",
-  mode: "dark",
+  theme: "scarlatta",
 
   others: {
     section_radius: 15,

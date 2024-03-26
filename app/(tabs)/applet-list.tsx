@@ -11,7 +11,11 @@ const icons = {
 
   light: {
     sudoku: require('@/assets/applet-icons/SudokuLight.png'),
-  }
+  },
+
+  scarlatta: {
+    sudoku: require('@/assets/applet-icons/SudokuScarlatta.png'),
+  },
 };
 
 export default function AppletsPage() : React.JSX.Element {
@@ -25,7 +29,7 @@ export default function AppletsPage() : React.JSX.Element {
             title='Sudoku'
             description={'Fill a 9×9 grid with 1-9 with no copies in each row, column, and subgrid.\nLogic, not guesswork, is key!'}
             path="applets/sudoku"
-            icon={icons[colors.mode].sudoku}
+            icon={icons[colors.theme].sudoku}
             style={styles.topOption}
           />
           </ScrollView>

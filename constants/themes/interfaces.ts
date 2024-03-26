@@ -1,5 +1,7 @@
 import React from "react";
 
+export type Themes = "dark" | "light" | "scarlatta";
+
 export interface ITheme {
   primary: `#${string}`;
   secondary: `#${string}`;
@@ -21,7 +23,7 @@ export interface ITheme {
 
   icon: string;
   statusbar: "light" | "dark";
-  mode: "light" | "dark",
+  theme: Themes,
 
   others: {
     section_radius: number;

@@ -21,7 +21,7 @@ export default {
 
   icon: "moon",
   statusbar: "light",
-  mode: "dark",
+  theme: "dark",
 
   others: {
     section_radius: 0,

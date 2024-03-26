@@ -12,5 +12,5 @@ export default {
 
   icon: "sunny",
   statusbar: "dark",
-  mode: "light",
+  theme: "light",
 } as ITheme;
