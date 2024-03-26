@@ -88,13 +88,13 @@ const Number = ({value, selected, setList}:{value:SlotType, selected:number | un
                 {"["}
                 <C.HIGHLIGHT>{value}</C.HIGHLIGHT>
                 {"]"}
-              </C.SECONDARY> :
+              </C.SECONDARY>
+              :
               <C.HIGHLIGHT>
                 {"{"}
                 <C.SECONDARY>{value}</C.SECONDARY>
                 {"}"}
-              </C.HIGHLIGHT> 
-            }
+              </C.HIGHLIGHT> }
           </B>
         : <Ionicons name={isPressed ? "backspace" : "backspace-outline"} size={styles.buttonText.fontSize * 1.5} color={colors.hot}/>}
       </T>
