@@ -2,7 +2,7 @@ import { B, Button, C, L, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 import { State } from "@/src/general/types";
 import React, { useState } from "react";
-import { DimensionValue, Pressable, StyleSheet, View, ViewProps } from "react-native";
+import { DimensionValue, Pressable, StyleSheet, View, ViewProps, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { EmptyBoard, SlotType, Sudoku, SudokuGrid, generateSolvedSudoku } from "@/src/sudoku";
 
@@ -16,7 +16,9 @@ const GridChild = ({value, id, locked, selected, setSelected}:{value:SlotType, i
         onPress={() => {
           if (!locked)
             setSelected(selected == id ? undefined : id)
-      }}>
+        }}
+        android_disableSound
+      >
 
         <T style={{...styles.slotText, color: locked ? colors.accent_2 : (selected == id ? colors.main : colors.main_3)}}>
           {selected == id
@@ -76,6 +78,7 @@ const Number = ({value, selected, setList}:{value:SlotType, selected:number | un
           })
         }
       }}
+      android_disableSound
     >
       <T style={styles.buttonText}>
         {value
@@ -101,7 +104,18 @@ const Controls = ({selected, setList}:{selected:number | undefined, setList:Stat
         <L>{']'}</L>
       </T>
       <View style={styles.controls}>
-        {([1, 2, 3, 4, 5, 6, 7, 8, 9, null] as SlotType[]).map((val, i) => (
+        {([1, 2, 3, 4, 5] as SlotType[]).map((val, i) => (
+          <Number
+          key={i}
+          value={val}
+          selected={selected}
+          setList={setList}
+          />
+          ))
+        }
+      </View>
+      <View style={styles.controls}>
+        {([6, 7, 8, 9, null] as SlotType[]).map((val, i) => (
           <Number
           key={i}
           value={val}
@@ -122,46 +136,52 @@ export function Board(props:ViewProps) : React.JSX.Element {
   const [list, setList] = useState<SudokuGrid | undefined>(undefined);
 
   return (
-    <View style={styles.container}>
-      <View {...props} style={styles.board}>
-        <Grid values={list} selected={selected} setSelected={setSelected} />
-      </View>
+    <Pressable style={{ flex: 1 }} onPress={() => setSelected(undefined)} android_disableSound>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
+        <View {...props} style={styles.board}>
+          <Grid values={list} selected={selected} setSelected={setSelected} />
+        </View>
 
-      <View style={styles.actions}>
-        <Button
-          title="Check"
-          style={styles.action}
-          textStyle={styles.actionText}
-          icon={{name:'checkmark-circle-outline'}}
-        />
+        <View style={styles.actions}>
+          <Button
+            title="Check"
+            style={styles.action}
+            textStyle={styles.actionText}
+            icon={{name:'checkmark-circle-outline'}}
+            />
 
-        <Button
-          title="New"
-          style={styles.action}
-          textStyle={styles.actionText}
-          icon={{name:'reload-circle-outline'}}
-          onPress={() => {
-            setList(generateSolvedSudoku())
-          }}
-        />
-        <Button
-          title="Print"
-          style={styles.action}
-          textStyle={styles.actionText}
-          icon={{name:'refresh-circle-outline'}}
-          onPress={() => {
-            let sud = new Sudoku(1)
-            sud.board = generateSolvedSudoku();
-            console.log(sud.subs)
-          }}
-        />
-      </View>
+          <Button
+            title="New"
+            style={styles.action}
+            textStyle={styles.actionText}
+            icon={{name:'reload-circle-outline'}}
+            onPress={() => {
+              setList(generateSolvedSudoku())
+            }}
+            />
+          <Button
+            title="Print"
+            style={styles.action}
+            textStyle={styles.actionText}
+            icon={{name:'refresh-circle-outline'}}
+            onPress={() => {
+              let sud = new Sudoku(1)
+              sud.board = generateSolvedSudoku();
+              console.log(sud.subs)
+            }}
+            />
+        </View>
 
-      <Controls
-        selected={selected}
-        setList={setList}
-      />
-    </View>
+        <View style={{ flex: 5 }}/>
+
+        <Controls
+          selected={selected}
+          setList={setList}
+          />
+
+        <View style={{ flex: 1 }}/>
+      </ScrollView>
+    </Pressable>
   );
 }
 
@@ -190,7 +210,7 @@ const styles = StyleSheet.create({
     alignContent: "space-between",
     justifyContent: "space-between",
     borderWidth: 3,
-    padding: 2,
+    padding: 3,
   },
 
   slot: {
@@ -220,12 +240,12 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     marginTop: 20,
-    marginHorizontal: 10,
+    width: "95%",
   },
 
   action: {
     marginHorizontal: 10,
-    flex: 1
+    flex: 1,
   },
 
   actionText: {
@@ -237,9 +257,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 0,
-    position: "absolute",
-    marginBottom: 50,
   },
 
   controls: {
