@@ -83,11 +83,18 @@ const Number = ({value, selected, setList}:{value:SlotType, selected:number | un
       <T style={styles.buttonText}>
         {value
         ? <B>
-            <C.ACCENT2>
-              {isPressed ? "[" : "{"}
-              <C.MAIN2>{value}</C.MAIN2>
-              {isPressed ? "]" : "}"}
-            </C.ACCENT2>
+            { isPressed ?
+              <C.MAIN2>
+                {"["}
+                <C.ACCENT2>{value}</C.ACCENT2>
+                {"]"}
+              </C.MAIN2> :
+              <C.ACCENT2>
+                {"{"}
+                <C.MAIN2>{value}</C.MAIN2>
+                {"}"}
+              </C.ACCENT2> 
+            }
           </B>
         : <Ionicons name={isPressed ? "backspace" : "backspace-outline"} size={styles.buttonText.fontSize * 1.5} color={colors.other_hot}/>}
       </T>
