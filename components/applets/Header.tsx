@@ -11,7 +11,7 @@ export function Header({title}:{title:string}) : React.JSX.Element {
   return (
     <Section style={styles.header} containerStyle={styles.headerContainer}>
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='chevron-back-sharp' size={35} color={colors.other_hot} />
+        <Ionicons name='chevron-back-sharp' size={35} color={colors.hot} />
       </TouchableOpacity>
       <T style={styles.titleText}>
         <C.ACCENT>•-{'{ '}</C.ACCENT>

@@ -1,19 +1,20 @@
 import React from "react";
 
 export interface ITheme {
-  main: `#${string}`;
-  main_2: `#${string}`;
-  main_3: `#${string}`;
+  primary: `#${string}`;
+  secondary: `#${string}`;
+  tertiary: `#${string}`;
   
   accent: `#${string}`;
-  accent_2: `#${string}`;
+  highlight: `#${string}`;
 
-  other_hot: `#${string}`;
-  other_cold: `#${string}`;
+  hot: `#${string}`;
+  cold: `#${string}`;
   
   red: `#${string}`;
   blue: `#${string}`;
   green: `#${string}`;
+
   cyan: `#${string}`;
   yellow: `#${string}`;
   magenta: `#${string}`;

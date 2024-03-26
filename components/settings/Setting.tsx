@@ -40,11 +40,11 @@ const Title = ({title, description, experimental}:{title:string, description:str
     <View style={styles.titleView}>
       <T style={styles.title}>
         <B>{title}</B>
-        <C.MAIN2>
+        <C.SECONDARY>
           :
-        </C.MAIN2>
+        </C.SECONDARY>
       </T>
-      {description ? <C.MAIN2 style={styles.description}>{description}</C.MAIN2> : null}
+      {description ? <C.SECONDARY style={styles.description}>{description}</C.SECONDARY> : null}
       {experimental ? <C.HOT style={styles.description}>{'{{ EXPERIMENTAL }}'}</C.HOT> : null}
     </View>
   </View>
@@ -93,7 +93,7 @@ export const BoolSetting = (props:BoolSettingProps) => {
       <Title title={props.title} description={props.description} experimental={props.experimental} />
       <Button
         title={props.current ? "true" : "false"}
-        style={{...(props.size === "small" ? styles.smallInput : props.size === "large" ? styles.largeInput : styles.input), borderColor: props.current ? colors.accent : colors.other_hot}}
+        style={{...(props.size === "small" ? styles.smallInput : props.size === "large" ? styles.largeInput : styles.input), borderColor: props.current ? colors.accent : colors.hot}}
         onPress={() => props.onSubmit()}
         icon={{ name: props.current ? "checkmark-circle-outline" : "close-circle-outline", size: 12 }}
       />

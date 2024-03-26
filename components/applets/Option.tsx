@@ -20,17 +20,17 @@ export const Option = ({ title, description, path, icon, style }:OptionProps) =>
 
   return (
     <TouchableOpacity onPress={() => router.push(path as any)}>
-      <View style={[styles.option, { borderColor: colors.main_2 }, style]}>
+      <View style={[styles.option, { borderColor: colors.secondary }, style]}>
         <Image
           source={icon}
           transition={500}
           style={styles.optionIcon} />
-        <View style={[styles.optionSep, { backgroundColor: colors.main_2 }]} />
+        <View style={[styles.optionSep, { backgroundColor: colors.secondary }]} />
         <View style={styles.optionText}>
           <T style={[styles.optionParaText, { color: colors.accent }]}>
             {title}
           </T>
-          <T style={[styles.optionDesc, { color: colors.main_2 }]}>
+          <T style={[styles.optionDesc, { color: colors.secondary }]}>
             {description}
           </T>
         </View>

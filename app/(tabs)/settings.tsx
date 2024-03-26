@@ -197,7 +197,7 @@ export default function SettingsPage() {
           {/* Reset Button */}
           <Button
             title={"Rest all"}
-            style={{...styles.reset, borderColor: colors.other_hot}}
+            style={{...styles.reset, borderColor: colors.hot}}
             onPress={() => {
               resetSettings();
               updateFullscreen(false);
@@ -216,13 +216,13 @@ export default function SettingsPage() {
               (v{consts.version})
             </L>
             {'\n'}
-            <C.MAIN2>
+            <C.SECONDARY>
               by
               {' '}
-              <C.ACCENT2>
+              <C.HIGHLIGHT>
                 IamFastre
-              </C.ACCENT2>
-            </C.MAIN2>
+              </C.HIGHLIGHT>
+            </C.SECONDARY>
           </T>
 
       </ScrollView>

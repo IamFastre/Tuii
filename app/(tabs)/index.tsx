@@ -82,7 +82,7 @@ export default function HomePage() : React.JSX.Element {
           <View style={styles.weatherCard}>
             {/* City, country */}
             <T style={styles.weatherCity}>{weather?.name}</T>
-            <T style={[styles.weatherSubtextT, { color: colors.main_2 }]}>{weather?.sys.country}</T>
+            <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>{weather?.sys.country}</T>
 
             {/* Weather icon */}
             <WeatherIcon id={weather?.weather[0].icon as WeatherIconID} size={12}/>
@@ -95,15 +95,15 @@ export default function HomePage() : React.JSX.Element {
                   <B>{Math.round((weather?.main.temp ?? 0)).toString()}</B>°
                 </T>
                 {/* Temperature unit */}
-                <T style={{...styles.weatherSubtextT, color: colors.main_2, ...styles.weatherUnit, right: -unitWidth}} onLayout={(event) => setUnitWidth(event.nativeEvent.layout.width)}>
+                <T style={{...styles.weatherSubtextT, color: colors.secondary, ...styles.weatherUnit, right: -unitWidth}} onLayout={(event) => setUnitWidth(event.nativeEvent.layout.width)}>
                   <B>
-                    <C.MAIN3>
+                    <C.TERTIARY>
                       {weather?.units === "imperial" ? "F" : "C"}
-                    </C.MAIN3>
+                    </C.TERTIARY>
                   </B>
                 </T>
                 {/* Feels like */}
-                <T style={{...styles.weatherSubtextT, color: colors.main_2, ...styles.weatherFeels, right: -feelsWidth}} onLayout={(event) => setFeelsWidth(Math.round(event.nativeEvent.layout.width * ((weather?.main.feels_like_difference ?? 0).toString().length / ((weather?.main.feels_like_difference ?? 0).toString().length + 1))) + 1)}>
+                <T style={{...styles.weatherSubtextT, color: colors.secondary, ...styles.weatherFeels, right: -feelsWidth}} onLayout={(event) => setFeelsWidth(Math.round(event.nativeEvent.layout.width * ((weather?.main.feels_like_difference ?? 0).toString().length / ((weather?.main.feels_like_difference ?? 0).toString().length + 1))) + 1)}>
                   {(weather?.main.feels_like_difference ?? 0) >= 0 ? "+" : ""}
                   {weather?.main.feels_like_difference ?? 0}
                 </T>
@@ -111,12 +111,12 @@ export default function HomePage() : React.JSX.Element {
               {/* Weather status */}
               <T style={styles.weatherMainT}>
                 <C.ACCENT>•</C.ACCENT>
-                <C.MAIN2>{'-{ '}</C.MAIN2>
+                <C.SECONDARY>{'-{ '}</C.SECONDARY>
                 {weather?.weather[0].main ?? "Loading..."}
-                <C.MAIN2>{' }-'}</C.MAIN2>
+                <C.SECONDARY>{' }-'}</C.SECONDARY>
                 <C.ACCENT>•</C.ACCENT>
               </T>
-              <T style={[styles.weatherSubtextT, { color: colors.main_2 }]}>
+              <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
                 ({weather?.weather[0].description ?? "..."})
               </T>
             </View>
@@ -127,7 +127,7 @@ export default function HomePage() : React.JSX.Element {
                 <T style={[styles.weatherOthersIcon, {transform: [{rotate: `${weather?.wind.deg ?? 0}deg`}]}]}>
                   <C.ACCENT><B>↑</B></C.ACCENT>
                 </T>
-                <T style={[styles.weatherSubtextT, { color: colors.main_2 }]}>
+                <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
                   {weather?.wind.speed ?? 0}{weather?.units === "imperial" ? "mph" : "m/s"}
                 </T>
               </View>
@@ -136,7 +136,7 @@ export default function HomePage() : React.JSX.Element {
                 <T style={styles.weatherOthersIcon}>
                   <C.ACCENT><B>☵</B></C.ACCENT>
                 </T>
-                <T style={[styles.weatherSubtextT, { color: colors.main_2 }]}>
+                <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
                   {weather?.main.humidity ?? 0}%
                 </T>
               </View>
@@ -145,7 +145,7 @@ export default function HomePage() : React.JSX.Element {
                 <T style={styles.weatherOthersIcon}>
                   <C.ACCENT><B>◎</B></C.ACCENT>
                 </T>
-                <T style={[styles.weatherSubtextT, { color: colors.main_2 }]}>
+                <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
                   {(weather?.visibility ?? 0) === 10000 ? ">" : ""}
                   {weather?.units === "imperial" ? Math.round(((weather?.visibility ?? 0))/160.9)/10 : Math.round((weather?.visibility ?? 0)/100)/10}
                   {weather?.units === "imperial" ? "mi" : "km"}
@@ -156,7 +156,7 @@ export default function HomePage() : React.JSX.Element {
                 <T style={styles.weatherOthersIcon}>
                   <C.ACCENT><B>▼</B></C.ACCENT>
                 </T>
-                <T style={[styles.weatherSubtextT, { color: colors.main_2 }]}>
+                <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
                   {weather?.main.pressure ?? 0}hPa
                 </T>
               </View>
@@ -173,9 +173,9 @@ export default function HomePage() : React.JSX.Element {
         <View style={{ alignSelf: "center", marginBottom: 20 }}>
           <T style={{ fontFamily: colors.others.fonts.clock, fontSize: 45 }}>
             {'{ '}
-            <C.ACCENT2>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.ACCENT2>
+            <C.HIGHLIGHT>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.HIGHLIGHT>
             :
-            <C.ACCENT2>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.ACCENT2>
+            <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
             {' }'}
           </T>
         </View>
@@ -186,7 +186,7 @@ export default function HomePage() : React.JSX.Element {
 
         <T style={styles.greetT}>
           {getGreet()}, {user?.gender === "male" ? "Mr. " : user?.gender === "female" ? "Ms. " : ""}
-          <B><C.MAIN2>{user?.name ?? "???"}</C.MAIN2></B>
+          <B><C.SECONDARY>{user?.name ?? "???"}</C.SECONDARY></B>
           {user?.gender === "other" ? " thing" : ""}!
         </T>
 

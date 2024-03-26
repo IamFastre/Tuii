@@ -5,15 +5,15 @@ import defaults from "./defaults";
 
 const theme = {
   ...defaults,
-  main: "#341411",
-  main_2: "#bd3478",
-  main_3: "#dddddd",
+  primary: "#341411",
+  secondary: "#bd3478",
+  tertiary: "#dddddd",
 
   accent: "#5c14e3",
-  accent_2: "#1F8870",
+  highlight: "#1F8870",
 
-  other_hot: "#2fa02f",
-  other_cold: "#2B6788",
+  hot: "#2fa02f",
+  cold: "#2B6788",
 
   icon: "flower-outline",
   statusbar: "light",
@@ -35,7 +35,7 @@ const theme = {
         <Ionicons
           name='rose'
           size={200}
-          color={theme.main_2}
+          color={theme.secondary}
           style={{
             top: -30,
             left: -40,
@@ -47,7 +47,7 @@ const theme = {
         <Ionicons
           name='rose-outline'
           size={225}
-          color={theme.main_2}
+          color={theme.secondary}
           style={{
             bottom: -50,
             right: -40,
@@ -59,7 +59,7 @@ const theme = {
         <Ionicons
           name='flower-outline'
           size={150}
-          color={theme.main_2}
+          color={theme.secondary}
           style={{
             top: "30%",
             right: -60,
@@ -71,7 +71,7 @@ const theme = {
         <Ionicons
           name='leaf-outline'
           size={150}
-          color={theme.main_2}
+          color={theme.secondary}
           style={{
             bottom: "30%",
             left: -30,

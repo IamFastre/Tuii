@@ -38,8 +38,8 @@ export function Button(props: ButtonProps): React.JSX.Element {
       alignItems: "center",
       justifyContent: "center",
       borderWidth: 1,
-      backgroundColor: colors.main,
-      borderColor: props.disabled ? colors.main_2 : colors.accent,
+      backgroundColor: colors.primary,
+      borderColor: props.disabled ? colors.secondary : colors.accent,
       borderRadius: 9999,
       padding: 5,
       paddingHorizontal: props.style?.width ? undefined : 20,
@@ -67,10 +67,10 @@ export function Button(props: ButtonProps): React.JSX.Element {
     <Pressable
       style={[
         self.view,
-        isPressed ? { borderColor: colors.main_2 } :
+        isPressed ? { borderColor: colors.secondary } :
         isHovered ? { backgroundColor: isHexColor(self.view.borderColor)
                                      ? self.view.borderColor as string + "33"
-                                     : colors.main_2 }
+                                     : colors.secondary }
         : { }
       ]}
       onPress={props.onPress}
@@ -88,7 +88,7 @@ export function Button(props: ButtonProps): React.JSX.Element {
               <Ionicons
                 name={props.icon.name as any}
                 size={(props.icon.size ?? self.text.fontSize ?? general.text.fontSize) * 1.75}
-                color={isPressed ? colors.main_2 : (props.icon.color ?? self.view.borderColor)}
+                color={isPressed ? colors.secondary : (props.icon.color ?? self.view.borderColor)}
               />
           </View>
         : <></>

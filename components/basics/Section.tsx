@@ -21,7 +21,7 @@ export function Section(props:SectionProps) : React.JSX.Element {
 
   const self = StyleSheet.create({
     screen: {
-      backgroundColor: colors.main,
+      backgroundColor: colors.primary,
       borderRadius: props.isCard ? colors.others.section_radius : 0,
       ...props.style
     },
@@ -31,7 +31,7 @@ export function Section(props:SectionProps) : React.JSX.Element {
       margin: props.isCard ? 0 : 10,
       overflow: "hidden",
       borderWidth: 1,
-      borderColor: colors.main_2,
+      borderColor: colors.secondary,
       borderRadius: colors.others.section_radius,
       ...props.containerStyle
     },

@@ -27,7 +27,7 @@ const TabIcon = ({icon, selected, path}:TabIconProps) => {
     >
       <Ionicons
         name={(icon + (selected ? "" : "-outline")) as any}
-        color={selected ? colors.accent : colors.main_2}
+        color={selected ? colors.accent : colors.secondary}
         size={30}
       />
     </TouchableOpacity>
@@ -50,7 +50,7 @@ export default function HomeLayout() {
             <TabIcon icon="settings" selected={props.state.index == 2} path="/(tabs)/settings" />
 
             <TouchableOpacity style={styles.tab} onPress={() => Exit()}>
-              <Ionicons name='exit-outline' size={30} color={colors.other_hot} />
+              <Ionicons name='exit-outline' size={30} color={colors.hot} />
             </TouchableOpacity>
           </Section>
         );

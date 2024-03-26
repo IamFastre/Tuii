@@ -10,9 +10,9 @@ export const WeatherIcons = {
           <C.ACCENT>
             <C.RED>
               {'•-{ '}
-              <C.MAIN3>
+              <C.TERTIARY>
                 ???
-              </C.MAIN3>
+              </C.TERTIARY>
               {' }-•'}
             </C.RED>
           </C.ACCENT>
@@ -276,7 +276,7 @@ export const WeatherIcons = {
     <View style={styles.icon}>
       <T style={[ styles.text, { fontSize: size } ]}>
         <B>
-          <C.MAIN2>
+          <C.SECONDARY>
             {"    -__-¯-_-¯-    -_-¯-_-¯-    \n"}
             {"\n"}
             {"¯-_-¯-       -_-¯¯¯-_-¯---\n"}
@@ -288,7 +288,7 @@ export const WeatherIcons = {
             {" ¯¯¯-_-¯-    -___-¯-_-¯-__\n"}
             {"\n"}
             {"      ¯-_-¯-_-¯-_-¯--_-_-¯--_-\n"}
-          </C.MAIN2>
+          </C.SECONDARY>
         </B>
       </T>
     </View>

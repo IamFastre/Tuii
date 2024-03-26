@@ -10,8 +10,8 @@ export const T = (props: TextProps & { plain?:boolean }) : React.JSX.Element => 
     <Text
       {...props}
       selectable={props.selectable ?? false}
-      selectionColor={colors.accent_2}
-      style={[props.plain ? { } : { color: colors.main_3, fontSize: general.text.fontSize, fontFamily: colors.others.fonts.R }, props.style]}
+      selectionColor={colors.highlight}
+      style={[props.plain ? { } : { color: colors.tertiary, fontSize: general.text.fontSize, fontFamily: colors.others.fonts.R }, props.style]}
     />
   );
 }
@@ -41,29 +41,29 @@ export const BI = (props: TextProps) : React.JSX.Element => (
 
 
 export const C = {
-  MAIN: (props: TextProps) : React.JSX.Element => (
-    <Text {...props} style={[props.style, { color: useColors().main }]} />
+  PRIMARY: (props: TextProps) : React.JSX.Element => (
+    <Text {...props} style={[props.style, { color: useColors().primary }]} />
   ),
-  MAIN2: (props: TextProps) : React.JSX.Element => (
-    <Text {...props} style={[props.style, { color: useColors().main_2 }]} />
+  SECONDARY: (props: TextProps) : React.JSX.Element => (
+    <Text {...props} style={[props.style, { color: useColors().secondary }]} />
   ),
-  MAIN3: (props: TextProps) : React.JSX.Element => (
-    <Text {...props} style={[props.style, { color: useColors().main_3 }]} />
+  TERTIARY: (props: TextProps) : React.JSX.Element => (
+    <Text {...props} style={[props.style, { color: useColors().tertiary }]} />
   ),
 
   ACCENT: (props: TextProps) : React.JSX.Element => (
     <Text {...props} style={[props.style, { color: useColors().accent }]} />
   ),
   
-  ACCENT2: (props: TextProps) : React.JSX.Element => (
-    <Text {...props} style={[props.style, { color: useColors().accent_2 }]} />
+  HIGHLIGHT: (props: TextProps) : React.JSX.Element => (
+    <Text {...props} style={[props.style, { color: useColors().highlight }]} />
   ),
 
   HOT: (props: TextProps) : React.JSX.Element => (
-    <Text {...props} style={[props.style, { color: useColors().other_hot }]} />
+    <Text {...props} style={[props.style, { color: useColors().hot }]} />
   ),
   COLD: (props: TextProps) : React.JSX.Element => (
-    <Text {...props} style={[props.style, { color: useColors().other_cold }]} />
+    <Text {...props} style={[props.style, { color: useColors().cold }]} />
   ),
 
   RED: (props: TextProps) : React.JSX.Element => (

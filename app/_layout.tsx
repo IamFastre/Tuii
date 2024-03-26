@@ -69,7 +69,7 @@ export default () => {
 
   return (
     <SettingsContext.Provider value={{ settings, updateSettings }}>
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.main }]} onLayout={onLayoutRootView} mode="padding">
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.primary }]} onLayout={onLayoutRootView} mode="padding">
         <Container style={{ flex: 1 }} behavior="padding">
 
           {/* ================================================================== */}

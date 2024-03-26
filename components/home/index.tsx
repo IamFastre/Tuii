@@ -37,18 +37,18 @@ export const TodaysWord = ({date: time}:{date:ITime}) => {
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {/* Word */}
         <T style={{ fontSize: 18, textAlign: 'center' }} selectable>
-          <C.ACCENT2>
+          <C.HIGHLIGHT>
             <BI>{Object.keys(dict)[i]}</BI>
-          </C.ACCENT2>
+          </C.HIGHLIGHT>
         </T>
 
         {/* Word Kind */}
-        <C.MAIN2
+        <C.SECONDARY
           onLayout={e => setWordWidth(Math.ceil(e.nativeEvent.layout.width))}
           style={{ fontSize: 10, bottom: Platform.OS === "android" ? 2 : -1, right: -wordWidth, position: "absolute" }}
         >
           (n.)
-        </C.MAIN2>
+        </C.SECONDARY>
       </View>
 
       {/* Definition */}
@@ -86,9 +86,9 @@ export const TodaysQuote = ({date: time}:{date:ITime}) => {
         <T style={{ fontSize: 18 }}>
             {'>>-•{ '}
             <LI>
-              <C.ACCENT2>
+              <C.HIGHLIGHT>
                 Copied
-              </C.ACCENT2>
+              </C.HIGHLIGHT>
             </LI>
             {' }•-<<'}
         </T>

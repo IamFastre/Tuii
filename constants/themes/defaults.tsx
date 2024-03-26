@@ -1,19 +1,19 @@
 import { ITheme } from "./interfaces";
 
 export default {
-  main: "#121212",
-  main_2: "#575757",
-  main_3: "#dddddd",
+  primary: "#121212",
+  secondary: "#575757",
+  tertiary: "#dddddd",
 
   accent: "#1ed760",
-  accent_2: "#5c14e3",
+  highlight: "#5c14e3",
 
-  other_hot: "#d71e1e",
-  other_cold: "#4b7bff",
+  hot: "#d71e1e",
+  cold: "#2054ff",
 
   red: "#d71e1e",
   green: "#00c43b",
-  blue: "#4b7bff",
+  blue: "#3a7aff",
 
   cyan: "#27d4ff",
   yellow: "#ffea29",

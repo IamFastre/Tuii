@@ -19,13 +19,13 @@ export const TI = (props:TIProps) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   return (
-    <View style={[styles.textInputView, props.style, { borderColor: isDeleting ? colors.other_hot : isPressed ? colors.accent : colors.main_2 }]}>
+    <View style={[styles.textInputView, props.style, { borderColor: isDeleting ? colors.hot : isPressed ? colors.accent : colors.secondary }]}>
       <T style={{ color: colors.accent, fontFamily: colors.others.fonts.L }}>{'>'}</T>
       <TextInput
         style={[styles.textInput, { color: colors.accent, fontFamily: colors.others.fonts.L }]}
         value={props.value}
         placeholder={`{${props.placeholder ?? "..."}}`}
-        placeholderTextColor={colors.main_2}
+        placeholderTextColor={colors.secondary}
         onChangeText={props.onChangeText}
         onSubmitEditing={(e) => {
           let color = props.value ? setIsPressed : setIsDeleting;

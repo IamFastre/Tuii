@@ -11,8 +11,8 @@ export default function NotFound() : React.JSX.Element {
 
   return (
     <View style={{ flex:1 }}>
-      <Section title="??????" style={{ flex:1 }} titleStyle={{ color: colors.other_hot }} containerStyle={{...styles.homeContainer, borderColor: colors.other_hot}}>
-        <Ionicons name='warning' size={100} color={colors.other_hot} style={styles.qIcon}/>
+      <Section title="??????" style={{ flex:1 }} titleStyle={{ color: colors.hot }} containerStyle={{...styles.homeContainer, borderColor: colors.hot}}>
+        <Ionicons name='warning' size={100} color={colors.hot} style={styles.qIcon}/>
         <T style={styles.paraText}>
           Page Not Found.
         </T>
@@ -23,7 +23,7 @@ export default function NotFound() : React.JSX.Element {
           icon={ {name:"home-sharp", size: 16} }
           onPress={() => router.replace("/(tabs)")}
         />
-        <T style={[styles.qmark, { color: colors.main_2 }]}>?</T>
+        <T style={[styles.qmark, { color: colors.secondary }]}>?</T>
       </Section>
     </View>
   );

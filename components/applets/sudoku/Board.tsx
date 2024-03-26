@@ -12,7 +12,7 @@ const GridChild = ({value, id, locked, selected, setSelected}:{value:SlotType, i
   return (
     <>
       <Pressable
-        style={{...styles.slot, borderColor: colors.main_2, backgroundColor: selected == id ? colors.accent : "transparent"}}
+        style={{...styles.slot, borderColor: colors.secondary, backgroundColor: selected == id ? colors.accent : "transparent"}}
         onPress={() => {
           if (!locked)
             setSelected(selected == id ? undefined : id)
@@ -20,7 +20,7 @@ const GridChild = ({value, id, locked, selected, setSelected}:{value:SlotType, i
         android_disableSound
       >
 
-        <T style={{...styles.slotText, color: locked ? colors.accent_2 : (selected == id ? colors.main : colors.main_3)}}>
+        <T style={{...styles.slotText, color: locked ? colors.highlight : (selected == id ? colors.primary : colors.tertiary)}}>
           {selected == id
           ? <B>{value?.toString() ?? ""}</B>
           : value?.toString() ?? ""}
@@ -28,8 +28,8 @@ const GridChild = ({value, id, locked, selected, setSelected}:{value:SlotType, i
     
       </Pressable>
     
-      {(id+1) % 3  === 0 && (id+1) % 9  !== 0 ? <View style={[styles.miniSepH, { backgroundColor: colors.main } ]} /> : null}
-      {(id+1) % 27 === 0 && (id+1) % 81 !== 0 ? <View style={[styles.miniSepV, { backgroundColor: colors.main } ]} /> : null}
+      {(id+1) % 3  === 0 && (id+1) % 9  !== 0 ? <View style={[styles.miniSepH, { backgroundColor: colors.primary } ]} /> : null}
+      {(id+1) % 27 === 0 && (id+1) % 81 !== 0 ? <View style={[styles.miniSepV, { backgroundColor: colors.primary } ]} /> : null}
     </>
   );
 };
@@ -84,19 +84,19 @@ const Number = ({value, selected, setList}:{value:SlotType, selected:number | un
         {value
         ? <B>
             { isPressed ?
-              <C.MAIN2>
+              <C.SECONDARY>
                 {"["}
-                <C.ACCENT2>{value}</C.ACCENT2>
+                <C.HIGHLIGHT>{value}</C.HIGHLIGHT>
                 {"]"}
-              </C.MAIN2> :
-              <C.ACCENT2>
+              </C.SECONDARY> :
+              <C.HIGHLIGHT>
                 {"{"}
-                <C.MAIN2>{value}</C.MAIN2>
+                <C.SECONDARY>{value}</C.SECONDARY>
                 {"}"}
-              </C.ACCENT2> 
+              </C.HIGHLIGHT> 
             }
           </B>
-        : <Ionicons name={isPressed ? "backspace" : "backspace-outline"} size={styles.buttonText.fontSize * 1.5} color={colors.other_hot}/>}
+        : <Ionicons name={isPressed ? "backspace" : "backspace-outline"} size={styles.buttonText.fontSize * 1.5} color={colors.hot}/>}
       </T>
     </Pressable>
   );
