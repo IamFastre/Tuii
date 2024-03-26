@@ -106,10 +106,10 @@ const Controls = ({selected, setList}:{selected:number | undefined, setList:Stat
       <View style={styles.controls}>
         {([1, 2, 3, 4, 5] as SlotType[]).map((val, i) => (
           <Number
-          key={i}
-          value={val}
-          selected={selected}
-          setList={setList}
+            key={i}
+            value={val}
+            selected={selected}
+            setList={setList}
           />
           ))
         }
@@ -136,8 +136,7 @@ export function Board(props:ViewProps) : React.JSX.Element {
   const [list, setList] = useState<SudokuGrid | undefined>(undefined);
 
   return (
-    <Pressable style={{ flex: 1 }} onPress={() => setSelected(undefined)} android_disableSound>
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
+    <Pressable style={styles.container} onPress={() => setSelected(undefined)} android_disableSound>
         <View {...props} style={styles.board}>
           <Grid values={list} selected={selected} setSelected={setSelected} />
         </View>
@@ -180,7 +179,6 @@ export function Board(props:ViewProps) : React.JSX.Element {
           />
 
         <View style={{ flex: 1 }}/>
-      </ScrollView>
     </Pressable>
   );
 }
@@ -240,7 +238,7 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     marginTop: 20,
-    width: "95%",
+    width: "100%",
   },
 
   action: {
