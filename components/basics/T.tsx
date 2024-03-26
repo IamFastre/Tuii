@@ -83,6 +83,6 @@ export const C = {
     <Text {...props} style={[props.style, { color: useColors().yellow }]} />
   ),
   MAGENTA: (props: TextProps) : React.JSX.Element => (
-    <Text {...props} style={[props.style, { color: useColors().yellow }]} />
+    <Text {...props} style={[props.style, { color: useColors().magenta }]} />
   ),
 };
