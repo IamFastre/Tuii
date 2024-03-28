@@ -58,6 +58,12 @@ export function normalize(str:string) : string {
     .replaceAll("'", "’");
 }
 
+export function capitalize(str:string) : string {
+  let chars = str.split('');
+  chars[0] = chars[0].toUpperCase();
+  return chars.join('');
+}
+
 export function updateFullscreen(fullscreen: boolean) {
   setStatusBarHidden(fullscreen);
   if (Platform.OS == 'android') {
@@ -68,4 +74,15 @@ export function updateFullscreen(fullscreen: boolean) {
 
 export function isHexColor(value:any) {
   return typeof value === "string" && (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/).test(value);
+}
+
+export function hashToLength(len: number, ...list: number[]): number {
+  list.sort((a, b) => a - b);
+  let val = (list.shift() ?? 2 << 16);
+  list.forEach(e => val ^= e);
+  return val % len;
+}
+
+export function hashDateToLength(date:ITime, len:number) : number {
+  return hashToLength(len, date.day, date.month, date.year);
 }
