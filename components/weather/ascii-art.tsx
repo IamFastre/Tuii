@@ -7,15 +7,13 @@ export const WeatherIcons = {
     <View style={styles.icon}>
       <T style={[ styles.text, { fontSize: size * 2.5 }]}>
         <B>
-          <C.ACCENT>
-            <C.RED>
-              {'•-{ '}
-              <C.TERTIARY>
-                ???
-              </C.TERTIARY>
-              {' }-•'}
-            </C.RED>
-          </C.ACCENT>
+          <C.RED>
+            {'•-{ '}
+            <C.TERTIARY>
+              ???
+            </C.TERTIARY>
+            {' }-•'}
+          </C.RED>
         </B>
       </T>
     </View>
