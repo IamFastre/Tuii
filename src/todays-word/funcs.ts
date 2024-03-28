@@ -18,8 +18,8 @@ export async function fetchDict(time:ITime, set:State<IWord>) {
     Print("Today's Word refreshed");
 
   } catch (e) {
-    let error = e as AxiosError<{title:string}>;
-    Print((error as any).toString(), 'error');
+    let error = e as AxiosError;
+    Print((e as any).toString(), 'error');
     throw error;
   }
 }

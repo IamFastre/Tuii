@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { IForecast } from "./interfaces"
 import { State } from '../general/types';
 import { Units } from '../general/interfaces';
@@ -31,8 +31,9 @@ export async function fetchWeather(city:string, units:Units, set:State<IForecast
     Print("Weather refreshed");
 
   } catch (e) {
+    let error = e as AxiosError;
     Print((e as any).toString(), 'error');
-    throw e;
+    throw error;
   }
 
   lastUpdated = now;
