@@ -197,7 +197,7 @@ export default function HomePage() : React.JSX.Element {
         {/* ================================================================== */}
   
         <View style={{ flexDirection: consts.height > consts.width ? 'column' : 'row', justifyContent: 'center', width: "100%"}}>
-          <TodaysWord date={time} />
+          <TodaysWord date={time} shortClass={options.short_word_class} />
           <TodaysQuote date={time} />
         </View>
 
