@@ -27,7 +27,7 @@ export interface IMetrics {
 export interface IOptions {
   theme: Themes;
   show_refresh_button: boolean;
-  is_fullscreen: boolean;
+  short_word_class: boolean;
   type: "options";
 }
 

@@ -85,6 +85,11 @@ export default function SettingsPage() {
     updateData();
   };
 
+  const onSubmitWordClass = () => {
+    setStored('options', {...options, short_word_class: !options.short_word_class});
+    updateData();
+  };
+
   const onSubmitRefreshButton = () => {
     setStored('options', {...options, show_refresh_button: !options.show_refresh_button});
     updateData();
@@ -168,11 +173,19 @@ export default function SettingsPage() {
             size='small'
           />
 
+          {/* Refresh button */}
+          <BoolSetting
+            title="Short Word Class"
+            description={"Uses short word class in word of the day.\neg. verb → v."}
+            current={options.short_word_class}
+            onSubmit={onSubmitWordClass}
+            size='small'
+          />
+
           <Sep />
 
           {/* ========= Other settings ========= */}
           <Title title='Others'/>
-
 
           {/* Refresh button */}
           <BoolSetting

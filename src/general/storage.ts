@@ -1,4 +1,3 @@
-import { State } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Print } from "./funcs";
 import { IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
@@ -20,7 +19,7 @@ export const DefaultSettings = {
   options: {
     theme: "system",
     show_refresh_button: false,
-    is_fullscreen: false,
+    short_word_class: true,
     type: "options",
   } as IOptions,
 };
@@ -33,7 +32,7 @@ export async function getStored<T extends StoredValue>(type: StoredKey) {
   try {
     let options = await AsyncStorage.getItem(type);
     if (options !== null)
-      return JSON.parse(options);
+      return { ...DefaultStored[type], ...JSON.parse(options) };
   } catch (e) {
     Print((e as any).toString(), 'error');
   }
@@ -42,7 +41,7 @@ export async function getStored<T extends StoredValue>(type: StoredKey) {
 }
 
 export async function setStored<T>(type:StoredKey, value:T) {
-  await AsyncStorage.setItem(type, JSON.stringify(value));
+  await AsyncStorage.setItem(type, JSON.stringify({ ...DefaultSettings[type], ...value }));
 }
 
 export async function resetStored(type:StoredKey) {
