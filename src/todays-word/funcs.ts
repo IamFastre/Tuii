@@ -9,7 +9,7 @@ import list from  "@/library/list.json";
 
 export async function fetchDict(time:ITime, set:State<IWord>) {
   const i   = hashDateToLength(time, list.length);
-  const url = `https://api.dictionaryapi.dev/api/v2/entries/en/love`;
+  const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${list[i]}`;
 
   try {
     const response = await axios.get(url);
