@@ -35,7 +35,7 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
   useEffect(() => {
     fetchDict(date, setWord as State<IWord>)
       .catch(() => setMsg("Please check your internet connection..."));
-  }, []);
+  }, [date.day, date.month, date.year]);
 
   return (
     <Section
