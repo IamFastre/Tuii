@@ -7,7 +7,7 @@ import { DefaultStored } from '../general/storage';
 
 var lastUpdated:number | undefined = undefined;
 
-export async function fetchWeather(city:string | undefined, units:Units | undefined, set:State<IForecast>) {
+export async function fetchWeather(city:string, units:Units, set:State<IForecast>) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city ?? DefaultStored['metrics'].city}&units=${units ?? DefaultStored['metrics'].units}&appid=e2b654197a0b322446ef267c83c71a2a`;
 
   const now = Date.now();
@@ -17,7 +17,7 @@ export async function fetchWeather(city:string | undefined, units:Units | undefi
   }
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get<IForecast>(url);
 
     set({
       ...response.data,

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { IDefinition, IMeaning, IWord, PartOfSpeech, POS, POSRecord } from "./interfaces"
 import { ITime } from '@/src/general/interfaces';
@@ -12,15 +12,15 @@ export async function fetchDict(time:ITime, set:State<IWord>) {
   const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${list[i]}`;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get<IWord[]>(url);
 
-    set(response.data[response.data > 1 ? hashDateToLength(time, response.data.length) : 0]);
-
+    set(response.data[response.data.length > 1 ? hashDateToLength(time, response.data.length) : 0]);
     Print("Today's Word refreshed");
 
   } catch (e) {
-    Print((e as any).toString(), 'error');
-    throw e;
+    let error = e as AxiosError<{title:string}>;
+    Print((error as any).toString(), 'error');
+    throw error;
   }
 }
 
