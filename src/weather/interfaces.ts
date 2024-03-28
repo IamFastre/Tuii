@@ -1,6 +1,6 @@
 import { Units } from "../general/interfaces";
 
-export interface IWeatherResponse {
+export interface IForecast {
   coord: ICoord;
   weather: IWeather[];
   base: string;

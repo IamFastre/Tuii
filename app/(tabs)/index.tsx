@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View, RefreshControl, Platform } from 'react-na
 import { B, Button, C, Section, T } from '@/components/basics';
 import { getTime, getGreet } from '@/src/general/funcs';
 import { ITime } from "@/src/general/interfaces";
-import { IWeatherResponse, WeatherIconID, fetchWeather } from '@/src/weather';
+import { IForecast, WeatherIconID, fetchWeather } from '@/src/weather';
 import { WeatherIcon } from '@/components/weather/ascii-art';
 import { Sep } from '@/components/settings';
 import { State } from '@/src/general/types';
@@ -27,12 +27,12 @@ export default function HomePage() : React.JSX.Element {
   const updateData = useContext(SettingsContext).updateSettings;
   const { user, metrics, options } = useContext(SettingsContext).settings;
   
-  const [weather, updateWeather] = useState<IWeatherResponse | null>(null);
+  const [weather, updateWeather] = useState<IForecast | null>(null);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     updateData();
-    fetchWeather(metrics.city, metrics.units, updateWeather as State<IWeatherResponse>);
+    fetchWeather(metrics.city, metrics.units, updateWeather as State<IForecast>);
 
     setTimeout(() => {
       setRefreshing(false);

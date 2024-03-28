@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IWeatherResponse as IForecast } from "./interfaces"
+import { IForecast } from "./interfaces"
 import { State } from '../general/types';
 import { Units } from '../general/interfaces';
 import { Print } from '../general/funcs';
