@@ -11,6 +11,7 @@ import { fetchDict, getDefinition, getClass, getPhonetic } from "@/src/todays-wo
 import { IWord } from "@/src/todays-word/interfaces";
 import { State } from "@/src/general/types";
 import { useColors } from "@/constants/colors";
+import { AxiosError } from "axios";
 
 const Copied = ({size}:{size?:number}) => (
   <T style={{ fontSize: size ?? 18 }}>
@@ -32,9 +33,21 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
   const [copied, setCopied] = useState<boolean>(false);
   const [wordWidth, setWordWidth] = useState<number>(10);
 
-  useEffect(() => {
+  const refresh = () => {
+    setMsg("loading...");
     fetchDict(date, setWord as State<IWord>)
-      .catch(() => setMsg("Please check your internet connection..."));
+      .catch((e:AxiosError) =>
+        setTimeout(() =>
+          setMsg(e.response?.status === 404
+                ? "Seems our dictionary doesn't have this word."
+                : "Please check your internet connection..."
+          )
+        , 250)
+      );
+  }
+
+  useEffect(() => {
+    refresh();
   }, [date.day, date.month, date.year]);
 
   return (
