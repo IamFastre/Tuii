@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import{ useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import { C, L, Section, T, Button } from '@/components/basics';

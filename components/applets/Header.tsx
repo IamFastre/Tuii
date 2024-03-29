@@ -1,4 +1,3 @@
-import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { T, Section, C, B } from '@/components/basics';

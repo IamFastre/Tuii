@@ -1,4 +1,3 @@
-import React from 'react';
 import { View } from 'react-native';
 import { Section } from '@/components/basics';
 import { Header } from '@/components/applets/Header';

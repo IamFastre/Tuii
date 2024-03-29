@@ -1,4 +1,3 @@
-import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Section } from '@/components/basics';
 import { Option } from '../../components/applets/Option';

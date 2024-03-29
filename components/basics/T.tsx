@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text, TextProps } from 'react-native';
 import general from '@/constants/general';
 import { useColors } from '@/constants/colors';

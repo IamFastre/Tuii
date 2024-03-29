@@ -1,4 +1,3 @@
-import React from 'react';
 import { TouchableOpacity, View, StyleSheet, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
 import { T } from '@/components/basics';

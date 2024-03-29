@@ -1,5 +1,3 @@
-import React from "react";
-
 export type Themes = "dark" | "light" | "scarlatta";
 
 export interface ITheme {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import{ useEffect, useState } from "react";
 import * as Clipboard from 'expo-clipboard';
 
 import { B, BI, C, L, LI, Section, T } from "@/components/basics";

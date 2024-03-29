@@ -1,4 +1,3 @@
-import React from "react";
 import { ITheme } from "./interfaces";
 import { Ionicons } from '@expo/vector-icons';
 import defaults from "./defaults";
