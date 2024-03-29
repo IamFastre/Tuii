@@ -86,3 +86,77 @@ export type WeatherIconID = "01d"
                           | "11n"
                           | "13n"
                           | "50n";
+
+// interface OneCallResponse {
+//   lat: number;
+//   lon: number;
+//   timezone: string;
+//   timezone_offset: number;
+//   current: CurrentWeather;
+//   hourly: HourlyWeather[];
+//   daily: DailyWeather[];
+// }
+
+// interface CurrentWeather extends Forecast {
+//   sunrise: number;
+//   sunset: number;
+// }
+
+// interface HourlyWeather extends Forecast {
+//   pop: number;
+// }
+
+// interface DailyWeather extends Omit<Forecast, 'temp' | 'feels_like' | 'rain' | 'snow'> {
+//   sunrise: number;
+//   sunset: number;
+//   moonrise: number;
+//   moonset: number;
+//   moon_phase: number;
+//   summary: string;
+//   temp: {
+//     morn: number;
+//     day: number;
+//     eve: number;
+//     night: number;
+//     min: number;
+//     max: number;
+//   };
+//   feels_like: {
+//     morn: number;
+//     day: number;
+//     eve: number;
+//     night: number;
+//   };
+//   pop: number;
+//   rain?: number;
+//   snow?: number;
+// }
+
+// interface WeatherDescription {
+//   id: number;
+//   main: string;
+//   description: string;
+//   icon: string;
+// }
+
+// interface Forecast {
+//   dt: number;
+//   temp: number;
+//   feels_like: number;
+//   pressure: number;
+//   humidity: number;
+//   dew_point: number;
+//   uvi: number;
+//   clouds: number;
+//   visibility: number;
+//   wind_speed: number;
+//   wind_deg: number;
+//   wind_gust?: number;
+//   rain?: {
+//     "1h": number;
+//   };
+//   snow?: {
+//     "1h": number;
+//   };
+//   weather: WeatherDescription[];
+// }
