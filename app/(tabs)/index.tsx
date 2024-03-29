@@ -18,6 +18,7 @@ export default function HomePage() : React.JSX.Element {
   const colors = useColors();
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [colonBlink, setColonBlink] = useState<boolean>(false);
   const [unitWidth, setUnitWidth] = useState<number>(13);
   const [feelsWidth, setFeelsWidth] = useState<number>(13);
 
@@ -46,6 +47,7 @@ export default function HomePage() : React.JSX.Element {
 
   useEffect(() => {
     updateData();
+    setColonBlink(!colonBlink);
   }, [time.second])
 
   useEffect(() => {
@@ -120,6 +122,30 @@ export default function HomePage() : React.JSX.Element {
                 ({weather?.weather[0].description ?? "..."})
               </T>
             </View>
+
+            {/* High & low */}
+            {/* <View style={styles.weatherMaxMinContainer}>
+                <View style={styles.weatherMaxMin}>
+                  <T style={styles.weatherOthersIcon}>
+                    <C.HOT><B>H</B></C.HOT>:
+                  </T>
+                  <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
+                    {Math.ceil(weather?.main.temp_max ?? 0)}°{weather?.units === "imperial" ? "F" : "C"}
+                  </T>
+                </View>
+
+                <View style={{ height: "80%", width: 1, backgroundColor: colors.tertiary }} />
+
+                <View style={styles.weatherMaxMin}>
+                  <T style={styles.weatherOthersIcon}>
+                    <C.COLD><B>L</B></C.COLD>:
+                  </T>
+                  <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
+                    {Math.floor(weather?.main.temp_min ?? 0)}°{weather?.units === "imperial" ? "F" : "C"}
+                  </T>
+                </View>
+            </View> */}
+
             {/* Others */}
             <View style={styles.weatherOthers}>
               {/* Wind */}
@@ -174,7 +200,7 @@ export default function HomePage() : React.JSX.Element {
           <T style={{ fontFamily: colors.others.fonts.clock, fontSize: 45 }}>
             {'{ '}
             <C.HIGHLIGHT>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.HIGHLIGHT>
-            :
+            <T style={{ opacity: colonBlink ? 1 : 0.25 }} plain>:</T>
             <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
             {' }'}
           </T>
@@ -273,12 +299,27 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
+  // weatherMaxMinContainer: {
+  //   flexDirection: "row",
+  //   alignSelf: "center",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginTop: 5,
+  // },
+
+  // weatherMaxMin: {
+  //   flexDirection: "row",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginHorizontal: 5,
+  // },
+
   weatherOthers: {
     flexDirection: "row",
     width: "60%",
     flexWrap: 'wrap',
     paddingLeft: "10%",
-    marginTop: 10,
+    marginTop: 15,
   },
 
   weatherOthersCard: {
@@ -289,8 +330,7 @@ const styles = StyleSheet.create({
   },
 
   weatherOthersIcon: {
-    marginRight: 5,
-    width: 12,
+    width: 20,
     textAlign: 'center'
   },
 
