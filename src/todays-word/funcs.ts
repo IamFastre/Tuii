@@ -8,8 +8,7 @@ import { hashDateToLength, Print } from '@/src/general/funcs';
 import list from  "@/library/list.json";
 
 export async function fetchDict(time:ITime, set:State<IWord>) {
-  const i   = hashDateToLength(time, list.length);
-  const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${list[i]}`;
+  const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${getWord(time)}`;
 
   try {
     const response = await axios.get<IWord[]>(url);
@@ -22,6 +21,10 @@ export async function fetchDict(time:ITime, set:State<IWord>) {
     Print((e as any).toString(), 'error');
     throw error;
   }
+}
+
+export function getWord(time:ITime) : string {
+  return list[hashDateToLength(time, list.length)];
 }
 
 export function getMeaning(word:IWord, time:ITime) : IMeaning {
