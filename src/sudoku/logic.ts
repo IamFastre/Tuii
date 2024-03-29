@@ -1,58 +1,6 @@
-import { SlotType, SudokuGrid } from "./types";
+import { DigitType, SlotType, SudokuGrid } from "./types";
 
 export const EmptyBoard:SudokuGrid = Array(9).fill(Array(9).fill(null));
-
-export function generateSolvedSudoku() : SudokuGrid {
-  const gridSize:number = 9;
-  const grid:SudokuGrid = Array.from({ length:gridSize }, () => Array.from({ length:gridSize }, () => null));
-
-
-  function isValid(row:number, col:number, value:number) : boolean {
-    for (let i = 0; i < gridSize; i++) {
-      if (grid[row][i] === value || grid[i][col] === value) return false;
-    }
-
-    const subgridRowStart:number = Math.floor(row / 3) * 3;
-    const subgridColStart:number = Math.floor(col / 3) * 3;
-    for (let i = subgridRowStart; i < subgridRowStart + 3; i++) {
-      for (let j = subgridColStart; j < subgridColStart + 3; j++) {
-        if (grid[i][j] === value) return false;
-      }
-    }
-    return true;
-  }
-
-  function solve(row:number, col:number) : boolean {
-    if (col === gridSize) {
-      col = 0;
-      row++;
-    }
-
-    if (row === gridSize) {
-      return true;
-    }
-
-    if (grid[row][col] !== null) {
-      return solve(row, col + 1);
-    }
-
-    for (let value = 1; value <= gridSize; value++) {
-      if (isValid(row, col, value)) {
-        grid[row][col] = value as SlotType;
-        if (solve(row, col + 1)) {
-          return true;
-        }
-        grid[row][col] = null;
-      }
-    }
-
-    return false;
-  }
-
-  solve(0, 0);
-  return grid;
-}
-
 
 export class Sudoku {
   board:SudokuGrid;
@@ -88,12 +36,39 @@ export class Sudoku {
     return subs;
   }
 
-
   #makeBoard() : SudokuGrid {
-    const board = [...EmptyBoard];
+    function pattern(r:number, c:number) {
+      return (3 * (r % 3) + Math.floor(r / 3) + c) % 9;
+    }
 
-    // Logic
+    function shuffle(list:DigitType[]) {
+      return [...list].sort(() => 0.5 - Math.random());
+    }
 
-    return board;
+    const rBase = [...Array(3).keys()] as DigitType[];
+
+    const rows:DigitType[] = [];
+    const cols:DigitType[] = [];
+
+    shuffle(rBase).forEach(r => {
+      shuffle(rBase).forEach(g => {
+        rows.push(g*3 + r as DigitType);
+      });
+    });
+
+    shuffle(rBase).forEach(r => {
+      shuffle(rBase).forEach(g => {
+        cols.push(g*3 + r as DigitType);
+      });
+    });
+
+    const nums = shuffle([1,2,3,4,5,6,7,8,9]);
+    const table:SudokuGrid = [];
+
+    rows.forEach((r) => {
+      table.push(cols.map(c => nums[pattern(r, c)]))
+    });
+
+    return table;
   }
 }
