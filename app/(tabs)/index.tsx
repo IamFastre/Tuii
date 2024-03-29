@@ -13,6 +13,7 @@ import { TodaysQuote, TodaysWord } from '@/components/home';
 import { useColors } from '@/constants/colors';
 import consts from '@/constants/consts';
 import { SettingsContext } from '@/components/Contexts';
+import { AxiosError } from 'axios';
  
 export default function HomePage() : React.JSX.Element {
   const colors = useColors();
@@ -21,6 +22,7 @@ export default function HomePage() : React.JSX.Element {
   const [colonBlink, setColonBlink] = useState<boolean>(false);
   const [unitWidth, setUnitWidth] = useState<number>(13);
   const [feelsWidth, setFeelsWidth] = useState<number>(13);
+  const [msg, setMsg] = useState<string>("loading...");
 
   const [greet, setGreet] = useState<string>(getGreet());
   const [time, setTime] = useState<ITime>(getTime());
@@ -31,9 +33,19 @@ export default function HomePage() : React.JSX.Element {
   const [weather, updateWeather] = useState<IForecast | null>(null);
 
   const onRefresh = useCallback(() => {
+    setMsg("Loading...")
     setRefreshing(true);
     updateData();
-    fetchWeather(metrics.city, metrics.units, updateWeather as State<IForecast>);
+    fetchWeather(metrics.city, metrics.units, updateWeather as State<IForecast>)
+      .catch((e:AxiosError) => {
+        updateWeather(null);
+        setTimeout(() =>
+        setMsg(e.response?.status === 404
+          ? "Wrong input"
+          : "No connection..."
+          )
+          , 250)
+      });
 
     setTimeout(() => {
       setRefreshing(false);
@@ -83,8 +95,8 @@ export default function HomePage() : React.JSX.Element {
         <View style={styles.weather}>
           <View style={styles.weatherCard}>
             {/* City, country */}
-            <T style={styles.weatherCity}>{weather?.name}</T>
-            <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>{weather?.sys.country}</T>
+            <T style={styles.weatherCity}>{weather?.name ?? `${metrics.city}?`}</T>
+            <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>{weather?.sys.country ?? "??"}</T>
 
             {/* Weather icon */}
             <WeatherIcon id={weather?.weather[0].icon as WeatherIconID} size={12}/>
@@ -114,7 +126,7 @@ export default function HomePage() : React.JSX.Element {
               <T style={styles.weatherMainT}>
                 <C.ACCENT>•</C.ACCENT>
                 <C.SECONDARY>{'-{ '}</C.SECONDARY>
-                {weather?.weather[0].main ?? "Loading..."}
+                {weather?.weather[0].main ?? msg}
                 <C.SECONDARY>{' }-'}</C.SECONDARY>
                 <C.ACCENT>•</C.ACCENT>
               </T>
