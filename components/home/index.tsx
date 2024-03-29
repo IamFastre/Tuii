@@ -7,7 +7,7 @@ import { ITime } from "@/src/general/interfaces";
 import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import quotes from "@/library/quotes.json";
 import { hashDateToLength } from "@/src/general/funcs";
-import { fetchDict, getDefinition, getClass, getPhonetic } from "@/src/todays-word/funcs";
+import { fetchDict, getDefinition, getClass, getPhonetic, getWord } from "@/src/todays-word/funcs";
 import { IWord } from "@/src/todays-word/interfaces";
 import { State } from "@/src/general/types";
 import { useColors } from "@/constants/colors";
@@ -39,7 +39,7 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
       .catch((e:AxiosError) =>
         setTimeout(() =>
           setMsg(e.response?.status === 404
-                ? "Seems our dictionary doesn't have this word."
+                ? `Seems our dictionary doesn't have this word.\n(${getWord(date)})`
                 : "Please check your internet connection..."
           )
         , 250)
@@ -106,7 +106,7 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
       :
       <>
         {/* Word definition */}
-        <T style={{ fontSize: 12 }} selectable>
+        <T style={{ fontSize: 12, textAlign: 'center' }} selectable>
           <L>
             {word ? getDefinition(word, date).definition : <LI style={{ opacity: 0.5 }}>{msg}</LI>}
           </L>
