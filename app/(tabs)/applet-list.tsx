@@ -26,7 +26,7 @@ export default function AppletsPage() : React.JSX.Element {
         <ScrollView style={{flex: 1}}>
           <Option
             title='Sudoku'
-            description={'Fill a 9×9 grid with 1-9 with no copies in each row, column, and subgrid.\nLogic, not guesswork, is key!'}
+            description={'Fill a 9×9 grid with 1-9 with no copies in each row, column, and subgrid. Logic, not guesswork, is key!'}
             path="applets/sudoku"
             icon={icons[colors.theme].sudoku}
             style={styles.topOption}

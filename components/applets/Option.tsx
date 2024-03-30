@@ -1,10 +1,10 @@
-import { TouchableOpacity, View, StyleSheet, ViewStyle } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, ViewStyle, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import { T } from '@/components/basics';
 import { router } from 'expo-router';
 import { Href } from 'expo-router/build/link/href';
 import { useColors } from '@/constants/colors';
-
+import { Ionicons } from '@expo/vector-icons';
 
 export interface OptionProps {
   title: string;
@@ -33,6 +33,9 @@ export const Option = ({ title, description, path, icon, style }:OptionProps) =>
             {description}
           </T>
         </View>
+        <TouchableOpacity onPress={() => router.push(path + '/settings' as any)}>
+          <Ionicons name='options-sharp' color={colors.secondary} size={28} style={styles.optionSettings}/>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -73,5 +76,9 @@ const styles = StyleSheet.create({
   optionDesc: {
     fontSize: 8,
     lineHeight: 12,
+  },
+
+  optionSettings: {
+    padding: 10,
   }
 });
