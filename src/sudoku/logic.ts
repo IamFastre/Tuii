@@ -1,74 +1,145 @@
-import { DigitType, SlotType, SudokuGrid } from "./types";
+import { getRandomInt } from "../general/funcs";
+import { DigitType, Position, SlotType, SudokuGrid } from "./types";
 
 export const EmptyBoard:SudokuGrid = Array(9).fill(Array(9).fill(null));
 
-export class Sudoku {
-  board:SudokuGrid;
-  poked:number;
-
-  constructor(poked:number) {
-    this.poked = poked;
-    this.board = this.#makeBoard()
+export function MakeBoard(pokes:number = 0) : SudokuGrid {
+  function pattern(r:number, c:number) {
+    return (3 * (r % 3) + Math.floor(r / 3) + c) % 9;
   }
 
-  get rows() : SlotType[][] {
-    return this.board;
+  function shuffle(list:DigitType[]) {
+    return [...list].sort(() => 0.5 - Math.random());
   }
 
-  get cols() : SlotType[][] {
-    return this.board[0].map((_, colIndex) => this.board.map(row => row[colIndex]));
+  const rBase = [...Array(3).keys()] as DigitType[];
+
+  const rows:DigitType[] = [];
+  const cols:DigitType[] = [];
+
+  shuffle(rBase).forEach(r => {
+    shuffle(rBase).forEach(g => {
+      rows.push(g*3 + r as DigitType);
+    });
+  });
+
+  shuffle(rBase).forEach(r => {
+    shuffle(rBase).forEach(g => {
+      cols.push(g*3 + r as DigitType);
+    });
+  });
+
+  const nums = shuffle([1,2,3,4,5,6,7,8,9]);
+  const table:SudokuGrid = [];
+
+  rows.forEach((r) => {
+    table.push(cols.map(c => nums[pattern(r, c)]))
+  });
+
+  return pokes ? Poke(table, pokes) : table;
+}
+
+export function Poke(board:SudokuGrid, pokes: number) : SudokuGrid {
+  board = [...board];
+
+  while (pokes) {
+    let r = getRandomInt(0, board.length - 1), c = getRandomInt(0, board[r].length - 1);
+    let before = board[r][c];
+    board[r][c] = null;
+
+    if (before)
+      pokes--;
   }
 
-  get subs() : SlotType[][] {
-    const size:number = Math.sqrt(this.board.length);
-    const subs:SlotType[][] = [];
-  
-    for (let rowStart = 0; rowStart < this.board.length; rowStart += size) {
-      for (let colStart = 0; colStart < this.board[0].length; colStart += size) {
-        const subgrid: SlotType[] = [];
-        for (let row = rowStart; row < rowStart + size; row++) {
-          subgrid.push(...this.board[row].slice(colStart, colStart + size));
-        }
-        subs.push(subgrid as SlotType[]);
+  return board;
+}
+
+/* ========================================================================== */
+
+export function GetRows(board:SudokuGrid) : SlotType[][] {
+  return board;
+}
+
+export function GetCols(board:SudokuGrid) : SlotType[][] {
+  return board[0].map((_, colIndex) => board.map(row => row[colIndex]));
+}
+
+export function GetSubs(board:SudokuGrid) : SlotType[][] {
+  const size:number = Math.sqrt(board.length);
+  const subs:SlotType[][] = [];
+
+  for (let rowStart = 0; rowStart < board.length; rowStart += size) {
+    for (let colStart = 0; colStart < board[0].length; colStart += size) {
+      const subgrid: SlotType[] = [];
+      for (let row = rowStart; row < rowStart + size; row++) {
+        subgrid.push(...board[row].slice(colStart, colStart + size));
       }
+      subs.push(subgrid as SlotType[]);
     }
+  }
+
+  return subs;
+}
+
+/* ========================================================================== */
+
+export function CountEmpty(board:SudokuGrid) : number {
+  var i = 0;
+  board.forEach(row => row.forEach(v => v === null ? i++ : i))
+  return i;
+}
+
+export function GetEmpty(board:SudokuGrid) : Position[] {
+  var list:Position[] = [];
+  board.forEach((row, r) => row.forEach((slot, c) => slot === null ? list.push([r, c]) : null))
+  return list;
+}
+
+export function GetDuplicates(board:SudokuGrid) : Position[] {
+  var list:Position[] = [];
+
+  // Checking rows
+  for (let r = 0; r < GetRows(board).length; r++) {
+    const row = GetRows(board)[r];
+    row.forEach((s, c) => {
+      if (s !== null && row.indexOf(s) !== row.lastIndexOf(s))
+        list.push([r, c]);
+    });
+  }
+
+  // Checking cols
+  for (let c = 0; c < GetCols(board).length; c++) {
+    const col = GetCols(board)[c];
+    col.forEach((s, r) => {
+      if (s !== null && col.indexOf(s) !== col.lastIndexOf(s))
+        list.push([r, c]);
+    });
+  }
+
+  // Checking subs
+  for (let b = 0; b < GetSubs(board).length; b++) {
+    const sub = GetSubs(board)[b];
+    sub.forEach((s, i) => {
+      let r = Math.floor(i / 3) + Math.floor(b / 3) * 3, c = i % 3 + b % 3 * 3;
+      if (s !== null && sub.indexOf(s) !== sub.lastIndexOf(s))
+        list.push([r, c]);
+    });
+  }
   
-    return subs;
-  }
+  list.map(e => JSON.stringify(e)).map((item, index, arr) => {
+    if (arr.indexOf(item) !== index)
+      delete list[index]
+  });
 
-  #makeBoard() : SudokuGrid {
-    function pattern(r:number, c:number) {
-      return (3 * (r % 3) + Math.floor(r / 3) + c) % 9;
-    }
+  return list.sort().filter(e => e);
+}
 
-    function shuffle(list:DigitType[]) {
-      return [...list].sort(() => 0.5 - Math.random());
-    }
+/* ========================================================================== */
 
-    const rBase = [...Array(3).keys()] as DigitType[];
+export function GetPosition(num:number) : Position {
+  return [Math.floor(num / 9), Math.floor(num % 9)]
+}
 
-    const rows:DigitType[] = [];
-    const cols:DigitType[] = [];
-
-    shuffle(rBase).forEach(r => {
-      shuffle(rBase).forEach(g => {
-        rows.push(g*3 + r as DigitType);
-      });
-    });
-
-    shuffle(rBase).forEach(r => {
-      shuffle(rBase).forEach(g => {
-        cols.push(g*3 + r as DigitType);
-      });
-    });
-
-    const nums = shuffle([1,2,3,4,5,6,7,8,9]);
-    const table:SudokuGrid = [];
-
-    rows.forEach((r) => {
-      table.push(cols.map(c => nums[pattern(r, c)]))
-    });
-
-    return table;
-  }
+export function GetIndex([r, c]:Position) : number {
+  return r * 9 + c;
 }
