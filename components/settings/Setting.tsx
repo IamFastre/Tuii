@@ -8,7 +8,7 @@ interface SettingProp {
   description?: string;
   experimental?:boolean;
   onSubmit: Function;
-  size?: "small" | "large";
+  size?: "small" | "medium" | "large";
 }
 
 interface TextInputSettingProps extends SettingProp {
@@ -18,7 +18,7 @@ interface TextInputSettingProps extends SettingProp {
   keyboardType?: KeyboardTypeOptions;
 }
 
-interface ToggleSettingProps extends SettingProp {
+interface OptionsSettingProps extends SettingProp {
   icon?: string;
   index: number;
   options: string[];
@@ -56,7 +56,7 @@ export const TextInputSetting = (props:TextInputSettingProps) => {
       <Title title={props.title} description={props.description} experimental={props.experimental} />
       <TI
         value={props.state.toString()}
-        style={props.size === "small" ? styles.smallInput : props.size === "large" ? styles.largeInput : styles.input}
+        style={props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input}
         onChangeText={props.setState}
         placeholder={props.placeholder}
         onSubmitEditing={() => {
@@ -69,13 +69,13 @@ export const TextInputSetting = (props:TextInputSettingProps) => {
   );
 };
 
-export const ToggleSetting = (props:ToggleSettingProps) => {
+export const OptionsSetting = (props:OptionsSettingProps) => {
   return (
     <View style={styles.setting}>
       <Title title={props.title} description={props.description} experimental={props.experimental} />
       <Button
         title={props.options[props.index]}
-        style={props.size === "small" ? styles.smallInput : props.size === "large" ? styles.largeInput : styles.input}
+        style={props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input}
         onPress={() => props.onSubmit()}
         onLongPress={() => props.onSubmit(false)}
         delayLongPress={350}
@@ -93,7 +93,7 @@ export const BoolSetting = (props:BoolSettingProps) => {
       <Title title={props.title} description={props.description} experimental={props.experimental} />
       <Button
         title={props.current ? "true" : "false"}
-        style={{...(props.size === "small" ? styles.smallInput : props.size === "large" ? styles.largeInput : styles.input), borderColor: props.current ? colors.accent : colors.hot}}
+        style={{...(props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input), borderColor: props.current ? colors.accent : colors.hot}}
         onPress={() => props.onSubmit()}
         icon={{ name: props.current ? "checkmark-circle-outline" : "close-circle-outline", size: 12 }}
       />
@@ -143,6 +143,12 @@ const styles = StyleSheet.create({
 
   input: {
     flex: 2,
+    height: "100%",
+    // backgroundColor: "purple"
+  },
+
+  mediumInput: {
+    flex: 1,
     height: "100%",
     // backgroundColor: "purple"
   },

@@ -3,17 +3,13 @@ import { ScrollView, StyleSheet } from 'react-native';
 
 import { C, L, Section, T, Button } from '@/components/basics';
 import { ThemeOptions, UnitsOptions, UserGenderOptions } from '@/src/general/interfaces';
-import { ToggleSetting, TextInputSetting, Title, Sep, BoolSetting } from '@/components/settings';
+import { OptionsSetting, TextInputSetting, Title, Sep, BoolSetting } from '@/components/settings';
 import { resetSettings, setStored } from '@/src/general/storage';
 import consts from '@/constants/consts';
 import { useColors } from '@/constants/colors';
-import { updateFullscreen } from '@/src/general/funcs';
+import { updateFullscreen, move } from '@/src/general/funcs';
 import { SettingsContext } from '@/components/Contexts';
 import themes from '@/constants/themes';
-
-const move = (toNext:boolean) => toNext ? next : prev;
-const next = <T,>(list:T[], current:T) => list[((list.indexOf(current)+1) % list.length)];
-const prev = <T,>(list:T[], current:T) => list[((list.length + list.indexOf(current) - 1) % list.length)];
 
 export default function SettingsPage() {
   const colors = useColors();
@@ -127,7 +123,7 @@ export default function SettingsPage() {
             keyboardType='numeric'
           />
           {/* Gender */}
-          <ToggleSetting
+          <OptionsSetting
             title="Gender"
             index={UserGenderOptions.indexOf(user.gender)}
             options={UserGenderOptions}
@@ -149,7 +145,7 @@ export default function SettingsPage() {
             onSubmit={onSubmitCity}
           />
           {/* Units */}
-          <ToggleSetting
+          <OptionsSetting
             title="Units"
             index={UnitsOptions.indexOf(metrics.units)}
             options={UnitsOptions}
@@ -163,7 +159,7 @@ export default function SettingsPage() {
           <Title title='Appearance'/>
 
           {/* Theme */}
-          <ToggleSetting
+          <OptionsSetting
             title="Color Theme"
             description={`The color palette used throughout the app.\nAvailable: ${Object.keys(themes).join(", ")}`}
             index={ThemeOptions.indexOf(options.theme)}
@@ -220,6 +216,10 @@ export default function SettingsPage() {
             icon={{ name: "reload-circle-outline", size: 12 }}
           />
 
+          <T style={styles.resetDisclaimer}>
+            <C.SECONDARY>This resets everything, including applets' settings and these settings.</C.SECONDARY>
+          </T>
+
           <T style={styles.footer}>
             <C.ACCENT>{'•-{ '}</C.ACCENT>
               Tuii
@@ -253,6 +253,15 @@ const styles = StyleSheet.create({
     marginTop: 60,
     alignSelf: "center",
     width: "50%",
+  },
+
+  resetDisclaimer: {
+    alignSelf: "center",
+    marginHorizontal: "20%",
+    marginTop: 10,
+    fontSize: 10,
+    textAlign: "center",
+    textAlignVertical: "center",
   },
 
   footer: {
