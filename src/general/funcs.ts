@@ -66,7 +66,7 @@ export function capitalize(str:string) : string {
 
 export function updateFullscreen(fullscreen: boolean) {
   setStatusBarHidden(fullscreen);
-  if (Platform.OS == 'android') {
+  if (Platform.OS === 'android') {
     NavigationBar.setVisibilityAsync(fullscreen ? "hidden" : "visible");
     NavigationBar.setBehaviorAsync("overlay-swipe");
   }
@@ -103,4 +103,14 @@ export function cyrb53(str:string, seed:number = 0) : number {
   h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
 
   return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+}
+
+export function getRandomNumber(min:number, max:number) {
+  return Math.random() * (max - min) + min;
+}
+
+export function getRandomInt(min:number, max:number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
 }
