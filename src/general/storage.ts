@@ -1,18 +1,20 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Print } from "./funcs";
-import { IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
+import { IApplets, IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
 
 export const DefaultSettings = {
   user: {
     name: "Stranger",
     age: 0,
     gender: "other",
+
     type: "user",
   } as IUser,
 
   metrics: {
     city: "Cairo",
     units: "metric",
+
     type: "metrics",
   } as IMetrics,
 
@@ -20,8 +22,20 @@ export const DefaultSettings = {
     theme: "system",
     show_refresh_button: false,
     short_word_class: true,
+
     type: "options",
   } as IOptions,
+
+  applets: {
+    sudoku: {
+      level: "easy",
+      show_conflicts: true,
+      show_remaining: true,
+      show_num_count: true,
+    },
+
+    type: "applets",
+  } as IApplets,
 };
 
 export const DefaultStored = {

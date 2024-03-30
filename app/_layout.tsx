@@ -42,7 +42,8 @@ export default () => {
     setSettings({
       user: await getStored('user'),
       metrics: await getStored('metrics'),
-      options: await getStored('options')
+      options: await getStored('options'),
+      applets: await getStored('applets'),
     })
   };
 
