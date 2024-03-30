@@ -16,7 +16,7 @@ export function Print(message:string, level:PrintLevel = 'log') {
 }
 
 export function Exit() {
-  if (Platform.OS == "ios")
+  if (Platform.OS === "ios")
     Alert.alert("No.", "Sadly you can't do that in iOS, just swipe out of the app.");
   else
     BackHandler.exitApp();

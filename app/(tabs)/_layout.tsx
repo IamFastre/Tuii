@@ -44,9 +44,9 @@ export default function HomeLayout() {
         
         return (
           <Section title="Tabs" style={styles.tabs} containerStyle={styles.tabsContainer}>
-            <TabIcon icon="home"     selected={props.state.index == 0} path="/(tabs)/" />
-            <TabIcon icon="apps"     selected={props.state.index == 1} path="/(tabs)/applet-list" />
-            <TabIcon icon="settings" selected={props.state.index == 2} path="/(tabs)/settings" />
+            <TabIcon icon="home"     selected={props.state.index === 0} path="/(tabs)/" />
+            <TabIcon icon="apps"     selected={props.state.index === 1} path="/(tabs)/applet-list" />
+            <TabIcon icon="settings" selected={props.state.index === 2} path="/(tabs)/settings" />
 
             <TouchableOpacity style={styles.tab} onPress={() => Exit()}>
               <Ionicons name='exit-outline' size={30} color={colors.hot} />
