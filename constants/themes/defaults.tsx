@@ -18,6 +18,12 @@ export default {
   cyan: "#27d4ff",
   yellow: "#ffea29",
   magenta: "#eb16c7",
+  
+  opacity: {
+    faint: "45",
+    mid: "65",
+    most: "98",
+  },
 
   icon: "moon",
   statusbar: "light",

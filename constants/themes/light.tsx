@@ -10,6 +10,12 @@ export default {
   accent: "#00c90f",
   highlight: "#4a00ff",
 
+  opacity: {
+    faint: "20",
+    mid: "45",
+    most: "88",
+  },
+
   icon: "sunny",
   statusbar: "dark",
   theme: "light",

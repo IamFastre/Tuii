@@ -19,6 +19,12 @@ export interface ITheme {
   yellow: `#${string}`;
   magenta: `#${string}`;
 
+  opacity: {
+    faint: string;
+    mid: string;
+    most: string;
+  },
+
   icon: string;
   statusbar: "light" | "dark";
   theme: Themes,
