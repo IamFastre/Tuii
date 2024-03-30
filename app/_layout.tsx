@@ -84,7 +84,7 @@ export default () => {
             }}
             >
             <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="applets/sudoku" options={screenOptions.applets}/>
+            <Stack.Screen name="applets/sudoku" options={screenOptions.applets} />
           </Stack>
           <StatusBar style={colors.statusbar}/>
         </Container>
