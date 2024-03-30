@@ -76,32 +76,6 @@ export default function Applets() : React.JSX.Element | null {
             />
             <View style={{ flex: 1 }} />
         </Pressable>
-        {/* <View
-          style={[StyleSheet.absoluteFill, {
-            zIndex: 2,
-            backgroundColor: colors.primary + colors.opacity.most,
-          }]}
-        >
-          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: "center" }} centerContent>
-            <Section containerStyle={{ padding: 10 }}>
-              <T style={{ fontSize: 18, marginBottom: 10 }}>
-                <C.ACCENT>
-                  [
-                  <C.TERTIARY>i</C.TERTIARY>
-                  ]
-                </C.ACCENT>
-                {' '}
-                Title
-              </T>
-
-              <T>
-                <C.SECONDARY>
-                  This is the message's body message!
-                </C.SECONDARY>
-              </T>
-            </Section>
-          </ScrollView>
-        </View> */}
       </Section>
     </View>
   );
