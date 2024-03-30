@@ -13,7 +13,7 @@ export default {
   opacity: {
     faint: "20",
     mid: "45",
-    most: "88",
+    most: "d0",
   },
 
   icon: "sunny",

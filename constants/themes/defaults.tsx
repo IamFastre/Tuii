@@ -22,7 +22,7 @@ export default {
   opacity: {
     faint: "45",
     mid: "65",
-    most: "98",
+    most: "d0",
   },
 
   icon: "moon",
