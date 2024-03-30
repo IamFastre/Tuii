@@ -1,8 +1,8 @@
-import { B, Button, C, L, T } from "@/components/basics";
+import { B, Button, C, L, Section, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 import { State } from "@/src/general/types";
 import{ useEffect, useState } from "react";
-import { DimensionValue, Pressable, StyleSheet, View, ViewProps } from "react-native";
+import { DimensionValue, Pressable, ScrollView, StyleSheet, View, ViewProps } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { CountEmpty, GetDuplicates, EmptyBoard, MakeBoard, SlotType, SudokuGrid, GetEmpty, Position } from "@/src/sudoku";
 
@@ -181,6 +181,7 @@ const Controls = ({selected, board, setBoard}:{selected:number | undefined, boar
 
 const pokes = 35;
 export function Board(props:ViewProps) {
+  const colors = useColors();
   const [selected, setSelected] = useState<number | undefined>(undefined);
 
   const [ready, setReady] = useState<boolean>(false);
@@ -205,51 +206,74 @@ export function Board(props:ViewProps) {
     return null;
 
   return (
-    <Pressable style={styles.container} onPress={() => setSelected(undefined)} android_disableSound>
-        <View {...props} style={styles.board}>
-          <Grid values={board} selected={selected} setSelected={setSelected} duplicates={GetDuplicates(board)} poked={poked} />
-          <T style={{ textAlign: 'center', marginTop: 15 }}>
-            <L>
+    <>
+      <Pressable style={styles.container} onPress={() => setSelected(undefined)} android_disableSound>
+          <View {...props} style={styles.board}>
+            <Grid values={board} selected={selected} setSelected={setSelected} duplicates={GetDuplicates(board)} poked={poked} />
+            <T style={{ textAlign: 'center', marginTop: 15 }}>
+              <L>
+                <C.SECONDARY>
+                  Remaining: <C.HIGHLIGHT>{CountEmpty(board)}</C.HIGHLIGHT>
+                </C.SECONDARY>
+              </L>
+            </T>
+          </View>
+          <View style={styles.actions}>
+            <Button
+              title="Check"
+              style={styles.action}
+              textStyle={styles.actionText}
+              icon={{name:'checkmark-circle-outline'}}
+              onPress={() => {
+                console.log("checking...")
+                console.log(GetDuplicates(board))
+              }}
+            />
+            <Button
+              title="New"
+              style={styles.action}
+              textStyle={styles.actionText}
+              icon={{name:'reload-circle-outline'}}
+              onPress={() => {
+                generate()
+              }}
+            />
+          </View>
+          <View style={{ flex: 2 }} />
+          <Controls
+            selected={selected}
+            board={board}
+            setBoard={setBoard}
+          />
+          <View style={{ flex: 1 }} />
+      </Pressable>
+      {/* <View
+        style={[StyleSheet.absoluteFill, {
+          zIndex: 2,
+          backgroundColor: colors.primary + colors.opacity.most,
+        }]}
+      >
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: "center" }} centerContent>
+          <Section containerStyle={{ padding: 10 }}>
+            <T style={{ fontSize: 18, marginBottom: 10 }}>
+              <C.ACCENT>
+                [
+                <C.TERTIARY>i</C.TERTIARY>
+                ]
+              </C.ACCENT>
+              {' '}
+              Title
+            </T>
+
+            <T>
               <C.SECONDARY>
-                Remaining: <C.HIGHLIGHT>{CountEmpty(board)}</C.HIGHLIGHT>
+                This is the message's body message!
               </C.SECONDARY>
-            </L>
-          </T>
-        </View>
-
-        <View style={styles.actions}>
-          <Button
-            title="Check"
-            style={styles.action}
-            textStyle={styles.actionText}
-            icon={{name:'checkmark-circle-outline'}}
-            onPress={() => {
-              console.log("checking...")
-              console.log(GetDuplicates(board))
-            }}
-          />
-
-          <Button
-            title="New"
-            style={styles.action}
-            textStyle={styles.actionText}
-            icon={{name:'reload-circle-outline'}}
-            onPress={() => {
-              generate()
-            }}
-          />
-        </View>
-
-        <View style={{ flex: 2 }} />
-
-        <Controls
-          selected={selected}
-          board={board}
-          setBoard={setBoard}
-        />
-
-        <View style={{ flex: 1 }} />
-    </Pressable>
+            </T>
+          </Section>
+        </ScrollView>
+      </View> */}
+    </>
   );
 }
 
