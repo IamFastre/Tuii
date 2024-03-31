@@ -1,7 +1,14 @@
 import { getRandomInt } from "../general/funcs";
+import { SudokuLevel } from "../general/interfaces";
 import { DigitType, Position, SlotType, SudokuGrid } from "./types";
 
 export const EmptyBoard:SudokuGrid = Array(9).fill(Array(9).fill(null));
+
+export function LevelToNumber(lvl:SudokuLevel) : number {
+  return lvl === "easy" ? 36 : lvl === "medium" ? 48 : lvl === "hard" ? 57 : 64;
+}
+
+/* ========================================================================== */
 
 export function MakeBoard(pokes:number = 0) : SudokuGrid {
   function pattern(r:number, c:number) {
@@ -43,7 +50,7 @@ export function Poke(board:SudokuGrid, pokes: number) : SudokuGrid {
   board = [...board];
 
   while (pokes) {
-    let r = getRandomInt(0, board.length - 1), c = getRandomInt(0, board[r].length - 1);
+    let r = getRandomInt(0, board.length), c = getRandomInt(0, board[r].length);
     let before = board[r][c];
     board[r][c] = null;
 
