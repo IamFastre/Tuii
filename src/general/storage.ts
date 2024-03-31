@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Print } from "./funcs";
-import { IApplets, IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
+import { ISudoku, IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
 
 export const DefaultSettings = {
   user: {
@@ -26,16 +26,13 @@ export const DefaultSettings = {
     type: "options",
   } as IOptions,
 
-  applets: {
-    sudoku: {
-      level: "easy",
-      show_conflicts: true,
-      show_remaining: true,
-      show_num_count: true,
-    },
-
-    type: "applets",
-  } as IApplets,
+  sudoku: {
+    level: "easy",
+    show_conflicts: true,
+    show_empty_count: true,
+    show_num_remaining: true,
+    type: "sudoku",
+  } as ISudoku,
 };
 
 export const DefaultStored = {

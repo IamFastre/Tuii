@@ -114,3 +114,15 @@ export function getRandomInt(min:number, max:number) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+
+export function move(toNext: boolean) {
+  return toNext ? next : prev;
+}
+
+export function next<T>(list: T[], current: T) {
+  return list[((list.indexOf(current) + 1) % list.length)];
+}
+
+export function prev<T>(list: T[], current: T) {
+  return list[((list.length + list.indexOf(current) - 1) % list.length)];
+}

@@ -43,7 +43,7 @@ export default () => {
       user: await getStored('user'),
       metrics: await getStored('metrics'),
       options: await getStored('options'),
-      applets: await getStored('applets'),
+      sudoku: await getStored('sudoku'),
     })
   };
 
@@ -85,7 +85,7 @@ export default () => {
             }}
             >
             <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="applets/sudoku/index" options={screenOptions.applets} />
+            <Stack.Screen name="applets/sudoku" options={screenOptions.applets} />
           </Stack>
           <StatusBar style={colors.statusbar}/>
         </Container>

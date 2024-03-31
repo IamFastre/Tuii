@@ -4,10 +4,12 @@ import { DefaultSettings } from '@/src/general/storage';
 export const UserGenderOptions:UserGender[] = ["male", "female", "other"];
 export const UnitsOptions:Units[] = ["metric", "imperial"];
 export const ThemeOptions:Themes[] = ["system", ...Object.keys(themes) as Themes[]];
+export const SudokuLevelOptions:SudokuLevel[] = ["easy", "medium", "hard", "max"];
 
-export type UserGender = "male" | "female" | "other";
-export type Units      = "metric" | "imperial";
-export type Themes     = "system" | keyof typeof themes;
+export type UserGender  = "male" | "female" | "other";
+export type Units       = "metric" | "imperial";
+export type Themes      = "system" | keyof typeof themes;
+export type SudokuLevel = "easy" | "medium" | "hard" | "max";
 
 export type StoredValue = IUser | IMetrics | IOptions;
 export type StoredKey = keyof typeof DefaultSettings;
@@ -32,14 +34,12 @@ export interface IOptions {
   type: "options";
 }
 
-export interface IApplets {
-  sudoku: {
-    level: "easy" | "medium" | "hard" | number;
-    show_conflicts: boolean;
-    show_remaining: boolean;
-    show_num_count: boolean;
-  }
-  type: "applets";
+export interface ISudoku {
+  level: SudokuLevel;
+  show_conflicts: boolean;
+  show_empty_count: boolean;
+  show_num_remaining: boolean;
+  type: "sudoku";
 }
 
 export interface ITime {
