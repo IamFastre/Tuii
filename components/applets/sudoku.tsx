@@ -47,8 +47,9 @@ export const GridChild = ({ value, id, locked, faulty, selected, setSelected }: 
   );
 };
 
-export const Grid = ({ values, selected, setSelected, duplicates, poked }: { values: SudokuGrid | undefined; selected: number | undefined; setSelected: State<number | undefined>; duplicates: Position[]; poked: Position[]; }) => {
+export const Grid = ({ values, show_conflicts, selected, setSelected, duplicates, poked }: { values: SudokuGrid | undefined; show_conflicts:boolean, selected: number | undefined; setSelected: State<number | undefined>; duplicates: Position[]; poked: Position[]; }) => {
   const colors = useColors();
+
   const isFaulty = (r: number, c: number) => {
     for (let i = 0; i < duplicates.length; i++) {
       const d = duplicates[i];
@@ -75,7 +76,7 @@ export const Grid = ({ values, selected, setSelected, duplicates, poked }: { val
             value={slot}
             id={r * 9 + c}
             locked={slot !== null && isPoked(r, c)}
-            faulty={isFaulty(r, c)}
+            faulty={show_conflicts && isFaulty(r, c)}
             selected={selected}
             setSelected={setSelected}
             key={r * 9 + c} />
@@ -85,7 +86,7 @@ export const Grid = ({ values, selected, setSelected, duplicates, poked }: { val
   );
 };
 
-export const Number = ({ value, selected, board, setBoard }: { value: SlotType; selected: number | undefined; board: SudokuGrid; setBoard: State<SudokuGrid>; }) => {
+export const Number = ({ show_num_remaining, value, selected, board, setBoard }: { show_num_remaining:boolean, value: SlotType; selected: number | undefined; board: SudokuGrid; setBoard: State<SudokuGrid>; }) => {
   const colors = useColors();
   const [isPressed, setIsPressed] = useState<boolean>(false);
   const amount = board.flat().filter(x => x === value).length;
@@ -114,21 +115,23 @@ export const Number = ({ value, selected, board, setBoard }: { value: SlotType; 
       <View style={{ alignSelf: "center" }}>
         {value
           ? <>
-            <B style={styles.buttonText}>
-              {isPressed ?
-                <C.SECONDARY>
-                  {"["}
-                  <C.HIGHLIGHT>{value}</C.HIGHLIGHT>
-                  {"]"}
-                </C.SECONDARY>
-                :
-                <C.HIGHLIGHT>
-                  {"{"}
-                  <C.SECONDARY>{value}</C.SECONDARY>
-                  {"}"}
-                </C.HIGHLIGHT>}
-            </B>
-            <T style={[styles.buttonCount, { color: colors.accent }]}>{9 - amount}</T>
+            <T style={styles.buttonText}>
+              <B>
+                {isPressed ?
+                  <C.SECONDARY>
+                    {"["}
+                    <C.HIGHLIGHT>{value}</C.HIGHLIGHT>
+                    {"]"}
+                  </C.SECONDARY>
+                  :
+                  <C.HIGHLIGHT>
+                    {"{"}
+                    <C.SECONDARY>{value}</C.SECONDARY>
+                    {"}"}
+                  </C.HIGHLIGHT>}
+              </B>
+            </T>
+            {show_num_remaining ? <T style={[styles.buttonCount, { color: colors.accent }]}>{9 - amount}</T> : null}
           </>
           : <Ionicons name={isPressed ? "backspace" : "backspace-outline"} size={styles.buttonText.fontSize * 1.5} color={colors.hot} />}
       </View>
@@ -136,7 +139,7 @@ export const Number = ({ value, selected, board, setBoard }: { value: SlotType; 
   );
 };
 
-export const Controls = ({ selected, board, setBoard }: { selected: number | undefined; board: SudokuGrid; setBoard: State<SudokuGrid>; }) => {
+export const Controls = ({ show_num_remaining, selected, board, setBoard }: { show_num_remaining:boolean, selected: number | undefined; board: SudokuGrid; setBoard: State<SudokuGrid>; }) => {
   const colors = useColors();
 
   return (
@@ -151,6 +154,7 @@ export const Controls = ({ selected, board, setBoard }: { selected: number | und
             value={val}
             selected={selected}
             board={board}
+            show_num_remaining={show_num_remaining}
             setBoard={setBoard} />
         ))}
       </View>
@@ -161,6 +165,7 @@ export const Controls = ({ selected, board, setBoard }: { selected: number | und
             value={val}
             selected={selected}
             board={board}
+            show_num_remaining={show_num_remaining}
             setBoard={setBoard} />
         ))}
       </View>
