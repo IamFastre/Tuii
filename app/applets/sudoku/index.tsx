@@ -1,14 +1,15 @@
 import { Section } from '@/components/basics';
-import{ useEffect, useState } from "react";
+import{ useContext, useEffect, useState } from "react";
 import { Button, C, L, T } from "@/components/basics";
 import { Pressable, StyleSheet, View } from "react-native";
-import { CountEmpty, GetDuplicates, MakeBoard, SudokuGrid, GetEmpty, Position } from "@/src/sudoku";
+import { CountEmpty, GetDuplicates, MakeBoard, SudokuGrid, GetEmpty, Position, LevelToNumber } from "@/src/sudoku";
 import { Header } from '@/components/applets/Header';
 import { Grid } from '@/components/applets/sudoku';
 import { Controls } from '@/components/applets/sudoku';
+import { SettingsContext } from '@/components/Contexts';
 
-const pokes = 35;
 export default function Applets() : React.JSX.Element | null {
+  const { sudoku } = useContext(SettingsContext).settings;
   const [selected, setSelected] = useState<number | undefined>(undefined);
 
   const [ready, setReady] = useState<boolean>(false);
@@ -19,7 +20,7 @@ export default function Applets() : React.JSX.Element | null {
   const generate = () => {
     setSelected(undefined);
 
-    const gen = MakeBoard(pokes);
+    const gen = MakeBoard(LevelToNumber(sudoku.level));
     setBoard(gen);
     setPoked(GetEmpty(gen));
   }
@@ -34,11 +35,12 @@ export default function Applets() : React.JSX.Element | null {
 
   return (
     <View style={{ flex:1 }}>
-      <Header title='SUDOKU' />
+      <Header title='SUDOKU' options={"/applets/sudoku/settings"}/>
       <Section style={{ flex:1 }}>
         <Pressable style={styles.container} onPress={() => setSelected(undefined)} android_disableSound>
             <View style={styles.board}>
-              <Grid values={board} selected={selected} setSelected={setSelected} duplicates={GetDuplicates(board)} poked={poked} />
+              <Grid values={board} show_conflicts={sudoku.show_conflicts} selected={selected} setSelected={setSelected} duplicates={GetDuplicates(board)} poked={poked} />
+              {sudoku.show_empty_count ?
               <T style={{ textAlign: 'center', marginTop: 15 }}>
                 <L>
                   <C.SECONDARY>
@@ -46,6 +48,7 @@ export default function Applets() : React.JSX.Element | null {
                   </C.SECONDARY>
                 </L>
               </T>
+              : null}
             </View>
             <View style={styles.actions}>
               <Button
@@ -70,6 +73,7 @@ export default function Applets() : React.JSX.Element | null {
             </View>
             <View style={{ flex: 2 }} />
             <Controls
+              show_num_remaining={sudoku.show_num_remaining}
               selected={selected}
               board={board}
               setBoard={setBoard}
