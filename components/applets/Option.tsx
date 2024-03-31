@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, StyleSheet, ViewStyle, Pressable } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
 import { T } from '@/components/basics';
 import { router } from 'expo-router';
@@ -33,8 +33,8 @@ export const Option = ({ title, description, path, icon, style }:OptionProps) =>
             {description}
           </T>
         </View>
-        <TouchableOpacity onPress={() => router.push(path + '/settings' as any)}>
-          <Ionicons name='options-sharp' color={colors.secondary} size={28} style={styles.optionSettings}/>
+        <TouchableOpacity onPress={() => router.push(path + '/settings' as any)} hitSlop={10}>
+          <Ionicons name='options' color={colors.secondary} size={28} style={styles.optionSettings}/>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
