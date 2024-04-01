@@ -15,8 +15,8 @@ export const Title = ({title}:{title:string}) => (
   </>
 );
 
-export const Sep = ({margin, thickness, color}:{margin?:number, thickness?:number, color?:ColorValue}) => (
-  <View style={[styles.sep, { borderRadius: 9999, height: thickness ?? 0.5, marginVertical: margin ?? 15, backgroundColor: color ?? useColors().accent }]}/>
+export const Sep = ({margin, thickness, color, noThickness}:{margin?:number, thickness?:number, color?:ColorValue, noThickness?:boolean }) => (
+  <View style={[styles.sep, { borderRadius: 9999, height: noThickness ? 0 : thickness ?? 0.5, marginVertical: margin ?? 15, backgroundColor: color ?? useColors().accent }]}/>
 );
 
 const styles = StyleSheet.create({
