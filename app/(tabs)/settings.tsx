@@ -1,5 +1,5 @@
 import{ useContext, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { C, L, Section, T, Button } from '@/components/basics';
 import { ThemeOptions, UnitsOptions, UserGenderOptions } from '@/src/general/interfaces';
@@ -15,6 +15,7 @@ export default function SettingsPage() {
   const colors = useColors();
   
   const [fullscreen, setFullscreen]  = useState<boolean>(false);
+  const [resetPressed, setResetPressed]  = useState<boolean>(false);
 
   const updateData = useContext(SettingsContext).updateSettings;
   const { user, metrics, options } = useContext(SettingsContext).settings;
@@ -40,17 +41,17 @@ export default function SettingsPage() {
   const [age, setAge] = useState<string>("");
 
   const onSubmitUsername = () => {
-    setStored('user', {...user, name});
+    setStored('user', { ...user, name });
     updateData();
   };
 
   const onSubmitAge = () => {
-    setStored('user', {...user, age:parseInt(age)});
+    setStored('user', { ...user, age:parseInt(age) });
     updateData();
   };
 
   const onSubmitGender = (forward:boolean = true) => {
-    setStored('user', {...user, gender: move(forward)(UserGenderOptions, user.gender)});
+    setStored('user', { ...user, gender: move(forward)(UserGenderOptions, user.gender) });
     updateData();
   };
 
@@ -62,12 +63,12 @@ export default function SettingsPage() {
   const [city, setCity] = useState<string>("");
 
   const onSubmitCity = () => {
-    setStored('metrics', {...metrics, city});
+    setStored('metrics', { ...metrics, city });
     updateData();
   };
 
   const onSubmitUnits = (forward:boolean = true) => {
-    setStored('metrics', {...metrics, units: move(forward)(UnitsOptions, metrics.units)});
+    setStored('metrics', { ...metrics, units: move(forward)(UnitsOptions, metrics.units) });
     updateData();
   };
 
@@ -77,17 +78,17 @@ export default function SettingsPage() {
   /* ======================================================================== */
 
   const onSubmitTheme = (forward:boolean = true) => {
-    setStored('options', {...options, theme: move(forward)(ThemeOptions, options.theme)});
+    setStored('options', { ...options, theme: move(forward)(ThemeOptions, options.theme) });
     updateData();
   };
 
   const onSubmitWordClass = () => {
-    setStored('options', {...options, short_word_class: !options.short_word_class});
+    setStored('options', { ...options, short_word_class: !options.short_word_class });
     updateData();
   };
 
   const onSubmitRefreshButton = () => {
-    setStored('options', {...options, show_refresh_button: !options.show_refresh_button});
+    setStored('options', { ...options, show_refresh_button: !options.show_refresh_button });
     updateData();
   };
 
@@ -203,18 +204,43 @@ export default function SettingsPage() {
           />
 
 
+          <Sep margin={30} noThickness/>
+
           {/* Reset Button */}
-          <Button
-            title={"Rest all"}
-            style={{...styles.reset, borderColor: colors.hot}}
-            onPress={() => {
-              resetSettings();
-              updateFullscreen(false);
-              setFullscreen(false);
-              updateData();
-            }}
-            icon={{ name: "reload-circle-outline", size: 12 }}
-          />
+          {resetPressed ? <T style={{ textAlign: 'center', marginBottom: 15 }}>Are you sure?</T> : null}
+          <View style={styles.reset}>
+            { !resetPressed ?
+              <Button
+                title={"Rest all"}
+                style={{ flex: 1, borderColor: colors.hot }}
+                onPress={() => {
+                    setResetPressed(true);
+                  }}
+                  icon={{ name: "reload-circle-outline", size: 12 }}
+              /> : <>
+              <Button
+                title={"Yes"}
+                style={{ flex: 1, borderColor: colors.green, marginRight: 10 }}
+                onPress={() => {
+                  resetSettings();
+                  updateFullscreen(false);
+                  setFullscreen(false);
+                  updateData();
+                  setResetPressed(false);
+                }}
+                icon={{ name: "checkmark-circle-outline", size: 12 }}
+              />
+              <Button
+                title={"No"}
+                style={{ flex: 1, borderColor: colors.red, marginLeft: 10 }}
+                onPress={() => {
+                    setResetPressed(false);
+                  }}
+                  icon={{ name: "close-circle-outline", size: 12 }}
+              />
+              </>
+            }
+          </View>
 
           <T style={styles.resetDisclaimer}>
             <C.SECONDARY>This resets everything, including applets' settings and these settings.</C.SECONDARY>
@@ -250,7 +276,9 @@ const styles = StyleSheet.create({
   },
 
   reset: {
-    marginTop: 60,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     alignSelf: "center",
     width: "50%",
   },

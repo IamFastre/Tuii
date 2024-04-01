@@ -17,7 +17,7 @@ export default function SudokuSettings() {
       <MiniHeader title='OPTIONS' subtitle='SUDOKU'/>
       <Title title="Game" />
 
-      <Sep color={"transparent"} />
+      <Sep noThickness />
 
       <OptionsSetting
         title="Difficulty"
