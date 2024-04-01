@@ -216,7 +216,7 @@ export default function SettingsPage() {
                 onPress={() => {
                     setResetPressed(true);
                   }}
-                  icon={{ name: "reload-circle", size: 12 }}
+                  icon={{ name: "reload-circle" }}
               /> : <>
               <Button
                 title={"Yes"}
@@ -228,7 +228,7 @@ export default function SettingsPage() {
                   updateData();
                   setResetPressed(false);
                 }}
-                icon={{ name: "checkmark-circle", size: 12 }}
+                icon={{ name: "checkmark-circle" }}
               />
               <Button
                 title={"No"}
@@ -236,7 +236,7 @@ export default function SettingsPage() {
                 onPress={() => {
                     setResetPressed(false);
                   }}
-                  icon={{ name: "close-circle", size: 12 }}
+                  icon={{ name: "close-circle" }}
               />
               </>
             }
