@@ -203,7 +203,6 @@ export default function SettingsPage() {
             size='small'
           />
 
-
           <Sep margin={30} noThickness/>
 
           {/* Reset Button */}

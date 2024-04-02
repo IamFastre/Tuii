@@ -1,12 +1,12 @@
-import { Section } from '@/components/basics';
 import{ useContext, useEffect, useState } from "react";
-import { Button, C, L, T } from "@/components/basics";
 import { Pressable, StyleSheet, View } from "react-native";
-import { CountEmpty, GetDuplicates, MakeBoard, SudokuGrid, GetEmpty, Position, LevelToNumber } from "@/src/sudoku";
-import { Header } from '@/components/applets/Header';
-import { Grid } from '@/components/applets/sudoku';
-import { Controls } from '@/components/applets/sudoku';
+
+import { Section, Button, C, L, T } from "@/components/basics";
 import { SettingsContext } from '@/components/Contexts';
+import { Header } from '@/components/applets/Header';
+
+import { Grid, Controls } from '@/components/applets/sudoku';
+import { CountEmpty, GetDuplicates, MakeBoard, SudokuGrid, GetEmpty, Position, LevelToNumber } from "@/src/sudoku";
 
 export default function Applets() : React.JSX.Element | null {
   const { sudoku } = useContext(SettingsContext).settings;
@@ -40,6 +40,7 @@ export default function Applets() : React.JSX.Element | null {
         <Pressable style={styles.container} onPress={() => setSelected(undefined)} android_disableSound>
             <View style={styles.board}>
               <Grid values={board} show_conflicts={sudoku.show_conflicts} selected={selected} setSelected={setSelected} duplicates={GetDuplicates(board)} poked={poked} />
+
               {sudoku.show_empty_count ?
               <T style={{ textAlign: 'center', marginTop: 15 }}>
                 <L>
@@ -50,6 +51,7 @@ export default function Applets() : React.JSX.Element | null {
               </T>
               : null}
             </View>
+
             <View style={styles.actions}>
               <Button
                 title="Check"
@@ -61,6 +63,7 @@ export default function Applets() : React.JSX.Element | null {
                   console.log(GetDuplicates(board))
                 }}
               />
+
               <Button
                 title="New"
                 style={styles.action}
@@ -71,13 +74,16 @@ export default function Applets() : React.JSX.Element | null {
                 }}
               />
             </View>
+
             <View style={{ flex: 2 }} />
+
             <Controls
               show_num_remaining={sudoku.show_num_remaining}
               selected={selected}
               board={board}
               setBoard={setBoard}
             />
+
             <View style={{ flex: 1 }} />
         </Pressable>
       </Section>
