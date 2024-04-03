@@ -1,4 +1,4 @@
-import{ useContext, useEffect, useState } from "react";
+import{ useContext } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import { Section, Button, C, L, T } from "@/components/basics";
@@ -6,11 +6,10 @@ import { SettingsContext } from '@/components/Contexts';
 import { Header } from '@/components/applets/Header';
 
 import { Grid, Controls } from '@/components/applets/sudoku';
-import { CountEmpty, GetDuplicates, MakeBoard, SudokuGrid, GetEmpty, Position, LevelToNumber, useSudoku } from "@/src/sudoku";
+import { CountEmpty, GetDuplicates, useSudoku } from "@/src/sudoku";
 
-export default function Applets() : React.JSX.Element | null {
+export default () : React.JSX.Element | null => {
   const { sudoku:config } = useContext(SettingsContext).settings;
-
   const sudoku = useSudoku(config.level);
 
   if (!sudoku.ready)
