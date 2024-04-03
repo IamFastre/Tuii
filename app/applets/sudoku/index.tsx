@@ -6,46 +6,29 @@ import { SettingsContext } from '@/components/Contexts';
 import { Header } from '@/components/applets/Header';
 
 import { Grid, Controls } from '@/components/applets/sudoku';
-import { CountEmpty, GetDuplicates, MakeBoard, SudokuGrid, GetEmpty, Position, LevelToNumber } from "@/src/sudoku";
+import { CountEmpty, GetDuplicates, MakeBoard, SudokuGrid, GetEmpty, Position, LevelToNumber, useSudoku } from "@/src/sudoku";
 
 export default function Applets() : React.JSX.Element | null {
-  const { sudoku } = useContext(SettingsContext).settings;
-  const [selected, setSelected] = useState<number | undefined>(undefined);
+  const { sudoku:config } = useContext(SettingsContext).settings;
 
-  const [ready, setReady] = useState<boolean>(false);
+  const sudoku = useSudoku(config.level);
 
-  const [board, setBoard] = useState<SudokuGrid>([]);
-  const [poked, setPoked] = useState<Position[]>([]);
-
-  const generate = () => {
-    setSelected(undefined);
-
-    const gen = MakeBoard(LevelToNumber(sudoku.level));
-    setBoard(gen);
-    setPoked(GetEmpty(gen));
-  }
-
-  useEffect(() => {
-    generate()
-    setReady(true);
-  }, []);
-
-  if (!ready)
+  if (!sudoku.ready)
     return null;
 
   return (
     <View style={{ flex:1 }}>
       <Header title='SUDOKU' options={"/applets/sudoku/settings"}/>
       <Section style={{ flex:1 }}>
-        <Pressable style={styles.container} onPress={() => setSelected(undefined)} android_disableSound>
+        <Pressable style={styles.container} onPress={() => sudoku.selected = undefined} android_disableSound>
             <View style={styles.board}>
-              <Grid values={board} show_conflicts={sudoku.show_conflicts} selected={selected} setSelected={setSelected} duplicates={GetDuplicates(board)} poked={poked} />
+              <Grid sudoku={sudoku} show_conflicts={config.show_conflicts} />
 
-              {sudoku.show_empty_count ?
+              {config.show_empty_count ?
               <T style={{ textAlign: 'center', marginTop: 15 }}>
                 <L>
                   <C.SECONDARY>
-                    Remaining: <C.HIGHLIGHT>{CountEmpty(board)}</C.HIGHLIGHT>
+                    Remaining: <C.HIGHLIGHT>{CountEmpty(sudoku.board)}</C.HIGHLIGHT>
                   </C.SECONDARY>
                 </L>
               </T>
@@ -60,7 +43,7 @@ export default function Applets() : React.JSX.Element | null {
                 icon={{name:'checkmark-circle-outline'}}
                 onPress={() => {
                   console.log("checking...")
-                  console.log(GetDuplicates(board))
+                  console.log(GetDuplicates(sudoku.board))
                 }}
               />
 
@@ -70,7 +53,7 @@ export default function Applets() : React.JSX.Element | null {
                 textStyle={styles.actionText}
                 icon={{name:'reload-circle-outline'}}
                 onPress={() => {
-                  generate()
+                  sudoku.regenerate()
                 }}
               />
             </View>
@@ -78,10 +61,8 @@ export default function Applets() : React.JSX.Element | null {
             <View style={{ flex: 2 }} />
 
             <Controls
-              show_num_remaining={sudoku.show_num_remaining}
-              selected={selected}
-              board={board}
-              setBoard={setBoard}
+              sudoku={sudoku}
+              show_num_remaining={config.show_num_remaining}
             />
 
             <View style={{ flex: 1 }} />

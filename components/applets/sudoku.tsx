@@ -2,11 +2,11 @@ import { B, C, L, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 import { State } from "@/src/general/types";
 import { DimensionValue, Pressable, View, StyleSheet } from "react-native";
-import { EmptyBoard, Position, SlotType, SudokuGrid } from "@/src/sudoku";
+import { EmptyBoard, GetDuplicates, Position, SlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
-export const GridChild = ({ value, id, locked, faulty, selected, setSelected }: { value: SlotType; id: number; locked?: boolean; faulty?: boolean; selected: number | undefined; setSelected: State<number | undefined>; }) => {
+export const GridChild = ({ value, id, locked, faulty, selected, setSelected }: { value: SlotType; id: number; locked?: boolean; faulty?: boolean; selected: number | undefined; setSelected: (v:number | undefined) => void; }) => {
   const colors = useColors();
 
   return (
@@ -47,8 +47,9 @@ export const GridChild = ({ value, id, locked, faulty, selected, setSelected }: 
   );
 };
 
-export const Grid = ({ values, show_conflicts, selected, setSelected, duplicates, poked }: { values: SudokuGrid | undefined; show_conflicts:boolean, selected: number | undefined; setSelected: State<number | undefined>; duplicates: Position[]; poked: Position[]; }) => {
+export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_conflicts:boolean; }) => {
   const colors = useColors();
+  const duplicates = GetDuplicates(sudoku.board);
 
   const isFaulty = (r: number, c: number) => {
     for (let i = 0; i < duplicates.length; i++) {
@@ -60,8 +61,8 @@ export const Grid = ({ values, show_conflicts, selected, setSelected, duplicates
   };
 
   const isPoked = (r: number, c: number) => {
-    for (let i = 0; i < poked.length; i++) {
-      const d = poked[i];
+    for (let i = 0; i < sudoku.poked.length; i++) {
+      const d = sudoku.poked[i];
       if (r === d[0] && c === d[1])
         return false;
     }
@@ -70,15 +71,15 @@ export const Grid = ({ values, show_conflicts, selected, setSelected, duplicates
 
   return (
     <View style={[styles.grid, { borderColor: colors.accent }]}>
-      {(values ?? EmptyBoard).map((rows, r) => (
+      {(sudoku.board ?? EmptyBoard).map((rows, r) => (
         rows.map((slot, c) => (
           <GridChild
             value={slot}
             id={r * 9 + c}
             locked={slot !== null && isPoked(r, c)}
             faulty={show_conflicts && isFaulty(r, c)}
-            selected={selected}
-            setSelected={setSelected}
+            selected={sudoku.selected}
+            setSelected={(v:number | undefined) => sudoku.selected = v}
             key={r * 9 + c} />
         ))
       )).flat()}
@@ -86,7 +87,8 @@ export const Grid = ({ values, show_conflicts, selected, setSelected, duplicates
   );
 };
 
-export const Number = ({ show_num_remaining, value, selected, board, setBoard }: { show_num_remaining:boolean, value: SlotType; selected: number | undefined; board: SudokuGrid; setBoard: State<SudokuGrid>; }) => {
+
+export const Number = ({ show_num_remaining, value, selected, board, setBoard }: { show_num_remaining:boolean; value: SlotType; selected: number | undefined; board: SudokuGrid; setBoard: (v:SudokuGrid) => void; }) => {
   const colors = useColors();
   const [isPressed, setIsPressed] = useState<boolean>(false);
   const amount = board.flat().filter(x => x === value).length;
@@ -100,14 +102,11 @@ export const Number = ({ show_num_remaining, value, selected, board, setBoard }:
         if (selected !== undefined) {
           const row = Math.floor(selected / 9);
           const col = selected % 9;
-          setBoard(l => {
-            if (l) {
-              const copy = [...l];
-              copy[row][col] = value;
-              return copy;
-            }
-            return l;
-          });
+          if (board) {
+            const copy = [...board];
+            copy[row][col] = value;
+            setBoard(copy);
+          }
         }
       } }
       android_disableSound
@@ -139,7 +138,8 @@ export const Number = ({ show_num_remaining, value, selected, board, setBoard }:
   );
 };
 
-export const Controls = ({ show_num_remaining, selected, board, setBoard }: { show_num_remaining:boolean, selected: number | undefined; board: SudokuGrid; setBoard: State<SudokuGrid>; }) => {
+
+export const Controls = ({ sudoku, show_num_remaining }: { sudoku:SudokuHook; show_num_remaining:boolean; }) => {
   const colors = useColors();
 
   return (
@@ -152,10 +152,11 @@ export const Controls = ({ show_num_remaining, selected, board, setBoard }: { sh
           <Number
             key={i}
             value={val}
-            selected={selected}
-            board={board}
+            selected={sudoku.selected}
+            board={sudoku.board}
             show_num_remaining={show_num_remaining}
-            setBoard={setBoard} />
+            setBoard={(v:SudokuGrid) => sudoku.board = v}
+          />
         ))}
       </View>
       <View style={styles.controls}>
@@ -163,10 +164,11 @@ export const Controls = ({ show_num_remaining, selected, board, setBoard }: { sh
           <Number
             key={i}
             value={val}
-            selected={selected}
-            board={board}
+            selected={sudoku.selected}
+            board={sudoku.board}
             show_num_remaining={show_num_remaining}
-            setBoard={setBoard} />
+            setBoard={(v:SudokuGrid) => sudoku.board = v}
+          />
         ))}
       </View>
       <T style={[styles.border, { left: consts.border, color: colors.accent }]}>
