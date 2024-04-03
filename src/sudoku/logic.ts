@@ -1,5 +1,6 @@
-import { getRandomInt } from "../general/funcs";
-import { SudokuLevel } from "../general/interfaces";
+import { deepCopy, getRandomInt } from "@/src/general/funcs";
+import { SudokuLevel } from "@/src/general/interfaces";
+
 import { DigitType, Position, SlotType, SudokuGrid } from "./types";
 
 export const EmptyBoard:SudokuGrid = Array(9).fill(Array(9).fill(null));
@@ -10,16 +11,16 @@ export function LevelToNumber(lvl:SudokuLevel) : number {
 
 /* ========================================================================== */
 
-export function MakeBoard(pokes:number = 0) : SudokuGrid {
+export function MakeBoard(pokes?:number) : SudokuGrid {
   function pattern(r:number, c:number) {
     return (3 * (r % 3) + Math.floor(r / 3) + c) % 9;
   }
 
   function shuffle(list:DigitType[]) {
-    return [...list].sort(() => 0.5 - Math.random());
+    return deepCopy(list).sort(() => 0.5 - Math.random());
   }
 
-  const rBase = [...Array(3).keys()] as DigitType[];
+  const rBase = deepCopy(Object.keys(Array(3).fill(undefined))) as any as DigitType[];
 
   const rows:DigitType[] = [];
   const cols:DigitType[] = [];
@@ -47,7 +48,7 @@ export function MakeBoard(pokes:number = 0) : SudokuGrid {
 }
 
 export function Poke(board:SudokuGrid, pokes: number) : SudokuGrid {
-  board = [...board];
+  board = deepCopy(board);
 
   while (pokes) {
     let r = getRandomInt(0, board.length), c = getRandomInt(0, board[r].length);
