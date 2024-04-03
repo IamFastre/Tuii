@@ -12,13 +12,12 @@ export default () : React.JSX.Element | null => {
   const { sudoku:config } = useContext(SettingsContext).settings;
   const sudoku = useSudoku(config.level);
 
-  if (!sudoku.ready)
-    return null;
-
   return (
     <View style={{ flex:1 }}>
       <Header title='SUDOKU' options={"/applets/sudoku/settings"}/>
       <Section style={{ flex:1 }}>
+        { sudoku.ready ?
+
         <Pressable style={styles.container} onPress={() => sudoku.selected = undefined} android_disableSound>
             <View style={styles.board}>
               <Grid sudoku={sudoku} show_conflicts={config.show_conflicts} />
@@ -66,6 +65,8 @@ export default () : React.JSX.Element | null => {
 
             <View style={{ flex: 1 }} />
         </Pressable>
+
+        : null }
       </Section>
     </View>
   );
