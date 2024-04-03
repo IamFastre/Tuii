@@ -6,7 +6,7 @@ import { EmptyBoard, GetDuplicates, Position, SlotType, SudokuGrid, SudokuHook }
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
-export const GridChild = ({ value, id, locked, faulty, selected, setSelected }: { value: SlotType; id: number; locked?: boolean; faulty?: boolean; selected: number | undefined; setSelected: (v:number | undefined) => void; }) => {
+export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSelected }: { value: SlotType; id: number; revealed?: boolean; locked?: boolean; faulty?: boolean; selected: number | undefined; setSelected: (v:number | undefined) => void; }) => {
   const colors = useColors();
 
   return (
@@ -33,7 +33,7 @@ export const GridChild = ({ value, id, locked, faulty, selected, setSelected }: 
           :
           null}
 
-        <T style={{ ...styles.slotText, color: selected === id ? colors.primary : colors.tertiary }}>
+        <T style={{ ...styles.slotText, color: revealed ? colors.cold : selected === id ? colors.primary : colors.tertiary }}>
           {selected === id
             ? <B>{value?.toString() ?? ""}</B>
             : value?.toString() ?? ""}
@@ -69,6 +69,15 @@ export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_confl
     return true;
   };
 
+  const isRevealed = (r: number, c: number) => {
+    for (let i = 0; i < sudoku.revealed.length; i++) {
+      const d = sudoku.revealed[i];
+      if (r === d[0] && c === d[1])
+        return true;
+    }
+    return false;
+  };
+
   return (
     <View style={[styles.grid, { borderColor: colors.accent }]}>
       {(sudoku.board ?? EmptyBoard).map((rows, r) => (
@@ -76,6 +85,7 @@ export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_confl
           <GridChild
             value={slot}
             id={r * 9 + c}
+            revealed={slot !== null && isRevealed(r, c)}
             locked={slot !== null && isPoked(r, c)}
             faulty={show_conflicts && isFaulty(r, c)}
             selected={sudoku.selected}

@@ -8,7 +8,7 @@ import { Header } from '@/components/applets/Header';
 import { Grid, Controls } from '@/components/applets/sudoku';
 import { CountEmpty, GetDuplicates, useSudoku } from "@/src/sudoku";
 
-export default () : React.JSX.Element | null => {
+export default () : React.JSX.Element => {
   const { sudoku:config } = useContext(SettingsContext).settings;
   const sudoku = useSudoku(config.level);
 
@@ -35,14 +35,11 @@ export default () : React.JSX.Element | null => {
 
             <View style={styles.actions}>
               <Button
-                title="Check"
+                title="Reveal"
                 style={styles.action}
                 textStyle={styles.actionText}
-                icon={{name:'checkmark-circle-outline'}}
-                onPress={() => {
-                  console.log("checking...")
-                  console.log(GetDuplicates(sudoku.board))
-                }}
+                icon={{name:'eye-outline'}}
+                onPress={sudoku.reveal}
               />
 
               <Button
@@ -50,9 +47,7 @@ export default () : React.JSX.Element | null => {
                 style={styles.action}
                 textStyle={styles.actionText}
                 icon={{name:'reload-circle-outline'}}
-                onPress={() => {
-                  sudoku.regenerate()
-                }}
+                onPress={sudoku.regenerate}
               />
             </View>
 
