@@ -9,7 +9,7 @@ export function Header({title, back, options}:{title:string, back?:string, optio
 
   return (
     <Section style={styles.header} containerStyle={styles.headerContainer}>
-      <TouchableOpacity style={styles.backButton} onPress={() => !router.canGoBack() ? router.back() : router.dismiss()}>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.canGoBack() ? router.back() : router.canDismiss() ? router.dismiss() : router.replace('/')}>
         <Ionicons name='chevron-back-sharp' size={35} color={colors.hot} />
       </TouchableOpacity>
       <T style={styles.titleText}>
@@ -29,7 +29,7 @@ export function MiniHeader({title, subtitle}:{title:string, subtitle:string}) : 
 
   return (
     <Section style={styles.header} containerStyle={styles.headerContainer}>
-      <TouchableOpacity style={styles.backButton} onPress={() => !router.canGoBack() ? router.back() : router.dismiss()}>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.canGoBack() ? router.back() : router.canDismiss() ? router.dismiss() : router.replace('/')}>
         <Ionicons name='close' size={35} color={colors.hot} />
       </TouchableOpacity>
       <T style={styles.titleText}>
