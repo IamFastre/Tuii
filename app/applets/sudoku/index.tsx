@@ -5,7 +5,7 @@ import { Section, Button, C, L, T } from "@/components/basics";
 import { SettingsContext } from '@/components/Contexts';
 import { Header } from '@/components/applets/Header';
 
-import { Grid, Controls } from '@/components/applets/sudoku';
+import { Grid, Controls } from '@/components/applets/Sudoku';
 import { CountEmpty, GetDuplicates, useSudoku } from "@/src/sudoku";
 
 export default () : React.JSX.Element => {

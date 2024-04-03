@@ -1,8 +1,7 @@
 import { B, C, L, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
-import { State } from "@/src/general/types";
 import { DimensionValue, Pressable, View, StyleSheet } from "react-native";
-import { EmptyBoard, GetDuplicates, Position, SlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
+import { EmptyBoard, GetDuplicates, SlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
