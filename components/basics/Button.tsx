@@ -47,7 +47,6 @@ export function Button(props: ButtonProps): React.JSX.Element {
     },
   
     text: {
-      textDecorationLine: props.disabled ? "line-through" : "none",
       textAlign: "center",
       textAlignVertical: "center",
       ...props.textStyle
@@ -93,13 +92,17 @@ export function Button(props: ButtonProps): React.JSX.Element {
           </View>
         : <></>
       }
-      <T style={[self.text, isPressed ? { color: self.view.borderColor } : { }]}>
-        {
-          props.icon
-          ? props.title ? (`: ${props.title}`) : ""
-          : `${left} ${props.title} ${right}`
-        }
-      </T>
+      {
+        props.title 
+        ? <T style={[self.text, isPressed ? { color: self.view.borderColor } : { }]}>
+            {
+              props.icon
+              ? `: ${props.title}`
+              : `${left} ${props.title} ${right}`
+            }
+          </T>
+        : <></>
+      }
     </Pressable>
   );
 };
