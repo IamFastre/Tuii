@@ -7,8 +7,11 @@ export type Position    = [r: number, c: number];
 
 export interface SudokuHook {
   ready: boolean;
+  solution: SudokuGrid;
   level: SudokuLevel;
   poked: Position[];
+  revealed: Position[];
+  reveal: () => void;
   regenerate: () => void;
   board: SudokuGrid;
   selected: number | undefined;
