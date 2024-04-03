@@ -126,3 +126,7 @@ export function next<T>(list: T[], current: T) {
 export function prev<T>(list: T[], current: T) {
   return list[((list.length + list.indexOf(current) - 1) % list.length)];
 }
+
+export function deepCopy<T>(v:T) : T {
+  return JSON.parse(JSON.stringify(v)) as T;
+}
