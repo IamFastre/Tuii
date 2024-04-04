@@ -39,7 +39,7 @@ export default () : React.JSX.Element => {
                 style={styles.action}
                 textStyle={styles.actionText}
                 icon={{name:'eye-outline'}}
-                onPress={sudoku.reveal}
+                onPress={sudoku.revealBoard}
               />
 
               <Button

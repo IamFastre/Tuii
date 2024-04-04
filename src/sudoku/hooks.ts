@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { SudokuLevel } from '@/src/general/interfaces';
 import { deepCopy } from '@/src/general/funcs';
 
-import { CountEmpty, GetEmpty, LevelToNumber, MakeBoard, Poke } from './logic';
+import { GetEmpty, LevelToNumber, MakeBoard, Poke } from './logic';
 import { Position, SudokuGrid, SudokuHook } from './types';
 
-export function useSudoku(level:SudokuLevel, onStart?:() => void, onFinish?:() => void) : SudokuHook {
+export function useSudoku(level:SudokuLevel) : SudokuHook {
   const [selected, setSelected] = useState<number | undefined>(undefined);
   const [isReady, setReady] = useState<boolean>(false);
   const [solution, setSolution] = useState<SudokuGrid>([]);
@@ -21,18 +21,26 @@ export function useSudoku(level:SudokuLevel, onStart?:() => void, onFinish?:() =
     setBoard(puz);
     setPoked(GetEmpty(puz));
     setSelected(undefined);
-  }
+    setRevealed([]);
+  };
 
-  const reveal = () => {
-    setRevealed(GetEmpty(board));
-    setBoard(solution);
-  }
+  const revealBoard = () => {
+    setRevealed(revealed.concat(GetEmpty(board)));
+    setBoard(b =>
+      b.map((row, r) => {
+        return row.map((slot, c) => {
+          if (slot === null) {
+            return solution[r][c];
+          }
+          return slot;
+        });
+      })
+    );
+  };
 
   useEffect(() => {
-    onStart ? onStart() : null;
     generate();
     setReady(true);
-    onFinish ? onFinish() : null;
   }, []);
 
   return {
@@ -41,7 +49,7 @@ export function useSudoku(level:SudokuLevel, onStart?:() => void, onFinish?:() =
     level,
     poked,
     revealed,
-    reveal,
+    revealBoard,
     regenerate: generate,
 
     get board() : SudokuGrid {
