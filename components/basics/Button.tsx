@@ -90,17 +90,21 @@ export function Button(props: ButtonProps): React.JSX.Element {
                 size={(props.icon.size ?? self.text.fontSize ?? general.text.fontSize) * 1.75}
                 color={isPressed ? colors.secondary : (props.icon.color ?? self.view.borderColor)}
               />
-              <T
-                style={{
-                  fontSize: (props.icon.size ?? self.text.fontSize ?? general.text.fontSize) * 1.5,
-                  textAlign: "center",
-                  textAlignVertical: "center",
-                }}
-              >
-                :
-              </T>
+              {
+                props.title
+                ? <T
+                    style={{
+                      fontSize: (props.icon.size ?? self.text.fontSize ?? general.text.fontSize) * 1.5,
+                      textAlign: "center",
+                      textAlignVertical: "center",
+                    }}
+                  >
+                    :
+                  </T>
+                : null
+              }
           </View>
-        : <></>
+        : null
       }
       {
         props.title 
@@ -111,7 +115,7 @@ export function Button(props: ButtonProps): React.JSX.Element {
               : `${left} ${props.title} ${right}`
             }
           </T>
-        : <></>
+        : null
       }
     </Pressable>
   );
