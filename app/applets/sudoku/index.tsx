@@ -1,20 +1,31 @@
 import{ useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
-import { Section, Button, C, L, T } from "@/components/basics";
+import { Section, Button, C, L, T, B } from "@/components/basics";
 import { SettingsContext } from '@/components/Contexts';
 import { Header } from '@/components/applets/Header';
 
 import { Grid, Controls } from '@/components/applets/Sudoku';
-import { CountEmpty, GetDuplicates, GetPosition, useSudoku } from "@/src/sudoku";
+import { CountEmpty, GetPosition, LevelToNumber, useSudoku } from "@/src/sudoku";
+import { useColors } from "@/constants/colors";
+import { Ionicons } from '@expo/vector-icons';
 
 export default () : React.JSX.Element => {
+  const colors = useColors();
+
   const [solved, setSolved] = useState<boolean>(false);
+  const [showWin, setShowWin] = useState<boolean>(true);
+
   const { sudoku:config } = useContext(SettingsContext).settings;
   const sudoku = useSudoku(config.level);
 
+  const dismissWin = () => setShowWin(false);
+
   useEffect(() => {
-    setSolved(sudoku.verify());
+    if (sudoku.ready && sudoku.verify()) {
+      setShowWin(true);
+      setSolved(true);
+    }
   }, [CountEmpty(sudoku.board)])
 
   return (
@@ -23,7 +34,7 @@ export default () : React.JSX.Element => {
       <Section style={{ flex:1 }}>
         { sudoku.ready ?
 
-        <Pressable style={styles.container} onPress={() => sudoku.selected = undefined} android_disableSound>
+        <Pressable style={styles.container} onPress={() => {sudoku.selected = undefined; setShowWin(true)}} android_disableSound>
             <View style={styles.board}>
               <Grid sudoku={sudoku} show_conflicts={config.show_conflicts} />
 
@@ -58,7 +69,10 @@ export default () : React.JSX.Element => {
                 style={styles.action}
                 textStyle={styles.actionText}
                 icon={{ name:'reload-circle-outline' }}
-                onPress={sudoku.regenerate}
+                onPress={() => {
+                  sudoku.regenerate();
+                  setSolved(false);
+                }}
               />
             </View>
 
@@ -73,6 +87,52 @@ export default () : React.JSX.Element => {
         </Pressable>
 
         : null }
+      {
+        solved && showWin ? 
+        <Pressable style={[styles.winContainer, { backgroundColor: colors.primary + colors.opacity.most }]} onPress={dismissWin} android_disableSound>
+          <Pressable android_disableSound>
+            <Section containerStyle={styles.winMessageContainer} centered>
+              <View style={[styles.winIcon, { backgroundColor: colors.accent }]}>
+                <Ionicons name={sudoku.revealed.length === LevelToNumber(sudoku.level) ? "star-outline" : "star"} size={40} color={colors.tertiary}/>
+              </View>
+              <T style={styles.winTitle}>
+                <B>
+                  <C.ACCENT>
+                    {'[ '}
+                      <C.TERTIARY>
+                        {sudoku.revealed.length === LevelToNumber(sudoku.level) ? "Congrats?" : "Congrats!"}
+                      </C.TERTIARY>
+                    {' ]'}
+                  </C.ACCENT>
+                </B>
+              </T>
+
+              <T style={styles.winBody}>
+                <C.SECONDARY>
+                  You have {sudoku.revealed.length === LevelToNumber(sudoku.level) ? "revealed" : "completed"} {sudoku.level === "easy" ? "an" : "a"} <C.TERTIARY><B>{sudoku.level}</B></C.TERTIARY> sudoku puzzle.
+                </C.SECONDARY>
+              </T>
+              <View style={styles.winStats}>
+                <T>
+                    Slots Solved:   <C.ACCENT>{sudoku.poked.length - sudoku.revealed.length - CountEmpty(sudoku.board)}</C.ACCENT>
+                </T>
+                <T>
+                    Slots Revealed: <C.ACCENT>{sudoku.revealed.length}</C.ACCENT>
+                </T>
+              </View>
+              { sudoku.revealed.length === LevelToNumber(sudoku.level) ?
+                <T style={styles.winShame}>
+                  <C.SECONDARY>
+                    Have you even tried?!
+                    { sudoku.level === "easy" ? "\nLike, dude, it was on easy." : "" }
+                  </C.SECONDARY>
+                </T> 
+              : null }
+            </Section>
+          </Pressable>
+        </Pressable>
+        : null
+      }
       </Section>
     </View>
   );
@@ -106,5 +166,52 @@ const styles = StyleSheet.create({
 
   actionText: {
     fontSize: 14,
+  },
+
+  winContainer: {
+    position: 'absolute',
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  winIcon: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    borderRadius: 9999,
+    aspectRatio: 1,
+    padding: 12.5,
+    marginTop: 5,
+    marginBottom: 20,
+  },
+
+  winMessageContainer: {
+    flex: undefined,
+    alignItems: 'center',
+    padding: 15,
+  },
+
+  winTitle: {
+    fontSize: 22,
+    marginBottom: 10,
+  },
+
+  winBody: {
+    marginVertical: 10,
+  },
+
+  winStats: {
+    alignSelf: 'flex-start',
+    marginLeft: 15
+  },
+
+  winShame: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 15,
+    fontSize: 10,
   },
 });

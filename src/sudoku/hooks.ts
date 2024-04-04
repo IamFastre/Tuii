@@ -6,7 +6,8 @@ import { deepCopy } from '@/src/general/funcs';
 import { CountEmpty, GetEmpty, LevelToNumber, MakeBoard, Poke } from './logic';
 import { Position, SudokuGrid, SudokuHook } from './types';
 
-export function useSudoku(level:SudokuLevel) : SudokuHook {
+export function useSudoku(lvl:SudokuLevel) : SudokuHook {
+  const [level, setLevel] = useState<SudokuLevel>(lvl);
   const [selected, setSelected] = useState<number | undefined>(undefined);
   const [isReady, setReady] = useState<boolean>(false);
   const [solution, setSolution] = useState<SudokuGrid>([]);
