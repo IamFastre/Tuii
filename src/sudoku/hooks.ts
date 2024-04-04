@@ -17,7 +17,8 @@ export function useSudoku(lvl:SudokuLevel) : SudokuHook {
 
   const generate = () => {
     const sol = MakeBoard();
-    const puz = Poke(deepCopy(sol), LevelToNumber(level));
+    const puz = Poke(deepCopy(sol), LevelToNumber(lvl));
+    setLevel(lvl);
     setSolution(sol);
     setBoard(puz);
     setPoked(GetEmpty(puz));
