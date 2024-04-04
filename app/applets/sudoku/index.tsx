@@ -6,7 +6,7 @@ import { SettingsContext } from '@/components/Contexts';
 import { Header } from '@/components/applets/Header';
 
 import { Grid, Controls } from '@/components/applets/Sudoku';
-import { CountEmpty, GetDuplicates, useSudoku } from "@/src/sudoku";
+import { CountEmpty, GetDuplicates, GetPosition, useSudoku } from "@/src/sudoku";
 
 export default () : React.JSX.Element => {
   const { sudoku:config } = useContext(SettingsContext).settings;
@@ -35,18 +35,24 @@ export default () : React.JSX.Element => {
 
             <View style={styles.actions}>
               <Button
-                title="Reveal"
+                title="Reveal Board"
                 style={styles.action}
                 textStyle={styles.actionText}
-                icon={{name:'eye-outline'}}
+                icon={{ name:'eye' }}
                 onPress={sudoku.revealBoard}
               />
-
+              <Button
+                title="Reveal Slot"
+                style={styles.action}
+                textStyle={styles.actionText}
+                icon={{ name:'eye-outline' }}
+                onPress={() => sudoku.selected !== undefined ? sudoku.revealSlot(GetPosition(sudoku.selected)) : null}
+              />
               <Button
                 title="New"
                 style={styles.action}
                 textStyle={styles.actionText}
-                icon={{name:'reload-circle-outline'}}
+                icon={{ name:'reload-circle-outline' }}
                 onPress={sudoku.regenerate}
               />
             </View>
@@ -79,17 +85,21 @@ const styles = StyleSheet.create({
   },
 
   actions: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
     marginTop: 15,
+    paddingHorizontal: 15,
     width: "100%",
   },
 
   action: {
-    marginHorizontal: 10,
-    flex: 1,
+    margin: "0.75%",
+    width: "48%",
+    flexGrow: 1,
   },
 
   actionText: {
-    fontSize: 16,
+    fontSize: 14,
   },
 });
