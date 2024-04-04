@@ -24,8 +24,25 @@ export function useSudoku(level:SudokuLevel) : SudokuHook {
     setRevealed([]);
   };
 
+  const revealSlot = ([r, c]:Position) => {
+    let hasPos = false;
+    for (let s of revealed) {
+      if (s[0] === r && s[1] === c) {
+        hasPos = true
+        break;
+      }
+    }
+    hasPos ? null : setRevealed(current => [...current, [r,c]]);
+
+    setBoard(current => {
+      current[r][c] = solution[r][c];
+      return current;
+    });
+    setSelected(undefined);
+  };
+
   const revealBoard = () => {
-    setRevealed(revealed.concat(GetEmpty(board)));
+    setRevealed(r => r.concat(GetEmpty(board)));
     setBoard(b =>
       b.map((row, r) => {
         return row.map((slot, c) => {
@@ -36,6 +53,7 @@ export function useSudoku(level:SudokuLevel) : SudokuHook {
         });
       })
     );
+    setSelected(undefined);
   };
 
   useEffect(() => {
@@ -49,6 +67,7 @@ export function useSudoku(level:SudokuLevel) : SudokuHook {
     level,
     poked,
     revealed,
+    revealSlot,
     revealBoard,
     regenerate: generate,
 

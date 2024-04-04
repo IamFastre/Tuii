@@ -11,6 +11,7 @@ export interface SudokuHook {
   level: SudokuLevel;
   poked: Position[];
   revealed: Position[];
+  revealSlot: ([r, c]:Position) => void;
   revealBoard: () => void;
   regenerate: () => void;
   board: SudokuGrid;
