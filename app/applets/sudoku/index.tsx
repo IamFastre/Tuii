@@ -1,4 +1,4 @@
-import{ useContext } from "react";
+import{ useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import { Section, Button, C, L, T } from "@/components/basics";
@@ -9,8 +9,13 @@ import { Grid, Controls } from '@/components/applets/Sudoku';
 import { CountEmpty, GetDuplicates, GetPosition, useSudoku } from "@/src/sudoku";
 
 export default () : React.JSX.Element => {
+  const [solved, setSolved] = useState<boolean>(false);
   const { sudoku:config } = useContext(SettingsContext).settings;
   const sudoku = useSudoku(config.level);
+
+  useEffect(() => {
+    setSolved(sudoku.verify());
+  }, [CountEmpty(sudoku.board)])
 
   return (
     <View style={{ flex:1 }}>

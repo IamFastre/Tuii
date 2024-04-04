@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { SudokuLevel } from '@/src/general/interfaces';
 import { deepCopy } from '@/src/general/funcs';
 
-import { GetEmpty, LevelToNumber, MakeBoard, Poke } from './logic';
+import { CountEmpty, GetEmpty, LevelToNumber, MakeBoard, Poke } from './logic';
 import { Position, SudokuGrid, SudokuHook } from './types';
 
 export function useSudoku(level:SudokuLevel) : SudokuHook {
@@ -56,6 +56,20 @@ export function useSudoku(level:SudokuLevel) : SudokuHook {
     setSelected(undefined);
   };
 
+  const verify = () : boolean => {
+    if (CountEmpty(board))
+      return false;
+
+    for (let r = 0; r < board.length; r++) {
+      for (let c = 0; c <  board[r].length; c++) {
+        if (board[r][c] !== solution[r][c])
+          return false;
+      }
+    }
+
+    return true;
+  };
+
   useEffect(() => {
     generate();
     setReady(true);
@@ -69,6 +83,7 @@ export function useSudoku(level:SudokuLevel) : SudokuHook {
     revealed,
     revealSlot,
     revealBoard,
+    verify,
     regenerate: generate,
 
     get board() : SudokuGrid {

@@ -13,6 +13,7 @@ export interface SudokuHook {
   revealed: Position[];
   revealSlot: ([r, c]:Position) => void;
   revealBoard: () => void;
+  verify: () => boolean;
   regenerate: () => void;
   board: SudokuGrid;
   selected: number | undefined;
