@@ -13,7 +13,7 @@ export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSe
       <Pressable
         style={{ ...styles.slot, borderColor: colors.secondary, backgroundColor: locked ? colors.secondary + colors.opacity.faint : selected === id ? colors.accent : "transparent" }}
         onPress={() => {
-          if (!locked)
+          if (!locked && !revealed)
             setSelected(selected === id ? undefined : id);
         }}
         android_disableSound
