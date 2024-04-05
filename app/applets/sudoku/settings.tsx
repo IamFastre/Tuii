@@ -31,7 +31,7 @@ export default function SudokuSettings() {
             updateSettings();
           }}
           icon={sudoku.level === "easy" ? "heart-outline" : sudoku.level === "medium" ? "heart-half" : sudoku.level === "hard" ? "heart" : "heart-dislike"}
-          size="small"
+          size="medium"
         />
 
         <Sep />
@@ -45,7 +45,7 @@ export default function SudokuSettings() {
             setStored('sudoku', {...sudoku, show_conflicts: !sudoku.show_conflicts });
             updateSettings();
           }}
-          size="small"
+          size="medium"
         />
         <BoolSetting
           title="Show Empty Count"
@@ -55,7 +55,7 @@ export default function SudokuSettings() {
             setStored('sudoku', {...sudoku, show_empty_count: !sudoku.show_empty_count });
             updateSettings();
           }}
-          size="small"
+          size="medium"
         />
         <BoolSetting
           title="Show Numbers Count"
@@ -65,7 +65,7 @@ export default function SudokuSettings() {
             setStored('sudoku', {...sudoku, show_num_remaining: !sudoku.show_num_remaining });
             updateSettings();
           }}
-          size="small"
+          size="medium"
         />
       </ScrollView>
     </Section>

@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
   },
 
   action: {
-    margin: "0.75%",
-    width: "48%",
+    margin: 5,
+    flexBasis: "40%",
     flexGrow: 1,
   },
 
