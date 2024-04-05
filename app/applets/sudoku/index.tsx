@@ -61,14 +61,14 @@ export default () : React.JSX.Element => {
                 title="Reveal Slot"
                 style={styles.action}
                 textStyle={styles.actionText}
-                icon={{ name:'eye-outline' }}
+                icon={{ name:'pencil' }}
                 onPress={() => sudoku.selected !== undefined ? sudoku.revealSlot(GetPosition(sudoku.selected)) : null}
               />
               <Button
                 title="New"
                 style={styles.action}
                 textStyle={styles.actionText}
-                icon={{ name:'reload-circle-outline' }}
+                icon={{ name:'reload-circle' }}
                 onPress={() => {
                   sudoku.regenerate();
                   setSolved(false);
