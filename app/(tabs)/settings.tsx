@@ -74,7 +74,7 @@ export default function SettingsPage() {
 
 
   /* ======================================================================== */
-  /*                               Other Options                              */
+  /*                             { Other Options }                            */
   /* ======================================================================== */
 
   const onSubmitTheme = (forward:boolean = true) => {
@@ -167,16 +167,16 @@ export default function SettingsPage() {
             options={ThemeOptions}
             onSubmit={onSubmitTheme}
             icon={options.theme === "system" ? "cog" : colors.icon}
-            size='small'
+            size='medium'
           />
 
-          {/* Refresh button */}
+          {/* Word class button */}
           <BoolSetting
             title="Short Word Class"
             description={"Uses short word class in word of the day.\neg. verb → v."}
             current={options.short_word_class}
             onSubmit={onSubmitWordClass}
-            size='small'
+            size='medium'
           />
 
           <Sep />
@@ -190,7 +190,7 @@ export default function SettingsPage() {
             description="Show weather refresh button anyway."
             current={options.show_refresh_button}
             onSubmit={onSubmitRefreshButton}
-            size='small'
+            size='medium'
           />
 
           {/* Full screen */}
@@ -200,45 +200,47 @@ export default function SettingsPage() {
             experimental
             current={fullscreen}
             onSubmit={onSubmitFullscreen}
-            size='small'
+            size='medium'
           />
 
           <Sep margin={30} noThickness/>
 
           {/* Reset Button */}
-          {resetPressed ? <T style={{ textAlign: 'center', marginBottom: 15 }}>Are you sure?</T> : null}
-          <View style={styles.reset}>
-            { !resetPressed ?
-              <Button
-                title={"Rest all"}
-                style={{ flex: 1, borderColor: colors.hot }}
-                onPress={() => {
-                    setResetPressed(true);
-                  }}
-                  icon={{ name: "reload-circle" }}
-              /> : <>
-              <Button
-                title={"Yes"}
-                style={{ flex: 1, borderColor: colors.green, marginRight: 10 }}
-                onPress={() => {
-                  resetSettings();
-                  updateFullscreen(false);
-                  setFullscreen(false);
-                  updateData();
-                  setResetPressed(false);
-                }}
-                icon={{ name: "checkmark-circle" }}
-              />
-              <Button
-                title={"No"}
-                style={{ flex: 1, borderColor: colors.red, marginLeft: 10 }}
-                onPress={() => {
+          <View style={styles.resetContainer}>
+            {resetPressed ? <T style={styles.resetAssure}>Are you sure?</T> : null}
+            <View style={styles.reset}>
+              { !resetPressed ?
+                <Button
+                  title={"Rest all"}
+                  style={{ flex: 1, borderColor: colors.hot, marginVertical: 7.5 }}
+                  onPress={() => {
+                      setResetPressed(true);
+                    }}
+                    icon={{ name: "reload-circle" }}
+                /> : <>
+                <Button
+                  title={"Yes"}
+                  style={{ flex: 1, borderColor: colors.green, marginRight: "1.5%" }}
+                  onPress={() => {
+                    resetSettings();
+                    updateFullscreen(false);
+                    setFullscreen(false);
+                    updateData();
                     setResetPressed(false);
                   }}
-                  icon={{ name: "close-circle" }}
-              />
-              </>
-            }
+                  icon={{ name: "checkmark-circle" }}
+                />
+                <Button
+                  title={"No"}
+                  style={{ flex: 1, borderColor: colors.red, marginLeft: "1.5%" }}
+                  onPress={() => {
+                      setResetPressed(false);
+                    }}
+                    icon={{ name: "close-circle" }}
+                />
+                </>
+              }
+            </View>
           </View>
 
           <T style={styles.resetDisclaimer}>
@@ -250,18 +252,24 @@ export default function SettingsPage() {
               Tuii
             <C.ACCENT>{' }-•'}</C.ACCENT>
             {'\n'}
-            <L style={{ fontSize: 10 }}>
+            <L style={{ fontSize: 11 }}>
               (v{consts.version})
             </L>
             {'\n'}
-            <C.SECONDARY>
+            <C.SECONDARY style={{ fontSize: 12 }}>
               by
               {' '}
               <C.HIGHLIGHT>
-                IamFastre
+                @IamFastre
               </C.HIGHLIGHT>
             </C.SECONDARY>
           </T>
+          {/* <View style={styles.logos}>
+            <T style={{ fontSize: 10, color: colors.secondary }}>on</T>
+            <Ionicons name='logo-github' size={15} color={colors.secondary}/>
+            <Ionicons name='logo-instagram' size={15} color={colors.secondary}/>
+            <Ionicons name='logo-discord' size={15} color={colors.secondary}/>
+          </View> */}
 
       </ScrollView>
     </Section>
@@ -274,12 +282,22 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
 
+  resetContainer: {
+    height: 60,
+    alignSelf: 'center',
+    width: "60%",
+  },
+
+  resetAssure: {
+    flex: 1,
+    textAlign: 'center',
+    marginBottom: 7.5
+  },
+
   reset: {
+    flex: 2,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: "center",
-    width: "50%",
+    alignItems: 'stretch',
   },
 
   resetDisclaimer: {
@@ -295,8 +313,17 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 20,
     opacity: 0.4,
-    fontSize: 12,
     lineHeight: 15,
     textAlign: 'center'
-  } 
+  },
+
+  // logos: {
+  //   opacity: 0.4,
+  //   marginTop: 1,
+  //   marginBottom: 20,
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   gap: 5,
+  // },
 });
