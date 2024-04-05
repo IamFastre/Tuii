@@ -41,8 +41,6 @@ export function Button(props: ButtonProps): React.JSX.Element {
       backgroundColor: colors.primary,
       borderColor: props.disabled ? colors.secondary : colors.accent,
       borderRadius: 9999,
-      padding: 5,
-      paddingHorizontal: props.style?.width ? undefined : 20,
       ...props.style
     },
   

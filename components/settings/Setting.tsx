@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontSize: 10,
+    fontSize: 9,
     marginRight: 5,
   },
 
