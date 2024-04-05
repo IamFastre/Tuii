@@ -243,10 +243,10 @@ export default function HomePage() : React.JSX.Element {
 
     </Section>
     {
-      Platform.OS === 'web' || options.show_refresh_button
+      options.show_refresh_button
       ? <Button
           title={refreshing ? "Refreshing" : ""}
-          style={{ position: "absolute", bottom: 0, alignSelf: 'center', zIndex: 5, width: "auto" }}
+          style={{ position: "absolute", bottom: 0, alignSelf: 'center', zIndex: 5, width: "auto", paddingVertical: refreshing ? 0 : 5, paddingHorizontal: 5 }}
           icon={{ name: 'reload-circle' }}
           onPress={onRefresh}
         />

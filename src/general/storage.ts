@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Print } from "./funcs";
 import { ISudoku, IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
+import { Platform } from "react-native";
 
 export const DefaultSettings = {
   user: {
@@ -20,7 +21,7 @@ export const DefaultSettings = {
 
   options: {
     theme: "system",
-    show_refresh_button: false,
+    show_refresh_button: Platform.OS === 'web',
     short_word_class: true,
 
     type: "options",
