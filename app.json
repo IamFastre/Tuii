@@ -40,7 +40,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#121212"
         }
-      }
+      },
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/icons/favicon.png"
