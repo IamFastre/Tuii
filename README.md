@@ -27,7 +27,7 @@ I mean just look at these:
 
 ## Home Page
 
-It offers simple stuff like current weather (provided by [OpenWeatherMap](https://openweathermap.org/)'s API), a clock, Word of The Day (fetched from [FreeDictionaryAPI](https://dictionaryapi.dev/)) and Today's Quote!
+It offers simple stuff like current weather, a clock, Word of The Day and Today's Quote!
 
 ## Applets
 
