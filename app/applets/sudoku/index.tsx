@@ -1,4 +1,4 @@
-import{ useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import { Section, Button, C, L, T, B } from "@/components/basics";
