@@ -31,6 +31,13 @@ export default function AppletsPage() : React.JSX.Element {
             icon={icons[colors.theme].sudoku}
             style={styles.topOption}
           />
+          <Option
+            title='TicTacToe'
+            description={''}
+            path="applets/tictactoe"
+            icon={icons[colors.theme].sudoku}
+            style={styles.topOption}
+          />
           </ScrollView>
       </Section>
     </View>
