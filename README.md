@@ -48,5 +48,5 @@ The world needs more mean bullying! **:D**
 
 ## References
 
-- [OpenWeatherMap](https://openweathermap.org/): for fetching weather in main menu
-- [FreeDictionaryAPI](https://dictionaryapi.dev/): for fetching word of the day meaning in main menu
+- [OpenWeatherMap](https://openweathermap.org/): for fetching weather in the main menu.
+- [FreeDictionaryAPI](https://dictionaryapi.dev/): for fetching word of the day meaning in the main menu.
