@@ -33,7 +33,7 @@ export default function AppletsPage() : React.JSX.Element {
           />
           <Option
             title='TicTacToe'
-            description={''}
+            description={"Take turns marking grid with X's and O's. The first to get three in a row wins!"}
             path="applets/tictactoe"
             icon={icons[colors.theme].sudoku}
             style={styles.topOption}
