@@ -7,7 +7,7 @@ import { SettingsContext } from "@/components/Contexts";
 import { Header } from "@/components/applets/Header";
 import { B, Button, C, L, Section, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
-import { CountEmpty, NumberToLetter, useXO } from "@/src/tictactoe";
+import { CountEmpty, GetWinningPos, NumberToLetter, useXO } from "@/src/tictactoe";
 import { Grid } from "@/components/applets/TicTacToe";
 
 export default () : React.JSX.Element => {
@@ -24,8 +24,9 @@ export default () : React.JSX.Element => {
   useEffect(() => {
     const res = xo.verify();
     if (res) {
-      xo.winner = typeof res === 'number' ? res : null;
       xo.solved = true;
+      xo.winId  = GetWinningPos(xo.board);
+      xo.winner = typeof res === 'number' ? res : null;
       setShowWin(true);
 
       if (res === 1) setXPoints(x => x+1);

@@ -10,7 +10,11 @@ export const GridChild = ({xo, id}:{ xo:XOHook; id:number; }) => {
   return (
     <>
       <Pressable
-        style={[styles.slot, { backgroundColor: colors.primary, borderColor: colors.secondary, borderRadius: colors.others.section_radius/2 }]}
+        style={[styles.slot, {
+          backgroundColor: xo.solved && xo.winId?.includes(id) ? colors.secondary + colors.opacity.faint : colors.primary,
+          borderColor: colors.secondary,
+          borderRadius: colors.others.section_radius/2
+        }]}
         onPress={() => {
           if (xo.board[id] === null && !xo.solved) {
             const copy = [...xo.board];

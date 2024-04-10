@@ -16,6 +16,7 @@ export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
   const [board, setBoard] = useState<TTTSlotType[]>([]);
   const [turn, setTurn] = useState<1|2>(1);
   const [winner, setWinner] = useState<TTTSlotType>(null);
+  const [winId, setWinId] = useState<[number, number, number] | null>(null);
 
   const restart = () => {
     setLevel(lvl);
@@ -47,7 +48,7 @@ export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
       return board;
     },
 
-    set board(value) {
+    set board(value:TTTSlotType[]) {
       solved ? null : setBoard(value);
     },
 
@@ -55,7 +56,7 @@ export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
       return solved;
     },
 
-    set solved(value) {
+    set solved(value:boolean) {
       setSolved(value);
     },
 
@@ -63,7 +64,7 @@ export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
       return turn;
     },
 
-    set turn(value) {
+    set turn(value:1|2) {
       setTurn(value);
     },
 
@@ -71,8 +72,16 @@ export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
       return winner;
     },
 
-    set winner(value) {
+    set winner(value:TTTSlotType) {
       setWinner(value);
+    },
+
+    get winId() : [number, number, number] | null {
+      return winId;
+    },
+
+    set winId(value:[number, number, number] | null) {
+      setWinId(value);
     },
   };
 }

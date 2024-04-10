@@ -11,4 +11,5 @@ export interface XOHook {
   solved: boolean;
   turn: 1 | 2;
   winner: TTTSlotType;
+  winId: [number, number, number] | null;
 }
