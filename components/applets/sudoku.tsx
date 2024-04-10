@@ -1,17 +1,17 @@
 import { B, C, L, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 import { DimensionValue, Pressable, View, StyleSheet } from "react-native";
-import { EmptyBoard, GetDuplicates, SlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
+import { EmptyBoard, GetDuplicates, SudSlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
-export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSelected }: { value: SlotType; id: number; revealed?: boolean; locked?: boolean; faulty?: boolean; selected: number | undefined; setSelected: (v:number | undefined) => void; }) => {
+export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSelected }: { value: SudSlotType; id: number; revealed?: boolean; locked?: boolean; faulty?: boolean; selected: number | undefined; setSelected: (v:number | undefined) => void; }) => {
   const colors = useColors();
 
   return (
     <>
       <Pressable
-        style={{ ...styles.slot, borderColor: colors.secondary, backgroundColor: locked ? colors.secondary + colors.opacity.faint : selected === id ? colors.accent : "transparent" }}
+        style={{ ...styles.slot, borderColor: colors.secondary, backgroundColor: locked ? colors.secondary + colors.opacity.faint : selected === id ? colors.accent : "transparent", borderRadius: colors.others.section_radius/2 }}
         onPress={() => {
           if (!locked && !revealed)
             setSelected(selected === id ? undefined : id);
@@ -40,7 +40,7 @@ export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSe
 
       </Pressable>
 
-      {(id + 1) % 3 === 0 && (id + 1) % 9 !== 0 ? <View style={[styles.miniSepH, { backgroundColor: colors.primary }]} /> : null}
+      {(id + 1) % 3  === 0 && (id + 1) % 9  !== 0 ? <View style={[styles.miniSepH, { backgroundColor: colors.primary }]} /> : null}
       {(id + 1) % 27 === 0 && (id + 1) % 81 !== 0 ? <View style={[styles.miniSepV, { backgroundColor: colors.primary }]} /> : null}
     </>
   );
@@ -78,7 +78,7 @@ export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_confl
   };
 
   return (
-    <View style={[styles.grid, { borderColor: colors.accent }]}>
+    <View style={[styles.grid, { borderColor: colors.accent, borderRadius: colors.others.section_radius/2 }]}>
       {(sudoku.board ?? EmptyBoard).map((rows, r) => (
         rows.map((slot, c) => (
           <GridChild
@@ -97,7 +97,7 @@ export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_confl
 };
 
 
-export const Number = ({ show_num_remaining, value, selected, board, setBoard }: { show_num_remaining:boolean; value: SlotType; selected: number | undefined; board: SudokuGrid; setBoard: (v:SudokuGrid) => void; }) => {
+export const Number = ({ show_num_remaining, value, selected, solved, board, setBoard }: { show_num_remaining:boolean; value:SudSlotType; selected:number | undefined; solved:boolean; board:SudokuGrid; setBoard:(v:SudokuGrid) => void; }) => {
   const colors = useColors();
   const [isPressed, setIsPressed] = useState<boolean>(false);
   const amount = board.flat().filter(x => x === value).length;
@@ -108,7 +108,7 @@ export const Number = ({ show_num_remaining, value, selected, board, setBoard }:
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       onPress={() => {
-        if (selected !== undefined) {
+        if (selected !== undefined && !solved) {
           const row = Math.floor(selected / 9);
           const col = selected % 9;
           if (board) {
@@ -157,11 +157,12 @@ export const Controls = ({ sudoku, show_num_remaining }: { sudoku:SudokuHook; sh
         <L>{colors.theme === "scarlatta" ? ')' : ']'}</L>
       </T>
       <View style={styles.controls}>
-        {([1, 2, 3, 4, 5] as SlotType[]).map((val, i) => (
+        {([1, 2, 3, 4, 5] as SudSlotType[]).map((val, i) => (
           <Number
             key={i}
             value={val}
             selected={sudoku.selected}
+            solved={sudoku.solved}
             board={sudoku.board}
             show_num_remaining={show_num_remaining}
             setBoard={(v:SudokuGrid) => sudoku.board = v}
@@ -169,11 +170,12 @@ export const Controls = ({ sudoku, show_num_remaining }: { sudoku:SudokuHook; sh
         ))}
       </View>
       <View style={styles.controls}>
-        {([6, 7, 8, 9, null] as SlotType[]).map((val, i) => (
+        {([6, 7, 8, 9, null] as SudSlotType[]).map((val, i) => (
           <Number
             key={i}
             value={val}
             selected={sudoku.selected}
+            solved={sudoku.solved}
             board={sudoku.board}
             show_num_remaining={show_num_remaining}
             setBoard={(v:SudokuGrid) => sudoku.board = v}
@@ -193,12 +195,12 @@ const consts = {
   border: 5,
 };
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   grid: {
-    width: 350,
-    aspectRatio: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    width: 350,
+    aspectRatio: 1,
     alignContent: "space-between",
     justifyContent: "space-between",
     borderWidth: 3,

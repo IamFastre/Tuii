@@ -12,8 +12,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default () : React.JSX.Element => {
   const colors = useColors();
-
-  const [solved, setSolved] = useState<boolean>(false);
   const [showWin, setShowWin] = useState<boolean>(true);
 
   const { sudoku:config } = useContext(SettingsContext).settings;
@@ -23,8 +21,8 @@ export default () : React.JSX.Element => {
 
   useEffect(() => {
     if (sudoku.ready && sudoku.verify()) {
+      sudoku.solved = true;
       setShowWin(true);
-      setSolved(true);
     }
   }, [CountEmpty(sudoku.board)])
 
@@ -71,7 +69,6 @@ export default () : React.JSX.Element => {
                 icon={{ name:'reload-circle' }}
                 onPress={() => {
                   sudoku.regenerate();
-                  setSolved(false);
                 }}
               />
             </View>
@@ -88,7 +85,7 @@ export default () : React.JSX.Element => {
 
         : null }
       {
-        solved && showWin ? 
+        sudoku.solved && showWin ? 
         <Pressable style={[styles.winContainer, { backgroundColor: colors.primary + colors.opacity.most }]} onPress={dismissWin} android_disableSound>
           <Pressable android_disableSound>
             <Section containerStyle={styles.winMessageContainer} centered>
@@ -145,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   board: {
-    marginTop: 20,
+    marginTop: 22.5,
     alignItems: "center",
   },
 

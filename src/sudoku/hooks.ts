@@ -8,8 +8,9 @@ import { Position, SudokuGrid, SudokuHook } from './types';
 
 export function useSudoku(lvl:SudokuLevel) : SudokuHook {
   const [level, setLevel] = useState<SudokuLevel>(lvl);
+  const [solved, setSolved] = useState<boolean>(false);
   const [selected, setSelected] = useState<number | undefined>(undefined);
-  const [isReady, setReady] = useState<boolean>(false);
+  const [ready, setReady] = useState<boolean>(false);
   const [solution, setSolution] = useState<SudokuGrid>([]);
   const [board, setBoard] = useState<SudokuGrid>([]);
   const [poked, setPoked] = useState<Position[]>([]);
@@ -19,6 +20,7 @@ export function useSudoku(lvl:SudokuLevel) : SudokuHook {
     const sol = MakeBoard();
     const puz = Poke(deepCopy(sol), LevelToNumber(lvl));
     setLevel(lvl);
+    setSolved(false);
     setSolution(sol);
     setBoard(puz);
     setPoked(GetEmpty(puz));
@@ -78,7 +80,7 @@ export function useSudoku(lvl:SudokuLevel) : SudokuHook {
   }, []);
 
   return {
-    ready: isReady,
+    ready,
     solution,
     level,
     poked,
@@ -93,7 +95,15 @@ export function useSudoku(lvl:SudokuLevel) : SudokuHook {
     },
 
     set board(value:SudokuGrid) {
-      setBoard(value);
+      solved ? null : setBoard(value);
+    },
+
+    get solved() : boolean {
+      return solved;
+    },
+
+    set solved(value:boolean) {
+      setSolved(value);
     },
 
     get selected() : number | undefined {

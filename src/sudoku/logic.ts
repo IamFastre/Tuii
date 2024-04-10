@@ -1,7 +1,7 @@
 import { deepCopy, getRandomInt } from "@/src/general/funcs";
 import { SudokuLevel } from "@/src/general/interfaces";
 
-import { DigitType, Position, SlotType, SudokuGrid } from "./types";
+import { DigitType, Position, SudSlotType, SudokuGrid } from "./types";
 
 export const EmptyBoard:SudokuGrid = Array(9).fill(Array(9).fill(null));
 
@@ -64,25 +64,25 @@ export function Poke(board:SudokuGrid, pokes: number) : SudokuGrid {
 
 /* ========================================================================== */
 
-export function GetRows(board:SudokuGrid) : SlotType[][] {
+export function GetRows(board:SudokuGrid) : SudSlotType[][] {
   return board;
 }
 
-export function GetCols(board:SudokuGrid) : SlotType[][] {
+export function GetCols(board:SudokuGrid) : SudSlotType[][] {
   return board[0].map((_, colIndex) => board.map(row => row[colIndex]));
 }
 
-export function GetSubs(board:SudokuGrid) : SlotType[][] {
+export function GetSubs(board:SudokuGrid) : SudSlotType[][] {
   const size:number = Math.sqrt(board.length);
-  const subs:SlotType[][] = [];
+  const subs:SudSlotType[][] = [];
 
   for (let rowStart = 0; rowStart < board.length; rowStart += size) {
     for (let colStart = 0; colStart < board[0].length; colStart += size) {
-      const subgrid: SlotType[] = [];
+      const subgrid: SudSlotType[] = [];
       for (let row = rowStart; row < rowStart + size; row++) {
         subgrid.push(...board[row].slice(colStart, colStart + size));
       }
-      subs.push(subgrid as SlotType[]);
+      subs.push(subgrid as SudSlotType[]);
     }
   }
 
