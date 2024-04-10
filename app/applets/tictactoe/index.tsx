@@ -13,6 +13,8 @@ import { Grid } from "@/components/applets/TicTacToe";
 export default () : React.JSX.Element => {
   const colors = useColors();
   const [showWin, setShowWin] = useState<boolean>(true);
+  const [xPoints, setXPoints] = useState<number>(0);
+  const [oPoints, setOPoints] = useState<number>(0);
 
   const { tictactoe:config } = useContext(SettingsContext).settings;
   const xo = useXO(config.level);
@@ -24,8 +26,10 @@ export default () : React.JSX.Element => {
     if (res) {
       xo.winner = typeof res === 'number' ? res : null;
       xo.solved = true;
-
       setShowWin(true);
+
+      if (res === 1) setXPoints(x => x+1);
+      if (res === 2) setOPoints(x => x+1);
     }
   }, [CountEmpty(xo.board)])
 
@@ -34,6 +38,26 @@ export default () : React.JSX.Element => {
       <Header title='TIC-TAC-TOE' options={"/applets/tictactoe/settings"} size="small" />
       <Section style={{ flex:1 }}>
         <Pressable style={styles.container} onPress={() => setShowWin(true)} android_disableSound>
+        <View style={styles.scoreBoard}>
+            <T style={{ fontFamily: colors.others.fonts.clock, textAlign: 'center', fontSize: 32 }}>
+              <C.ACCENT>
+                { colors.theme === "scarlatta"
+                ? <C.SECONDARY>{'❁  '}</C.SECONDARY>
+                : <>•<C.SECONDARY>{'-< '}</C.SECONDARY></>
+                }
+                  Score
+                { colors.theme === "scarlatta"
+                ? <C.SECONDARY>{'  ❁'}</C.SECONDARY>
+                : <><C.SECONDARY>{' >-'}</C.SECONDARY>•</>
+                }
+              </C.ACCENT>
+            </T>
+            <T style={[styles.scoreNums, { fontFamily: colors.others.fonts.clock }]}>
+              <C.RED>{xPoints}</C.RED>
+              {' - '}
+              <C.GREEN>{oPoints}</C.GREEN>
+            </T>
+          </View>
           <View style={styles.board}>
             <Grid xo={xo} />
               <T style={styles.turn}>
@@ -128,6 +152,16 @@ const styles = StyleSheet.create({
 
   actionText: {
     fontSize: 14,
+  },
+
+  scoreBoard: {
+    marginTop: 20,
+  },
+
+  scoreNums: {
+    marginTop: 5,
+    textAlign: 'center',
+    fontSize: 30,
   },
 
   winContainer: {
