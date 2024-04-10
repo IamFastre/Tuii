@@ -4,7 +4,7 @@ import { T, Section, C, B } from '@/components/basics';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '@/constants/colors';
 
-export function Header({title, back, options}:{title:string, back?:string, options:string}) : React.JSX.Element {
+export function Header({title, options, size}:{ title:string; options:string; size?:"small" | "large"; }) : React.JSX.Element {
   const colors = useColors();
 
   return (
@@ -12,7 +12,7 @@ export function Header({title, back, options}:{title:string, back?:string, optio
       <TouchableOpacity style={styles.backButton} onPress={() => router.canGoBack() ? router.back() : router.canDismiss() ? router.dismiss() : router.replace('/')}>
         <Ionicons name='chevron-back-sharp' size={35} color={colors.hot} />
       </TouchableOpacity>
-      <T style={styles.titleText}>
+      <T style={{ fontSize: size === "small" ? 22 : size === "large" ? 30 : 26 }}>
         <C.ACCENT>•-{'{ '}</C.ACCENT>
         <B>{title}</B>
         <C.ACCENT>{' }'}-•</C.ACCENT>
@@ -24,7 +24,7 @@ export function Header({title, back, options}:{title:string, back?:string, optio
   );
 }
 
-export function MiniHeader({title, subtitle}:{title:string, subtitle:string}) : React.JSX.Element {
+export function MiniHeader({title, subtitle, size}:{ title:string; subtitle:string; size?:"small" | "large"; }) : React.JSX.Element {
   const colors = useColors();
 
   return (
@@ -32,7 +32,7 @@ export function MiniHeader({title, subtitle}:{title:string, subtitle:string}) : 
       <TouchableOpacity style={styles.backButton} onPress={() => router.canGoBack() ? router.back() : router.canDismiss() ? router.dismiss() : router.replace('/')}>
         <Ionicons name='close' size={35} color={colors.hot} />
       </TouchableOpacity>
-      <T style={styles.titleText}>
+      <T style={{ fontSize: size === "small" ? 22 : size === "large" ? 30 : 26 }}>
         <C.ACCENT>[</C.ACCENT>
         <B> {title} </B>
         <C.ACCENT>]</C.ACCENT>
@@ -59,10 +59,6 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     left: 20
-  },
-
-  titleText: {
-    fontSize: 26,
   },
 
   settingsButton: {
