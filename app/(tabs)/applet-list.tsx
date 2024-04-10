@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Section } from '@/components/basics';
+import { Section, Sep } from '@/components/basics';
 import { Option } from '../../components/applets/Option';
 import { useColors } from '@/constants/colors';
 
@@ -27,18 +27,18 @@ export default function AppletsPage() : React.JSX.Element {
     <View style={{ flex:1 }}>
       <Section title="Applets" style={{ flex:1 }}>
         <ScrollView style={{flex: 1}}>
-          <Option
-            title='Sudoku'
-            description={'Fill a 9×9 grid with 1-9 with no copies in each row, column, and box.\nLogic, not guesswork, is key!'}
-            path="applets/sudoku"
-            icon={icons[colors.theme].sudoku}
-            style={styles.topOption}
-          />
+          <Sep noThickness margin={10} />
           <Option
             title='TicTacToe'
             description={"Take turns marking grid with X's and O's. The first to get three in a row wins!"}
             path="applets/tictactoe"
             icon={icons[colors.theme].tictactoe}
+          />
+          <Option
+            title='Sudoku'
+            description={'Fill a 9×9 grid with 1-9 with no copies in each row, column, and box.\nLogic, not guesswork, is key!'}
+            path="applets/sudoku"
+            icon={icons[colors.theme].sudoku}
           />
           </ScrollView>
       </Section>
@@ -47,7 +47,4 @@ export default function AppletsPage() : React.JSX.Element {
 }
 
 export const styles = StyleSheet.create({
-  topOption: {
-    marginTop: 30
-  }
 });
