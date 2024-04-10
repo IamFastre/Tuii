@@ -1,12 +1,11 @@
 import{ useCallback, useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, RefreshControl, Platform } from 'react-native';
 
-import { B, Button, C, Section, T } from '@/components/basics';
+import { B, Button, C, Section, T, Sep } from '@/components/basics';
 import { getTime, getGreet } from '@/src/general/funcs';
 import { ITime } from "@/src/general/interfaces";
 import { IForecast, WeatherIconID, fetchWeather } from '@/src/weather';
 import { WeatherIcon } from '@/components/weather/ascii-art';
-import { Sep } from '@/components/settings';
 import { State } from '@/src/general/types';
 
 import { TodaysQuote, TodaysWord } from '@/components/home';

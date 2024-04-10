@@ -1,7 +1,7 @@
 import { MiniHeader } from "@/components/applets/Header";
-import { Section } from "@/components/basics";
+import { Section, Sep } from "@/components/basics";
 import { SettingsContext } from "@/components/Contexts";
-import { Sep, Title, OptionsSetting } from "@/components/settings";
+import { Title, OptionsSetting } from "@/components/settings";
 import { move } from "@/src/general/funcs";
 import { TTTLevelOptions } from "@/src/general/interfaces";
 import { setStored } from "@/src/general/storage";

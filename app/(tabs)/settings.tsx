@@ -1,9 +1,9 @@
 import{ useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { C, L, Section, T, Button } from '@/components/basics';
+import { C, L, Section, T, Button, Sep } from '@/components/basics';
 import { ThemeOptions, UnitsOptions, UserGenderOptions } from '@/src/general/interfaces';
-import { OptionsSetting, TextInputSetting, Title, Sep, BoolSetting } from '@/components/settings';
+import { OptionsSetting, TextInputSetting, Title, BoolSetting } from '@/components/settings';
 import { resetSettings, setStored } from '@/src/general/storage';
 import consts from '@/constants/consts';
 import { useColors } from '@/constants/colors';

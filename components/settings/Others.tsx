@@ -15,10 +15,6 @@ export const Title = ({title}:{title:string}) => (
   </>
 );
 
-export const Sep = ({margin, thickness, color, noThickness}:{margin?:number, thickness?:number, color?:ColorValue, noThickness?:boolean }) => (
-  <View style={[styles.sep, { borderRadius: 9999, height: noThickness ? 0 : thickness ?? 0.5, marginVertical: margin ?? 15, backgroundColor: color ?? useColors().accent }]}/>
-);
-
 const styles = StyleSheet.create({
   titleText: {
     textAlign: 'center',
@@ -34,10 +30,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     top: -10,
     lineHeight: 20,
-  },
-
-  sep: {
-    width: "60%",
-    alignSelf: 'center'
   },
 });
