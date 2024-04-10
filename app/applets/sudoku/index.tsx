@@ -66,7 +66,7 @@ export default () : React.JSX.Element => {
                 title="New"
                 style={styles.action}
                 textStyle={styles.actionText}
-                icon={{ name:'reload-circle' }}
+                icon={{ name:'refresh-circle' }}
                 onPress={() => {
                   sudoku.regenerate();
                 }}
