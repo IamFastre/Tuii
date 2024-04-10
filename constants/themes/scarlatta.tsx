@@ -6,7 +6,7 @@ const theme = {
   ...defaults,
   primary: "#341411",
   secondary: "#bd3478",
-  tertiary: "#dddddd",
+  tertiary: "#eed0d0",
 
   accent: "#5c14e3",
   highlight: "#1F8870",
