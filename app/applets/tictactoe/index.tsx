@@ -64,9 +64,9 @@ export default () : React.JSX.Element => {
           <Pressable android_disableSound>
             <Section containerStyle={styles.winMessageContainer} centered>
               <View style={[styles.winIcon, { backgroundColor: colors.accent }]}>
-                { xo.winner === 1 ? <Ionicons name={"close-sharp"} size={40} color={colors.tertiary}/>
+                { xo.winner === 1 ? <Ionicons name={"close-sharp"} size={50} color={colors.tertiary}/>
                 : xo.winner === 2 ? <Ionicons name={"ellipse-outline"} size={40} color={colors.tertiary}/>
-                : <MaterialCommunityIcons name="tie" size={40} color={colors.tertiary}/>}
+                : colors.theme === "scarlatta" ? <MaterialCommunityIcons name="bow-tie" size={50} color={colors.tertiary}/> : <MaterialCommunityIcons name="tie" size={45} color={colors.tertiary}/>}
               </View>
               <T style={styles.winTitle}>
                 <B>
