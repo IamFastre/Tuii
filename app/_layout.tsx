@@ -44,6 +44,7 @@ export default () => {
       metrics: await getStored('metrics'),
       options: await getStored('options'),
       sudoku: await getStored('sudoku'),
+      tictactoe: await getStored('tictactoe'),
     })
   };
 
