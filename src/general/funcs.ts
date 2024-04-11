@@ -47,15 +47,14 @@ export function getGreet() : string {
 
 export function normalize(str:string) : string {
   return str.toLowerCase()
-    .replace(/^./, c => c.toUpperCase())
-    .replace(/[\.\!\?]\s+./, c => c.toUpperCase())
-    .replace(/[^\.\!\?]$/, c => c+".")
+    .replaceAll(/^./g, c => c.toUpperCase())
+    .replaceAll(/[\.\!\?]\s+./g, c => c.toUpperCase())
+    .replaceAll(/[^\.\!\?]$/g, c => c+".")
     .replaceAll(" s ", "’s ")
     .replaceAll(" re ", "’re ")
     .replaceAll(" don t ", " don’t ")
     .replaceAll(" can t ", " can’t ")
-    .replaceAll(" i ", " I ")
-    .replaceAll("'", "’");
+    .replaceAll(" i ", " I ");
 }
 
 export function capitalize(str:string) : string {
