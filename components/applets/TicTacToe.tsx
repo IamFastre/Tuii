@@ -1,8 +1,51 @@
 import { Pressable, View, StyleSheet } from "react-native";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 
 import { useColors } from "@/constants/colors";
-import { XOHook } from "@/src/tictactoe";
+import { TTTSlotType, XOHook } from "@/src/tictactoe";
+import { useEffect } from "react";
+
+export const Icon = ({id}:{id:TTTSlotType}) => {
+  const colors = useColors();
+  const scaler = useSharedValue(0);
+
+  const style = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { scale: scaler.value },
+        id === 2 ? { rotateX: `${scaler.value*360}deg` } : { rotate: `${scaler.value*270}deg` },
+      ]
+    };
+  }, [scaler, id]);
+
+  useEffect(() => {
+    if (id !== null) {
+      scaler.value = withTiming(1, {
+        duration: 750,
+        easing: Easing.bezier(0.5, 0.01, 0, 1),
+      });
+    }
+
+    return () => {
+      scaler.value = 0;
+    };
+  }, [id])
+
+  return (
+    <Animated.View style={style}>
+      {
+        id === 1 ?
+        <Ionicons name="close-sharp" size={65} color={colors.red} />
+        :
+        id === 2 ?
+        <Ionicons name="ellipse-outline" size={55} color={colors.green} />
+        :
+        null
+      }
+    </Animated.View>
+  )
+};
 
 export const GridChild = ({xo, id}:{ xo:XOHook; id:number; }) => {
   const colors = useColors();
@@ -16,7 +59,7 @@ export const GridChild = ({xo, id}:{ xo:XOHook; id:number; }) => {
           borderRadius: colors.others.section_radius/2
         }]}
         onPress={() => {
-          if (xo.board[id] === null && !xo.solved) {
+          if (xo.board[id] === null && !xo.solved && !xo.cpuTurn) {
             const copy = [...xo.board];
             copy[id] = xo.turn;
             xo.board = copy;
@@ -25,14 +68,7 @@ export const GridChild = ({xo, id}:{ xo:XOHook; id:number; }) => {
         }}
         android_disableSound
       >
-        {
-          xo.board[id] === 1 ?
-          <Ionicons name="close-sharp"     size={65} color={colors.red} />
-          : xo.board[id] === 2 ?
-          <Ionicons name="ellipse-outline" size={60} color={colors.green} />
-          :
-          null
-        }
+        <Icon id={xo.board[id]} />
       </Pressable>
     </>
   );
