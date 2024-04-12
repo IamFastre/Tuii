@@ -23,7 +23,7 @@ export default () : React.JSX.Element => {
 
   useEffect(() => {
     config.vs_cpu ? xo.cpu = config.cpu_as : null;
-  }, [config.vs_cpu, config.cpu_as, xo.cpu, xo.turn]);
+  }, [config.vs_cpu, config.cpu_as, xo.turn]);
 
   useEffect(() => {
     const res = xo.verify();
