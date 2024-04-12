@@ -1,5 +1,5 @@
 import{ useState } from 'react';
-import { StyleSheet, View, ViewStyle, TextStyle, GestureResponderEvent, Pressable } from 'react-native';
+import { StyleSheet, View, ViewStyle, TextStyle, GestureResponderEvent, Pressable, ColorValue } from 'react-native';
 import { useColors } from '@/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { T } from './T';
@@ -8,7 +8,7 @@ import { isHexColor } from '@/src/general/funcs';
 
 export type ButtonIcon = {
   name: string;
-  color?: string;
+  color?: ColorValue;
   size?: number;
   style?: TextStyle;
 };
@@ -39,9 +39,9 @@ export function Button(props: ButtonProps): React.JSX.Element {
       justifyContent: "center",
       borderWidth: 1,
       backgroundColor: colors.primary,
-      borderColor: props.disabled ? colors.secondary : colors.accent,
       borderRadius: 9999,
-      ...props.style
+      ...props.style,
+      borderColor: props.disabled ? colors.secondary : props.style?.borderColor ? props.style.borderColor : colors.accent,
     },
   
     text: {
