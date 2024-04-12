@@ -7,7 +7,7 @@ import { SettingsContext } from "@/components/Contexts";
 import { Header } from "@/components/applets/Header";
 import { B, Button, C, L, Section, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
-import { CountEmpty, cpuMove, GetWinningPos, NumberToLetter, useXO } from "@/src/tictactoe";
+import { CountEmpty, GetWinningPos, NumberToLetter, useXO } from "@/src/tictactoe";
 import { Grid } from "@/components/applets/TicTacToe";
 
 export default () : React.JSX.Element => {
@@ -20,6 +20,10 @@ export default () : React.JSX.Element => {
   const xo = useXO(config.level);
 
   const dismissWin = () => setShowWin(false);
+
+  useEffect(() => {
+    config.vs_cpu ? xo.cpu = config.cpu_as : null;
+  }, [config.vs_cpu, config.cpu_as, xo.cpu, xo.turn]);
 
   useEffect(() => {
     const res = xo.verify();
@@ -60,7 +64,7 @@ export default () : React.JSX.Element => {
             </T>
           </View>
           <View style={styles.board}>
-            <Grid xo={xo} />
+            <Grid xo={xo} vs_cpu={config.vs_cpu} />
               <T style={styles.turn}>
                 <C.SECONDARY>
                   {'•-[ '}

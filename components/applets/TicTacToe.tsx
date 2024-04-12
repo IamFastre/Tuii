@@ -3,8 +3,8 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from '
 import { Ionicons } from '@expo/vector-icons';
 
 import { useColors } from "@/constants/colors";
-import { TTTSlotType, XOHook } from "@/src/tictactoe";
-import { useEffect } from "react";
+import { cpuMove, TTTSlotType, XOHook } from "@/src/tictactoe";
+import { useEffect, useRef } from "react";
 
 export const Icon = ({id}:{id:TTTSlotType}) => {
   const colors = useColors();
@@ -74,8 +74,27 @@ export const GridChild = ({xo, id}:{ xo:XOHook; id:number; }) => {
   );
 };
 
-export const Grid = ({xo}:{xo:XOHook}) => {
+export const Grid = ({xo, vs_cpu}:{ xo:XOHook; vs_cpu:boolean; }) => {
   const colors = useColors();
+  const rendered = useRef(false);
+
+  useEffect(() => {
+    rendered.current = true;
+  }, [])
+
+  useEffect(() => {
+    if (vs_cpu && xo.turn === xo.cpu) {
+      setTimeout(() => {
+        const move = cpuMove(xo.board, xo.cpu);
+        if (xo.board[move] === null && !xo.solved) {
+          const copy = [...xo.board];
+          copy[move] = xo.turn;
+          xo.board = copy;
+          xo.next();
+        }
+      }, 500);
+    }
+  }, [rendered.current, xo.cpu, xo.turn]);
 
   return (
     <View style={[styles.grid, { borderColor: colors.accent, borderRadius: colors.others.section_radius/2 }]}>
