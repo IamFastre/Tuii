@@ -1,12 +1,13 @@
-import { View, StyleSheet, KeyboardTypeOptions, Pressable, ViewStyle } from "react-native";
+import { View, StyleSheet, KeyboardTypeOptions, Pressable, ViewStyle, ColorValue } from "react-native";
 import { B, Button, C, L, T, TI } from "@/components/basics";
 import { State } from '@/src/general/types';
 import { useColors } from "@/constants/colors";
 
 interface SettingProp {
   title: string;
-  description?: string;
+  description?: string | React.JSX.Element;
   experimental?:boolean;
+  disabled?:boolean;
   onSubmit: Function;
   size?: "small" | "medium" | "large";
 }
@@ -20,15 +21,16 @@ interface TextInputSettingProps extends SettingProp {
 
 interface OptionsSettingProps extends SettingProp {
   icon?: string;
+  color?: ColorValue;
   index: number;
-  options: string[];
+  options?: string[];
 }
 
 interface BoolSettingProps extends SettingProp {
   current: boolean;
 }
 
-const Title = ({title, description, experimental}:{title:string, description:string | undefined, experimental:boolean | undefined}) => (
+const Title = ({title, description, experimental}:{title:string, description:string | React.JSX.Element | undefined, experimental:boolean | undefined}) => (
   <View style={styles.titleContainer}>
     <T>
       <C.ACCENT>
@@ -64,6 +66,7 @@ export const TextInputSetting = (props:TextInputSettingProps) => {
           props.setState("");
         }}
         keyboardType={props.keyboardType}
+        disabled={props.disabled}
       />
     </View>
   );
@@ -74,12 +77,22 @@ export const OptionsSetting = (props:OptionsSettingProps) => {
     <View style={styles.setting}>
       <Title title={props.title} description={props.description} experimental={props.experimental} />
       <Button
-        title={props.options[props.index]}
-        style={props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input}
+        title={props.options ? props.options[props.index] : undefined}
+        style={{
+          ...(props.color ? { borderColor: props.color } : {}),
+          ...(props.size === "small" ?
+              styles.smallInput :
+              props.size === "medium" ?
+              styles.mediumInput
+              : props.size === "large" ?
+              styles.largeInput :
+              styles.input)
+        }}
         onPress={() => props.onSubmit()}
         onLongPress={() => props.onSubmit(false)}
         delayLongPress={350}
-        icon={props.icon ? { name: props.icon, size: 12 } : undefined}
+        icon={props.icon ? { name: props.icon, size: 12, color: props.color } : undefined}
+        disabled={props.disabled}
       />
     </View>
   );
@@ -96,6 +109,7 @@ export const BoolSetting = (props:BoolSettingProps) => {
         style={{...(props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input), borderColor: props.current ? colors.accent : colors.hot}}
         onPress={() => props.onSubmit()}
         icon={{ name: props.current ? "checkmark-circle-outline" : "close-circle-outline", size: 12 }}
+        disabled={props.disabled}
       />
     </View>
   );

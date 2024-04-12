@@ -11,6 +11,7 @@ export interface TIProps {
   onChangeText?: (text: string) => void;
   onSubmitEditing?: (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void;
   style?: ViewStyle;
+  disabled?:boolean;
 }
 
 export const TI = (props:TIProps) => {
@@ -51,6 +52,7 @@ export const TI = (props:TIProps) => {
             setTimeout(() => setIsPressed(false), 400)
           }
         }}
+        editable={!props.disabled}
       />
     </View>
   );
