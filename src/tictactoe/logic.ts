@@ -126,5 +126,5 @@ export function cpuMove(board:TTTSlotType[], cpu:TTTSlotType) : number {
 
   // Desperate, get a random space
   const emptySpaces = [...board.keys()].filter(i => board[i] === null);
-  return emptySpaces[getRandomInt(0, emptySpaces.length)];
+  return emptySpaces.length ? emptySpaces[getRandomInt(0, emptySpaces.length)] : -1;
 }
