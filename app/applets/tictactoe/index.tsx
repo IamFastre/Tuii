@@ -22,7 +22,7 @@ export default () : React.JSX.Element => {
   const dismissWin = () => setShowWin(false);
 
   useEffect(() => {
-    config.vs_cpu ? xo.cpu = config.cpu_as : null;
+    xo.cpu = config.vs_cpu ? config.cpu_as : null;
   }, [config.vs_cpu, config.cpu_as, xo.turn]);
 
   useEffect(() => {

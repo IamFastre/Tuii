@@ -94,7 +94,7 @@ export const Grid = ({xo, vs_cpu}:{ xo:XOHook; vs_cpu:boolean; }) => {
         }
       }, 500);
     }
-  }, [rendered.current, xo.cpu, xo.turn]);
+  }, [rendered.current, xo.cpu, xo.turn, vs_cpu]);
 
   return (
     <View style={[styles.grid, { borderColor: colors.accent, borderRadius: colors.others.section_radius/2 }]}>
