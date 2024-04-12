@@ -7,7 +7,7 @@ import { SettingsContext } from "@/components/Contexts";
 import { Header } from "@/components/applets/Header";
 import { B, Button, C, L, Section, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
-import { CountEmpty, GetWinningPos, NumberToLetter, useXO } from "@/src/tictactoe";
+import { CountEmpty, cpuMove, GetWinningPos, NumberToLetter, useXO } from "@/src/tictactoe";
 import { Grid } from "@/components/applets/TicTacToe";
 
 export default () : React.JSX.Element => {
