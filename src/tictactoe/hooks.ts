@@ -12,11 +12,10 @@ const NewTTT:TTTSlotType[] = [
 
 export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
   const [level, setLevel] = useState<TTTLevel>(lvl);
-  const [is2P, setIs2P] = useState<boolean>(false);
   const [solved, setSolved] = useState<boolean>(false);
-  const [cpuTurn, setCpuTurn] = useState<boolean>(false);
   const [board, setBoard] = useState<TTTSlotType[]>([]);
   const [turn, setTurn] = useState<1|2>(1);
+  const [cpu, setCpu] = useState<TTTSlotType>(null);
   const [winner, setWinner] = useState<TTTSlotType>(null);
   const [winId, setWinId] = useState<[number, number, number] | null>(null);
 
@@ -54,14 +53,6 @@ export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
       solved ? null : setBoard(value);
     },
 
-    get is2P() : boolean {
-      return is2P;
-    },
-
-    set is2P(value:boolean) {
-      setIs2P(value);
-    },
-
     get solved() : boolean {
       return solved;
     },
@@ -70,12 +61,12 @@ export function useXO(lvl:TTTLevel, starter:1|2 = 1) : XOHook {
       setSolved(value);
     },
 
-    get cpuTurn() : boolean {
-      return cpuTurn;
+    get cpu() : TTTSlotType {
+      return cpu;
     },
 
-    set cpuTurn(value:boolean) {
-      setCpuTurn(value);
+    set cpu(value:TTTSlotType) {
+      setCpu(value);
     },
 
     get turn() : 1 | 2 {

@@ -59,7 +59,7 @@ export const GridChild = ({xo, id}:{ xo:XOHook; id:number; }) => {
           borderRadius: colors.others.section_radius/2
         }]}
         onPress={() => {
-          if (xo.board[id] === null && !xo.solved && !xo.cpuTurn) {
+          if (xo.board[id] === null && !xo.solved && xo.turn !== xo.cpu) {
             const copy = [...xo.board];
             copy[id] = xo.turn;
             xo.board = copy;
