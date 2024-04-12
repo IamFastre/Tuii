@@ -38,6 +38,8 @@ export const DefaultSettings = {
 
   tictactoe: {
     level: "easy",
+    vs_cpu: true,
+    cpu_as: 2,
 
     type: "tictactoe",
   } as ITicTacToe,

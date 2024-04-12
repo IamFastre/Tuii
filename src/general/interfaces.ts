@@ -6,11 +6,15 @@ export const UnitsOptions:Units[] = ["metric", "imperial"];
 export const ThemeOptions:Themes[] = ["system", ...Object.keys(themes) as Themes[]];
 export const SudokuLevelOptions:SudokuLevel[] = ["easy", "medium", "hard", "max"];
 export const TTTLevelOptions:TTTLevel[] = ["easy", "medium", "hard"];
+export const TTTPlayers:TTTPlayer[] = [1, 2];
 
 export type UserGender  = "male" | "female" | "other";
 export type Units       = "metric" | "imperial";
 export type Themes      = "system" | keyof typeof themes;
+
 export type SudokuLevel = "easy" | "medium" | "hard" | "max";
+
+export type TTTPlayer = 1 | 2;
 export type TTTLevel = "easy" | "medium" | "hard";
 
 export type StoredValue = IUser | IMetrics | IOptions;
@@ -46,6 +50,8 @@ export interface ISudoku {
 
 export interface ITicTacToe {
   level: TTTLevel;
+  vs_cpu: boolean;
+  cpu_as: TTTPlayer;
   type: "tictactoe";
 }
 
