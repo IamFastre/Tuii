@@ -106,7 +106,6 @@ export function cpuMove(board:TTTSlotType[], cpu:TTTSlotType) : number {
     const dup = getDouble(line);
     if (dup) {
       const spaces = win.filter(v => board[v] === null);
-      console.log(spaces);
       if (spaces.length)
         return spaces[0];
     }
