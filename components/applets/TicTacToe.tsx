@@ -85,8 +85,8 @@ export const Grid = ({xo, vs_cpu}:{ xo:XOHook; vs_cpu:boolean; }) => {
   useEffect(() => {
     if (vs_cpu && xo.turn === xo.cpu) {
       setTimeout(() => {
-        const move = CPUMove(xo.board, xo.cpu);
-        if (xo.board[move] === null && !xo.solved) {
+        const move = CPUMove(xo.board, xo.cpu, xo.level);
+        if (xo.board[move] === null && !xo.verify()) {
           const copy = [...xo.board];
           copy[move] = xo.turn;
           xo.board = copy;
