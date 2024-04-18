@@ -1,8 +1,9 @@
 import { B, C, T } from "@/components/basics";
+import { Themes } from "@/constants/themes/interfaces";
 import { WeatherIconID } from "@/src/weather";
 import { StyleSheet, View } from "react-native";
 
-export const WeatherIcons = {
+export const ArtWeatherIcons = {
   None: ({size}:{size:number}) => (
     <View style={styles.icon}>
       <T style={[ styles.text, { fontSize: size * 2.5 }]}>
@@ -304,37 +305,75 @@ const styles = StyleSheet.create({
 
   text: {
     textAlignVertical: "center",
-  }
+  },
+
+  segText: {
+    marginVertical: 30,
+    fontFamily: "Weather Segment",
+    fontSize: 200
+  },
 });
 
-export const weatherIcons:Record<WeatherIconID, ({ size }: { size: number }) => React.JSX.Element> = {
-  "01d": WeatherIcons.ClearD,
-  "02d": WeatherIcons.FewCloudsD,
-  "03d": WeatherIcons.ScatteredClouds,
-  "04d": WeatherIcons.BrokenClouds,
-  "09d": WeatherIcons.ShowerRain,
-  "10d": WeatherIcons.RainD,
-  "11d": WeatherIcons.Thunderstorm,
-  "13d": WeatherIcons.Snow,
-  "50d": WeatherIcons.Mist,
+export const artWeatherIcons:Record<WeatherIconID, ({ size }: { size: number }) => React.JSX.Element> = {
+  "01d": ArtWeatherIcons.ClearD,
+  "02d": ArtWeatherIcons.FewCloudsD,
+  "03d": ArtWeatherIcons.ScatteredClouds,
+  "04d": ArtWeatherIcons.BrokenClouds,
+  "09d": ArtWeatherIcons.ShowerRain,
+  "10d": ArtWeatherIcons.RainD,
+  "11d": ArtWeatherIcons.Thunderstorm,
+  "13d": ArtWeatherIcons.Snow,
+  "50d": ArtWeatherIcons.Mist,
 
-  "01n": WeatherIcons.ClearN,
-  "02n": WeatherIcons.FewCloudsN,
-  "03n": WeatherIcons.ScatteredClouds,
-  "04n": WeatherIcons.BrokenClouds,
-  "09n": WeatherIcons.ShowerRain,
-  "10n": WeatherIcons.RainN,
-  "11n": WeatherIcons.Thunderstorm,
-  "13n": WeatherIcons.Snow,
-  "50n": WeatherIcons.Mist,
+  "01n": ArtWeatherIcons.ClearN,
+  "02n": ArtWeatherIcons.FewCloudsN,
+  "03n": ArtWeatherIcons.ScatteredClouds,
+  "04n": ArtWeatherIcons.BrokenClouds,
+  "09n": ArtWeatherIcons.ShowerRain,
+  "10n": ArtWeatherIcons.RainN,
+  "11n": ArtWeatherIcons.Thunderstorm,
+  "13n": ArtWeatherIcons.Snow,
+  "50n": ArtWeatherIcons.Mist,
+
+  "x": ArtWeatherIcons.None,
 };
 
-export const WeatherIcon = ({id, size}:{ id:WeatherIconID | undefined, size:number }) => {
-  // return <WeatherIcons.None size={size}/>;
-  var icon = <WeatherIcons.None size={size}/>;
+export const segWeatherIcons:Record<WeatherIconID, "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|":"> = {
+  "01d": "1",
+  "02d": "9",
+  "03d": "2",
+  "04d": "2",
+  "09d": "3",
+  "10d": "4",
+  "11d": "6",
+  "13d": "5",
+  "50d": "0",
 
-  if (id !== undefined)
-    icon = weatherIcons[id]({ size });
+  "01n": "1",
+  "02n": "9",
+  "03n": "2",
+  "04n": "2",
+  "09n": "3",
+  "10n": "4",
+  "11n": "6",
+  "13n": "5",
+  "50n": "0",
 
-  return icon;
+  "x": "0"
+};
+
+export const WeatherIcon = ({id, size, theme}:{ id:WeatherIconID | undefined, size:number, theme:Themes }) => {
+  if (theme === "e9999")
+    return (
+      <>
+        <T style={styles.segText}>
+          {segWeatherIcons[id ?? "x"]}
+        </T>
+        <T style={[styles.segText, { position: "absolute", top: styles.segText.marginVertical, opacity: 0.1 }]}>
+          {segWeatherIcons["x"]}
+        </T>
+      </>
+    );
+
+  return artWeatherIcons[id ?? "x"]({ size });
 }
