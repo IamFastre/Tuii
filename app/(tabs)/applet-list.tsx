@@ -18,6 +18,11 @@ const icons = {
     sudoku: require('@/assets/applet-icons/SudokuScarlatta.png'),
     tictactoe: require('@/assets/applet-icons/TicTacToeScarlatta.png'),
   },
+
+  e9999: {
+    sudoku: require('@/assets/applet-icons/SudokuDark.png'),
+    tictactoe: require('@/assets/applet-icons/TicTacToeDark.png'),
+  },
 };
 
 export default function AppletsPage() : React.JSX.Element {

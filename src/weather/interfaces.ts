@@ -85,7 +85,8 @@ export type WeatherIconID = "01d"
                           | "10n"
                           | "11n"
                           | "13n"
-                          | "50n";
+                          | "50n"
+                          | "x";
 
 // interface OneCallResponse {
 //   lat: number;

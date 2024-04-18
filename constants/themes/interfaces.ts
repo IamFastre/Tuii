@@ -1,4 +1,4 @@
-export type Themes = "dark" | "light" | "scarlatta";
+export type Themes = "dark" | "light" | "scarlatta" | "e9999";
 
 export interface ITheme {
   primary: `#${string}`;
