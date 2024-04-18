@@ -14,7 +14,7 @@ const winConditions:[number, number, number][] = [
   [2, 4, 6],
 ];
 
-function getDouble(list:TTTSlotType[]) : 0 | 1 | 2 {
+function GetDouble(list:TTTSlotType[]) : 0 | 1 | 2 {
   for (let i = 0; i < list.length; i++) {
     const s = list[i];
     if (s !== null && list.indexOf(s) !== list.lastIndexOf(s)) {
@@ -62,11 +62,11 @@ export function GetWinningPos(board:TTTSlotType[]) : [number, number, number] | 
   return null;
 }
 
-export function cpuMove(board:TTTSlotType[], cpu:TTTSlotType) : number {
+export function CPUMove(board:TTTSlotType[], cpu:TTTSlotType) : number {
   // Aggressive
   for (let win of winConditions) {
     const line = win.map(v => board[v]);
-    const dup = getDouble(line);
+    const dup = GetDouble(line);
     if (dup === cpu) {
       const spaces = win.filter(v => board[v] === null);
       if (spaces.length)
@@ -77,7 +77,7 @@ export function cpuMove(board:TTTSlotType[], cpu:TTTSlotType) : number {
   // Defensive
   for (let win of winConditions) {
     const line = win.map(v => board[v]);
-    const dup = getDouble(line);
+    const dup = GetDouble(line);
     if (dup) {
       const spaces = win.filter(v => board[v] === null);
       if (spaces.length)

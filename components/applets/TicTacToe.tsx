@@ -3,7 +3,7 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from '
 import { Ionicons } from '@expo/vector-icons';
 
 import { useColors } from "@/constants/colors";
-import { cpuMove, TTTSlotType, XOHook } from "@/src/tictactoe";
+import { CPUMove, TTTSlotType, XOHook } from "@/src/tictactoe";
 import { useEffect, useRef } from "react";
 
 export const Icon = ({id}:{id:TTTSlotType}) => {
@@ -85,7 +85,7 @@ export const Grid = ({xo, vs_cpu}:{ xo:XOHook; vs_cpu:boolean; }) => {
   useEffect(() => {
     if (vs_cpu && xo.turn === xo.cpu) {
       setTimeout(() => {
-        const move = cpuMove(xo.board, xo.cpu);
+        const move = CPUMove(xo.board, xo.cpu);
         if (xo.board[move] === null && !xo.solved) {
           const copy = [...xo.board];
           copy[move] = xo.turn;
