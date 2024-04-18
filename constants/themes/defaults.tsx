@@ -32,7 +32,8 @@ export default {
   others: {
     section_radius: 0,
     fonts: {
-      clock: "Seven Segment",
+      clock: "7-Segment",
+      clock2: "14-Segment",
       L: 'Cascadia Code Light',
       R: 'Cascadia Code',
       B: 'Cascadia Code Bold',

@@ -22,6 +22,7 @@ const theme = {
     section_radius: 15,
     fonts: {
       clock: "Soria",
+      clock2: "Soria",
       L: "Ubuntu",
       R: "Ubuntu",
       B: "Ubuntu Bold",

@@ -33,6 +33,7 @@ export interface ITheme {
     section_radius: number;
     fonts: {
       clock: string;
+      clock2: string;
       L: string;
       R: string;
       B: string;
