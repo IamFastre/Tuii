@@ -1,4 +1,5 @@
 import { getRandomInt } from "../general/funcs";
+import { TTTLevel } from "../general/interfaces";
 import { TTTSlotType } from "./types";
 
 const winConditions:[number, number, number][] = [
@@ -26,6 +27,10 @@ function GetDouble(list:TTTSlotType[]) : 0 | 1 | 2 {
 
 export function NumberToLetter(p:1|2) {
   return p === 1 ? "X" : "O";
+}
+
+export function LevelToWeight(level:TTTLevel) : number {
+  return level === "easy" ? 0.25 : level === "medium" ? 0.5 : level === "hard" ? 1 : 0;
 }
 
 export function CountEmpty(board:TTTSlotType[]) : number {
@@ -62,40 +67,44 @@ export function GetWinningPos(board:TTTSlotType[]) : [number, number, number] | 
   return null;
 }
 
-export function CPUMove(board:TTTSlotType[], cpu:TTTSlotType) : number {
+export function CPUMove(board:TTTSlotType[], cpu:TTTSlotType, level:TTTLevel = "medium") : number {
+  const roll = (factor:number = 1) => Math.random() <= LevelToWeight(level) * factor;
+
   // Aggressive
-  for (let win of winConditions) {
-    const line = win.map(v => board[v]);
-    const dup = GetDouble(line);
-    if (dup === cpu) {
-      const spaces = win.filter(v => board[v] === null);
-      if (spaces.length)
-        return spaces[0];
+  if (roll(1.25))
+    for (let win of winConditions) {
+      const line = win.map(v => board[v]);
+      const dup = GetDouble(line);
+      if (dup === cpu) {
+        const spaces = win.filter(v => board[v] === null);
+        if (spaces.length)
+          return spaces[0];
+      }
     }
-  }
 
   // Defensive
-  for (let win of winConditions) {
-    const line = win.map(v => board[v]);
-    const dup = GetDouble(line);
-    if (dup) {
-      const spaces = win.filter(v => board[v] === null);
-      if (spaces.length)
-        return spaces[0];
+  if (roll())
+    for (let win of winConditions) {
+      const line = win.map(v => board[v]);
+      const dup = GetDouble(line);
+      if (dup) {
+        const spaces = win.filter(v => board[v] === null);
+        if (spaces.length)
+          return spaces[0];
+      }
     }
-  }
 
   // Get center
-  const center = 4;
-  if (board[center] === null) {
-    return center;
-  }
+  if (roll())
+    if (board[4] === null)
+      return 4;
 
   // Get corners
-  const corners = [0, 2, 6, 8];
-  const emptyCorners = corners.filter(i => board[i] === null);
-  if (emptyCorners.length)
-    return emptyCorners[getRandomInt(0, emptyCorners.length)];
+  if (roll()) {
+    const emptyCorners = [0, 2, 6, 8].filter(i => board[i] === null);
+    if (emptyCorners.length)
+      return emptyCorners[getRandomInt(0, emptyCorners.length)];
+  }
 
   // Desperate, get a random space
   const emptySpaces = [...board.keys()].filter(i => board[i] === null);

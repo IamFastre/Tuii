@@ -36,7 +36,7 @@ export default () : React.JSX.Element => {
       if (res === 1) setXPoints(x => x+1);
       if (res === 2) setOPoints(x => x+1);
     }
-  }, [CountEmpty(xo.board)])
+  }, [CountEmpty(xo.board)]);
 
   return (
     <View style={{ flex:1 }}>
