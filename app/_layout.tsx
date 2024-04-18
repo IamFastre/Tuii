@@ -31,9 +31,17 @@ export default () => {
     'Ubuntu Italic': require('@/assets/fonts/UbuntuMono-Italic.ttf'),
     'Ubuntu BoldItalic': require('@/assets/fonts/UbuntuMono-BoldItalic.ttf'),
 
-    'Seven Segment': require('@/assets/fonts/Seven-Segment.ttf'),
+    'Fourteen Segment Light': require('@/assets/fonts/Fourteen-Segment-Light.ttf'),
     'Fourteen Segment': require('@/assets/fonts/Fourteen-Segment.ttf'),
+    'Fourteen Segment Bold':  require('@/assets/fonts/Fourteen-Segment-Bold.ttf'),
+
+    'Fourteen Segment LightItalic': require('@/assets/fonts/Fourteen-Segment-LightItalic.ttf'),
+    'Fourteen Segment Italic':      require('@/assets/fonts/Fourteen-Segment-Italic.ttf'),
+    'Fourteen Segment BoldItalic':  require('@/assets/fonts/Fourteen-Segment-BoldItalic.ttf'),
+
+    'Seven Segment': require('@/assets/fonts/Seven-Segment.ttf'),
     'Soria': require('@/assets/fonts/Soria.ttf'),
+    'Weather Segment': require('@/assets/fonts/Weather-Segment.ttf'),
   });
   
   const [settings, setSettings] = useState(DefaultSettings);
