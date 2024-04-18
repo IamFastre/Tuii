@@ -210,9 +210,11 @@ export default function HomePage() : React.JSX.Element {
         <View style={{ alignSelf: "center", marginBottom: 20 }}>
           <T style={{ fontFamily: colors.others.fonts.clock, fontSize: 45 }}>
             {'{ '}
-            <C.HIGHLIGHT>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.HIGHLIGHT>
-            <T style={{ opacity: colonBlink ? 1 : 0.25 }} plain>:</T>
-            <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
+            <T style={{ fontFamily: colors.others.fonts.clock2 }} plain>
+              <C.HIGHLIGHT>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.HIGHLIGHT>
+              <T style={{ opacity: colonBlink ? 1 : 0.25 }} plain>:</T>
+              <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
+            </T>
             {' }'}
           </T>
         </View>
