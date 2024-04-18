@@ -37,7 +37,7 @@ export const DefaultSettings = {
   } as ISudoku,
 
   tictactoe: {
-    level: "easy",
+    level: "medium",
     vs_cpu: true,
     cpu_as: 2,
 
