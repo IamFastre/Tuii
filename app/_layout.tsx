@@ -31,8 +31,8 @@ export default () => {
     'Ubuntu Italic': require('@/assets/fonts/UbuntuMono-Italic.ttf'),
     'Ubuntu BoldItalic': require('@/assets/fonts/UbuntuMono-BoldItalic.ttf'),
 
-    'Seven Segment': require('@/assets/fonts/7-Segment.ttf'),
-    'Fourteen Segment': require('@/assets/fonts/14-Segment.ttf'),
+    'Seven Segment': require('@/assets/fonts/Seven-Segment.ttf'),
+    'Fourteen Segment': require('@/assets/fonts/Fourteen-Segment.ttf'),
     'Soria': require('@/assets/fonts/Soria.ttf'),
   });
   
