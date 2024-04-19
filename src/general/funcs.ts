@@ -33,6 +33,9 @@ export function getTime() : ITime {
     hour: currentdate.getHours(),
     minute: currentdate.getMinutes(),
     second: currentdate.getSeconds(),
+    offset: currentdate.getTimezoneOffset(),
+    offsetH: Math.floor(currentdate.getTimezoneOffset() / 60),
+    offsetM: currentdate.getTimezoneOffset() % 60,
   };
 }
 

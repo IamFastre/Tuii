@@ -63,6 +63,9 @@ export interface ITime {
   hour: number;
   minute: number;
   second: number;
+  offset: number;
+  offsetH: number;
+  offsetM: number;
 }
 
 export interface ILocation {
