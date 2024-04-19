@@ -207,15 +207,19 @@ export default function HomePage() : React.JSX.Element {
         {/*                              { Time }                              */}
         {/* ================================================================== */}
 
-        <View style={{ alignSelf: "center", marginBottom: 20 }}>
+        <View style={styles.timeContainer}>
           <T style={{ fontFamily: colors.others.fonts.clock, fontSize: 45 }}>
-            {'{ '}
-            <T style={{ fontFamily: colors.others.fonts.clock2 }} plain>
-              <C.HIGHLIGHT>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.HIGHLIGHT>
-              <T style={{ opacity: colonBlink ? 1 : 0.25 }} plain>:</T>
-              <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
-            </T>
-            {' }'}
+            <C.HIGHLIGHT>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.HIGHLIGHT>
+            <T style={{ opacity: colonBlink ? 1 : 0.25 }} plain>:</T>
+            <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
+          </T>
+          <T style={styles.timezone}>
+            <C.SECONDARY>
+              UTC
+              {time.offset > 0 ? '-' : '+'}{Math.abs(time.offsetH) < 10 ? `0${Math.abs(time.offsetH)}` : Math.abs(time.offsetH)}
+              :
+              {time.offsetM < 10 ? `0${time.offsetM}` : time.offsetM}
+            </C.SECONDARY>
           </T>
         </View>
 
@@ -287,7 +291,6 @@ const styles = StyleSheet.create({
 
   weatherTempT: {
     fontSize: 30,
-    lineHeight: 30,
     paddingLeft: 16,
   },
 
@@ -345,6 +348,18 @@ const styles = StyleSheet.create({
   weatherOthersIcon: {
     width: 20,
     textAlign: 'center'
+  },
+
+  timeContainer: {
+    alignSelf: "center",
+    marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  timezone: {
+    fontSize: 10,
+    marginTop: -10
   },
 
   greetT: {
