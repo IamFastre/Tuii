@@ -1,12 +1,16 @@
-import { WeatherIconID } from "@/src/weather";
 import { StyleSheet, View } from "react-native";
+
+import { WeatherIP } from "@/src/general/interfaces";
+import { WeatherIconID } from "@/src/weather";
+
 import { asciiWeatherIcons } from "./ascii-art";
 import { segWeatherIcons } from "./retro-segments";
-import { WeatherIP } from "@/src/general/interfaces";
+import { imgWeatherIcons } from "./images";
 
 export const iconPacks = {
  ascii: asciiWeatherIcons,
  segments: segWeatherIcons,
+ openweathermap: imgWeatherIcons,
 };
 
 export const WeatherIcon = ({id, size, theme, pack}:{ id?:WeatherIconID, size:number, theme:keyof typeof iconPacks, pack:WeatherIP }) => {
