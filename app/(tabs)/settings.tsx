@@ -2,7 +2,7 @@ import{ useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { C, L, Section, T, Button, Sep } from '@/components/basics';
-import { ThemeOptions, UnitsOptions, UserGenderOptions } from '@/src/general/interfaces';
+import { ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
 import { OptionsSetting, TextInputSetting, Title, BoolSetting } from '@/components/settings';
 import { resetSettings, setStored } from '@/src/general/storage';
 import consts from '@/constants/consts';
@@ -10,6 +10,7 @@ import { useColors } from '@/constants/colors';
 import { updateFullscreen, move } from '@/src/general/funcs';
 import { SettingsContext } from '@/components/Contexts';
 import themes from '@/constants/themes';
+import { iconPacks } from '@/components/weather/WeatherIcons';
 
 export default function SettingsPage() {
   const colors = useColors();
@@ -84,6 +85,11 @@ export default function SettingsPage() {
 
   const onSubmitWordClass = () => {
     setStored('options', { ...options, short_word_class: !options.short_word_class });
+    updateData();
+  };
+
+  const onSubmitWeatherIP = (forward:boolean = true) => {
+    setStored('options', { ...options, weather_icon_pack: move(forward)(WeatherIPsOptions, options.weather_icon_pack) });
     updateData();
   };
 
@@ -188,6 +194,16 @@ export default function SettingsPage() {
 
           {/* ========= Other settings ========= */}
           <Title title='Others'/>
+
+          <OptionsSetting
+            title="Weather Icons"
+            description={`The icon pack used in the home page for the weather conditions.\nAvailable: ${Object.keys(iconPacks).join(", ")}`}
+            index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
+            options={WeatherIPsOptions}
+            onSubmit={onSubmitWeatherIP}
+            icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii" ? "code-slash" : "calculator"}
+            size='medium'
+          />
 
           {/* Refresh button */}
           <BoolSetting

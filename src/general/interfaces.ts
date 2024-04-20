@@ -5,7 +5,10 @@ import { iconPacks } from "@/components/weather/WeatherIcons";
 export const UserGenderOptions:UserGender[] = ["male", "female", "other"];
 export const UnitsOptions:Units[] = ["metric", "imperial"];
 export const ThemeOptions:Themes[] = ["system", ...Object.keys(themes) as Themes[]];
+export const WeatherIPsOptions:WeatherIP[] = ["theme-default", ...Object.keys(iconPacks) as WeatherIP[]];
+
 export const SudokuLevelOptions:SudokuLevel[] = ["easy", "medium", "hard", "max"];
+
 export const TTTLevelOptions:TTTLevel[] = ["easy", "medium", "hard"];
 export const TTTPlayers:TTTPlayer[] = [1, 2];
 
