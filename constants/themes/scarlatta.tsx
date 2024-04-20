@@ -21,14 +21,14 @@ const theme = {
   others: {
     section_radius: 15,
     fonts: {
-      clock: "Soria",
-      clock2: "Soria",
-      L: "Ubuntu",
-      R: "Ubuntu",
-      B: "Ubuntu Bold",
-      LI: "Ubuntu Italic",
-      I: "Ubuntu Italic",
-      BI: "Ubuntu BoldItalic",
+      L: 'Ubuntu',
+      R: 'Ubuntu',
+      B: 'Ubuntu Bold',
+      LI: 'Ubuntu Italic',
+      I: 'Ubuntu Italic',
+      BI: 'Ubuntu BoldItalic',
+
+      S: 'Soria',
     },
     background: function() {
       return (<>

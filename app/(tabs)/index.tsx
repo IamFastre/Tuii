@@ -208,7 +208,7 @@ export default function HomePage() : React.JSX.Element {
         {/* ================================================================== */}
 
         <View style={styles.timeContainer}>
-          <T style={{ fontFamily: colors.others.fonts.clock, fontSize: 45 }}>
+          <T style={{ fontFamily: colors.others.fonts.S, fontSize: 45 }}>
             <C.HIGHLIGHT>{time.hour < 10 ? `0${time.hour}` : time.hour}</C.HIGHLIGHT>
             <T style={{ opacity: colonBlink ? 1 : 0.25 }} plain>:</T>
             <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
@@ -359,7 +359,6 @@ const styles = StyleSheet.create({
 
   timezone: {
     fontSize: 10,
-    marginTop: -10
   },
 
   greetT: {

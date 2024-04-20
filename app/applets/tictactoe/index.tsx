@@ -44,7 +44,7 @@ export default () : React.JSX.Element => {
       <Section style={{ flex:1 }}>
         <Pressable style={styles.container} onPress={() => setShowWin(true)} android_disableSound>
         <View style={styles.scoreBoard}>
-            <T style={{ fontFamily: colors.others.fonts.clock, textAlign: 'center', fontSize: 32 }}>
+            <T style={{ fontFamily: colors.others.fonts.S, textAlign: 'center', fontSize: 32 }}>
               <C.ACCENT>
                 { colors.theme === "scarlatta"
                 ? <C.SECONDARY>{'❁  '}</C.SECONDARY>
@@ -57,7 +57,7 @@ export default () : React.JSX.Element => {
                 }
               </C.ACCENT>
             </T>
-            <T style={[styles.scoreNums, { fontFamily: colors.others.fonts.clock }]}>
+            <T style={[styles.scoreNums, { fontFamily: colors.others.fonts.S }]}>
               <C.RED>{xPoints}</C.RED>
               {' - '}
               <C.GREEN>{oPoints}</C.GREEN>

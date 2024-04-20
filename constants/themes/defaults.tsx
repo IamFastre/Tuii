@@ -32,14 +32,14 @@ export default {
   others: {
     section_radius: 0,
     fonts: {
-      clock: "Seven Segment",
-      clock2: "Fourteen Segment",
       L: 'Cascadia Code Light',
       R: 'Cascadia Code',
       B: 'Cascadia Code Bold',
       LI: 'Cascadia Code LightItalic',
       I : 'Cascadia Code Italic',
       BI: 'Cascadia Code BoldItalic',
+
+      S: 'Kode Bold',
     },
     background: () => null,
   }

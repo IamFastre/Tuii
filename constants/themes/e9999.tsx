@@ -34,14 +34,14 @@ export default {
   others: {
     section_radius: 0,
     fonts: {
-      clock: "Seven Segment",
-      clock2: "Fourteen Segment",
-      L: 'Fourteen Segment Light',
-      R: 'Seven Segment',
-      B: 'Fourteen Segment Bold',
-      LI: 'Fourteen Segment LightItalic',
-      I : 'Fourteen Segment Italic',
-      BI: 'Fourteen Segment BoldItalic',
+      L: 'Digital-7 Light',
+      R: 'Digital-7',
+      B: 'Digital-7 Bold',
+      LI: 'Digital-7 LightItalic',
+      I : 'Digital-7 Italic',
+      BI: 'Digital-7 BoldItalic',
+
+      S: 'Digital-7',
     },
     background: () => null,
   }

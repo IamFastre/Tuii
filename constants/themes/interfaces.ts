@@ -32,14 +32,14 @@ export interface ITheme {
   others: {
     section_radius: number;
     fonts: {
-      clock: string;
-      clock2: string;
       L: string;
       R: string;
       B: string;
       LI: string;
       I: string;
       BI: string;
+
+      S: string;
     },
     background: () => React.JSX.Element | null,
   }
