@@ -31,17 +31,19 @@ export default () => {
     'Ubuntu Italic': require('@/assets/fonts/UbuntuMono-Italic.ttf'),
     'Ubuntu BoldItalic': require('@/assets/fonts/UbuntuMono-BoldItalic.ttf'),
 
-    'Fourteen Segment Light': require('@/assets/fonts/Fourteen-Segment-Light.ttf'),
-    'Fourteen Segment': require('@/assets/fonts/Fourteen-Segment.ttf'),
-    'Fourteen Segment Bold':  require('@/assets/fonts/Fourteen-Segment-Bold.ttf'),
+    'Digital-7 Light': require('@/assets/fonts/Digital-7 Light.ttf'),
+    'Digital-7': require('@/assets/fonts/Digital-7.ttf'),
+    'Digital-7 Bold':  require('@/assets/fonts/Digital-7 Bold.ttf'),
 
-    'Fourteen Segment LightItalic': require('@/assets/fonts/Fourteen-Segment-LightItalic.ttf'),
-    'Fourteen Segment Italic':      require('@/assets/fonts/Fourteen-Segment-Italic.ttf'),
-    'Fourteen Segment BoldItalic':  require('@/assets/fonts/Fourteen-Segment-BoldItalic.ttf'),
+    'Digital-7 LightItalic': require('@/assets/fonts/Digital-7 LightItalic.ttf'),
+    'Digital-7 Italic':      require('@/assets/fonts/Digital-7 Italic.ttf'),
+    'Digital-7 BoldItalic':  require('@/assets/fonts/Digital-7 BoldItalic.ttf'),
 
     'Seven Segment': require('@/assets/fonts/Seven-Segment.ttf'),
-    'Soria': require('@/assets/fonts/Soria.ttf'),
     'Weather Segment': require('@/assets/fonts/Weather-Segment.ttf'),
+
+    'Soria': require('@/assets/fonts/Soria.ttf'),
+    'Kode Bold': require('@/assets/fonts/KodeMono-Bold.ttf'),
   });
   
   const [settings, setSettings] = useState(DefaultSettings);
