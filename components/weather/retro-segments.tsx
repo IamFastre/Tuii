@@ -13,7 +13,7 @@ export const getSegment = (id?:WeatherLetters) => {
         <T style={{ color: colors.accent, fontFamily: "Weather Segment", fontSize: size*16 }}>
           {id ?? " "}
         </T>
-        <T style={{ color: colors.accent, fontFamily: "Weather Segment", fontSize: size*16, position: "absolute", top: 0, opacity: 0.1 }}>
+        <T style={{ color: colors.secondary, fontFamily: "Weather Segment", fontSize: size*16, position: "absolute", top: 0, opacity: 0.1 }}>
           {' '}
         </T>
       </>
