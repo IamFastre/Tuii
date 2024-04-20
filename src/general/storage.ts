@@ -1,7 +1,9 @@
+import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import _ from "lodash";
+
 import { Print } from "./funcs";
 import { ITicTacToe, ISudoku, IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
-import { Platform } from "react-native";
 
 export const DefaultSettings = {
   user: {
@@ -54,7 +56,7 @@ export async function getStored<T extends StoredValue>(type: StoredKey) {
   try {
     let options = await AsyncStorage.getItem(type);
     if (options !== null)
-      return { ...DefaultStored[type], ...JSON.parse(options) };
+      return _.merge({ }, DefaultStored[type], JSON.parse(options));
   } catch (e) {
     Print((e as any).toString(), 'error');
   }
@@ -63,7 +65,7 @@ export async function getStored<T extends StoredValue>(type: StoredKey) {
 }
 
 export async function setStored<T>(type:StoredKey, value:T) {
-  await AsyncStorage.setItem(type, JSON.stringify({ ...DefaultSettings[type], ...value }));
+  await AsyncStorage.setItem(type, JSON.stringify(_.merge({ }, DefaultStored[type], value)));
 }
 
 export async function resetStored(type:StoredKey) {
