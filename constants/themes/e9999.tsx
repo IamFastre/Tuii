@@ -32,6 +32,7 @@ export default {
   theme: "e9999",
 
   others: {
+    weather_icon_pack: "segments",
     section_radius: 0,
     fonts: {
       L: 'Digital-7 Light',

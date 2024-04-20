@@ -88,6 +88,9 @@ export type WeatherIconID = "01d"
                           | "50n"
                           | "x";
 
+export type WeatherIconComponent = ({ size }: { size: number; }) => React.JSX.Element;
+export type WeatherIconPack = Record<WeatherIconID, WeatherIconComponent>;
+
 // interface OneCallResponse {
 //   lat: number;
 //   lon: number;

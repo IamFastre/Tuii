@@ -1,3 +1,5 @@
+import { iconPacks } from "@/components/weather/WeatherIcons";
+
 export type Themes = "dark" | "light" | "scarlatta" | "e9999";
 
 export interface ITheme {
@@ -25,11 +27,12 @@ export interface ITheme {
     most: string;
   },
 
+  theme: Themes;
   icon: string;
   statusbar: "light" | "dark";
-  theme: Themes,
 
   others: {
+    weather_icon_pack: keyof typeof iconPacks;
     section_radius: number;
     fonts: {
       L: string;
@@ -40,7 +43,7 @@ export interface ITheme {
       BI: string;
 
       S: string;
-    },
-    background: () => React.JSX.Element | null,
+    };
+    background: () => React.JSX.Element | null;
   }
 };

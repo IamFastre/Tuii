@@ -1,4 +1,4 @@
-import { WeatherIconID } from "@/src/weather";
+import { WeatherIconPack } from "@/src/weather";
 import { T, B, C } from "../basics";
 
 export const ASCIIWeatherIcons = {
@@ -266,7 +266,7 @@ export const ASCIIWeatherIcons = {
   ),
 };
 
-export const asciiWeatherIcons:Record<WeatherIconID, ({ size }: { size: number }) => React.JSX.Element> = {
+export const asciiWeatherIcons:WeatherIconPack = {
   "01d": ASCIIWeatherIcons.ClearD,
   "02d": ASCIIWeatherIcons.FewCloudsD,
   "03d": ASCIIWeatherIcons.ScatteredClouds,

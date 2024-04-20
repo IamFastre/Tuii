@@ -16,7 +16,7 @@ export default {
     most: "d0",
   },
 
+  theme: "light",
   icon: "sunny",
   statusbar: "dark",
-  theme: "light",
 } as ITheme;

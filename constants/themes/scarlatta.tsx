@@ -14,11 +14,12 @@ const theme = {
   hot: "#2fa02f",
   cold: "#2B6788",
 
+  theme: "scarlatta",
   icon: "flower-outline",
   statusbar: "light",
-  theme: "scarlatta",
 
   others: {
+    weather_icon_pack: "ascii",
     section_radius: 15,
     fonts: {
       L: 'Ubuntu',

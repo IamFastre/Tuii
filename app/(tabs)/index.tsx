@@ -98,7 +98,7 @@ export default function HomePage() : React.JSX.Element {
             <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>{weather?.sys.country ?? "??"}</T>
 
             {/* Weather icon */}
-            <WeatherIcon id={weather?.weather[0].icon as WeatherIconID} size={12} theme={colors.theme} />
+            <WeatherIcon id={weather?.weather[0].icon as WeatherIconID} size={12} theme={colors.others.weather_icon_pack} pack='ascii' />
   
             {/* Weather description */}
             <View style={styles.weatherTexts}>

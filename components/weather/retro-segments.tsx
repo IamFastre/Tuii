@@ -1,4 +1,4 @@
-import { WeatherIconID } from "@/src/weather";
+import { WeatherIconPack } from "@/src/weather";
 import { T } from "@/components/basics";
 
 type WeatherLetters = "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|" ";
@@ -16,7 +16,7 @@ export const getSegment = (id?:WeatherLetters) => {
   );
 }
 
-export const segWeatherIcons:Record<WeatherIconID, ({ size }: { size: number }) => React.JSX.Element> = {
+export const segWeatherIcons:WeatherIconPack = {
   "01d": getSegment("A"),
   "02d": getSegment("J"),
   "03d": getSegment("B"),

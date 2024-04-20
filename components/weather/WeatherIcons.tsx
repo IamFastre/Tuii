@@ -1,13 +1,19 @@
-import { Themes } from "@/constants/themes/interfaces";
 import { WeatherIconID } from "@/src/weather";
 import { StyleSheet, View } from "react-native";
 import { asciiWeatherIcons } from "./ascii-art";
 import { segWeatherIcons } from "./retro-segments";
+import { WeatherIP } from "@/src/general/interfaces";
 
+export const iconPacks = {
+ ascii: asciiWeatherIcons,
+ segments: segWeatherIcons,
+};
 
-export const WeatherIcon = ({id, size, theme}:{ id?:WeatherIconID, size:number, theme:Themes }) => {
+export const WeatherIcon = ({id, size, theme, pack}:{ id?:WeatherIconID, size:number, theme:keyof typeof iconPacks, pack:WeatherIP }) => {
   id ??= "x";
-  const Icon = theme === "e9999" ? segWeatherIcons[id] : asciiWeatherIcons[id];
+  const Icon = (pack === "theme-default"
+             ? iconPacks[theme]
+             : iconPacks[pack])[id];
 
   return (
     <View style={{ marginVertical: 30 }}>

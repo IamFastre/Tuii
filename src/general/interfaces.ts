@@ -1,5 +1,6 @@
 import themes from "@/constants/themes";
 import { DefaultSettings } from '@/src/general/storage';
+import { iconPacks } from "@/components/weather/WeatherIcons";
 
 export const UserGenderOptions:UserGender[] = ["male", "female", "other"];
 export const UnitsOptions:Units[] = ["metric", "imperial"];
@@ -11,6 +12,7 @@ export const TTTPlayers:TTTPlayer[] = [1, 2];
 export type UserGender  = "male" | "female" | "other";
 export type Units       = "metric" | "imperial";
 export type Themes      = "system" | keyof typeof themes;
+export type WeatherIP   = "theme-default" | keyof typeof iconPacks;
 
 export type SudokuLevel = "easy" | "medium" | "hard" | "max";
 

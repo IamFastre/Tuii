@@ -25,11 +25,12 @@ export default {
     most: "d0",
   },
 
+  theme: "dark",
   icon: "moon",
   statusbar: "light",
-  theme: "dark",
 
   others: {
+    weather_icon_pack: "ascii",
     section_radius: 0,
     fonts: {
       L: 'Cascadia Code Light',
