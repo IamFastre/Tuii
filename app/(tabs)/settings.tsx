@@ -181,6 +181,16 @@ export default function SettingsPage() {
             size='medium'
           />
 
+          <OptionsSetting
+            title="Weather Icons"
+            description={`The icon pack used the weather conditions.\nAvailable: ${Object.keys(iconPacks).join(", ")}`}
+            index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
+            options={WeatherIPsOptions}
+            onSubmit={onSubmitWeatherIP}
+            icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii" ? "code-slash" : "calculator"}
+            size='medium'
+          />
+
           {/* Word class button */}
           <BoolSetting
             title="Short Word Class"
@@ -194,16 +204,6 @@ export default function SettingsPage() {
 
           {/* ========= Other settings ========= */}
           <Title title='Others'/>
-
-          <OptionsSetting
-            title="Weather Icons"
-            description={`The icon pack used in the home page for the weather conditions.\nAvailable: ${Object.keys(iconPacks).join(", ")}`}
-            index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
-            options={WeatherIPsOptions}
-            onSubmit={onSubmitWeatherIP}
-            icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii" ? "code-slash" : "calculator"}
-            size='medium'
-          />
 
           {/* Refresh button */}
           <BoolSetting
