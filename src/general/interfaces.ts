@@ -37,6 +37,7 @@ export interface IMetrics {
 
 export interface IOptions {
   theme: Themes;
+  weather_icon_pack: WeatherIP;
   show_refresh_button: boolean;
   short_word_class: boolean;
   show_timezone: boolean;

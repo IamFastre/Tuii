@@ -23,6 +23,7 @@ export const DefaultSettings = {
 
   options: {
     theme: "system",
+    weather_icon_pack: "theme-default",
     show_refresh_button: Platform.OS === 'web',
     short_word_class: true,
     show_timezone: true,
