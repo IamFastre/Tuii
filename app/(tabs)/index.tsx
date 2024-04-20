@@ -1,18 +1,18 @@
 import{ useCallback, useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, RefreshControl, Platform } from 'react-native';
+import { AxiosError } from 'axios';
 
 import { B, Button, C, Section, T, Sep } from '@/components/basics';
 import { getTime, getGreet } from '@/src/general/funcs';
 import { ITime } from "@/src/general/interfaces";
 import { IForecast, WeatherIconID, fetchWeather } from '@/src/weather';
-import { WeatherIcon } from '@/components/weather/ascii-art';
+import { WeatherIcon } from '@/components/weather/WeatherIcons';
 import { State } from '@/src/general/types';
 
 import { TodaysQuote, TodaysWord } from '@/components/home';
 import { useColors } from '@/constants/colors';
 import consts from '@/constants/consts';
 import { SettingsContext } from '@/components/Contexts';
-import { AxiosError } from 'axios';
  
 export default function HomePage() : React.JSX.Element {
   const colors = useColors();
