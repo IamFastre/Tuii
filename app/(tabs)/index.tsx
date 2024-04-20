@@ -213,7 +213,7 @@ export default function HomePage() : React.JSX.Element {
             <T style={{ opacity: colonBlink ? 1 : 0.25 }} plain>:</T>
             <C.HIGHLIGHT>{time.minute < 10 ? `0${time.minute}` : time.minute}</C.HIGHLIGHT>
           </T>
-          <T style={styles.timezone}>
+          <T style={[styles.timezone, { display: options.show_timezone ? "flex" : "none" }]}>
             <C.SECONDARY>
               UTC
               {time.offset > 0 ? '-' : '+'}{Math.abs(time.offsetH) < 10 ? `0${Math.abs(time.offsetH)}` : Math.abs(time.offsetH)}
@@ -247,16 +247,21 @@ export default function HomePage() : React.JSX.Element {
       </ScrollView>
 
     </Section>
-    {
-      options.show_refresh_button
-      ? <Button
-          title={refreshing ? "Refreshing" : ""}
-          style={{ position: "absolute", bottom: 0, alignSelf: 'center', zIndex: 5, width: "auto", paddingVertical: refreshing ? 0 : 5, paddingHorizontal: 5 }}
-          icon={{ name: 'reload-circle' }}
-          onPress={onRefresh}
-        />
-      : null
-    }
+    <Button
+      title={refreshing ? "Refreshing" : ""}
+      style={{
+        display: options.show_refresh_button ? "flex" : "none",
+        alignSelf: 'center',
+        position: "absolute",
+        bottom: 0,
+        zIndex: 5,
+        width: "auto",
+        paddingVertical: refreshing ? 0 : 5,
+        paddingHorizontal: 5
+      }}
+      icon={{ name: 'reload-circle' }}
+      onPress={onRefresh}
+    />
     </>
   );
 }

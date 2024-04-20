@@ -37,6 +37,7 @@ export interface IOptions {
   theme: Themes;
   show_refresh_button: boolean;
   short_word_class: boolean;
+  show_timezone: boolean;
   type: "options";
 }
 

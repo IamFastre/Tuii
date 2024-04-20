@@ -92,6 +92,11 @@ export default function SettingsPage() {
     updateData();
   };
 
+  const onSubmitTimezoneButton = () => {
+    setStored('options', { ...options, show_timezone: !options.show_timezone });
+    updateData();
+  };
+
   const onSubmitFullscreen = () => {
     updateFullscreen(!fullscreen);
     setFullscreen(!fullscreen);
@@ -190,6 +195,14 @@ export default function SettingsPage() {
             description="Show weather refresh button anyway."
             current={options.show_refresh_button}
             onSubmit={onSubmitRefreshButton}
+            size='medium'
+          />
+
+          <BoolSetting
+            title="Timezone"
+            description="Show timezone offset under current time."
+            current={options.show_timezone}
+            onSubmit={onSubmitTimezoneButton}
             size='medium'
           />
 

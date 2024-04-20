@@ -23,6 +23,7 @@ export const DefaultSettings = {
     theme: "system",
     show_refresh_button: Platform.OS === 'web',
     short_word_class: true,
+    show_timezone: true,
 
     type: "options",
   } as IOptions,
