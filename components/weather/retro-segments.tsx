@@ -10,10 +10,10 @@ export const getSegment = (id?:WeatherLetters) => {
     const colors = useColors();
     return (
       <>
-        <T style={{ color: colors.accent, fontFamily: "Weather Segment", fontSize: size*16 }}>
+        <T style={{ color: colors.accent, fontFamily: "DSEGWeather", fontSize: size*16 }}>
           {id ?? " "}
         </T>
-        <T style={{ color: colors.secondary, fontFamily: "Weather Segment", fontSize: size*16, position: "absolute", top: 0, opacity: 0.1 }}>
+        <T style={{ color: colors.secondary, fontFamily: "DSEGWeather", fontSize: size*16, position: "absolute", top: 0, opacity: 0.1 }}>
           {' '}
         </T>
       </>

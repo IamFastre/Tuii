@@ -28,22 +28,21 @@ export default () => {
     'Ubuntu':       require('@/assets/fonts/UbuntuMono.ttf'),
     'Ubuntu Bold':  require('@/assets/fonts/UbuntuMono-Bold.ttf'),
     
-    'Ubuntu Italic': require('@/assets/fonts/UbuntuMono-Italic.ttf'),
+    'Ubuntu Italic':     require('@/assets/fonts/UbuntuMono-Italic.ttf'),
     'Ubuntu BoldItalic': require('@/assets/fonts/UbuntuMono-BoldItalic.ttf'),
 
-    'Digital-7 Light': require('@/assets/fonts/Digital-7 Light.ttf'),
-    'Digital-7': require('@/assets/fonts/Digital-7.ttf'),
-    'Digital-7 Bold':  require('@/assets/fonts/Digital-7 Bold.ttf'),
+    'Digital-7 Light': require('@/assets/fonts/Tuii-Digital-7 Light.ttf'),
+    'Digital-7':       require('@/assets/fonts/Tuii-Digital-7.ttf'),
+    'Digital-7 Bold':  require('@/assets/fonts/Tuii-Digital-7 Bold.ttf'),
 
-    'Digital-7 LightItalic': require('@/assets/fonts/Digital-7 LightItalic.ttf'),
-    'Digital-7 Italic':      require('@/assets/fonts/Digital-7 Italic.ttf'),
-    'Digital-7 BoldItalic':  require('@/assets/fonts/Digital-7 BoldItalic.ttf'),
-
-    'Seven Segment': require('@/assets/fonts/Seven-Segment.ttf'),
-    'Weather Segment': require('@/assets/fonts/Weather-Segment.ttf'),
+    'Digital-7 LightItalic': require('@/assets/fonts/Tuii-Digital-7 LightItalic.ttf'),
+    'Digital-7 Italic':      require('@/assets/fonts/Tuii-Digital-7 Italic.ttf'),
+    'Digital-7 BoldItalic':  require('@/assets/fonts/Tuii-Digital-7 BoldItalic.ttf'),
 
     'Soria': require('@/assets/fonts/Soria.ttf'),
     'Kode Bold': require('@/assets/fonts/KodeMono-Bold.ttf'),
+
+    'DSEGWeather': require('@/assets/fonts/Tuii-DSEGWeather.ttf'),
   });
   
   const [settings, setSettings] = useState(DefaultSettings);
