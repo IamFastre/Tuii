@@ -308,7 +308,6 @@ const styles = StyleSheet.create({
   },
 
   segText: {
-    marginVertical: 30,
     fontFamily: "Weather Segment",
     fontSize: 200
   },
@@ -337,42 +336,43 @@ export const artWeatherIcons:Record<WeatherIconID, ({ size }: { size: number }) 
 
   "x": ArtWeatherIcons.None,
 };
+type WeatherLetters = "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|" ";
 
-export const segWeatherIcons:Record<WeatherIconID, "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|":"> = {
-  "01d": "1",
-  "02d": "9",
-  "03d": "2",
-  "04d": "2",
-  "09d": "3",
-  "10d": "4",
-  "11d": "6",
-  "13d": "5",
-  "50d": "0",
+export const segWeatherIcons:Record<WeatherIconID, WeatherLetters> = {
+  "01d": "A",
+  "02d": "J",
+  "03d": "B",
+  "04d": "B",
+  "09d": "E",
+  "10d": "C",
+  "11d": "G",
+  "13d": "F",
+  "50d": "K",
+  
+  "01n": "a",
+  "02n": "j",
+  "03n": "b",
+  "04n": "b",
+  "09n": "e",
+  "10n": "c",
+  "11n": "g",
+  "13n": "f",
+  "50n": "k",
 
-  "01n": "1",
-  "02n": "9",
-  "03n": "2",
-  "04n": "2",
-  "09n": "3",
-  "10n": "4",
-  "11n": "6",
-  "13n": "5",
-  "50n": "0",
-
-  "x": "0"
+  "x": " "
 };
 
 export const WeatherIcon = ({id, size, theme}:{ id:WeatherIconID | undefined, size:number, theme:Themes }) => {
   if (theme === "e9999")
     return (
-      <>
+      <View style={{ marginVertical: 30 }}>
         <T style={styles.segText}>
           {segWeatherIcons[id ?? "x"]}
         </T>
-        <T style={[styles.segText, { position: "absolute", top: styles.segText.marginVertical, opacity: 0.1 }]}>
+        <T style={[styles.segText, { position: "absolute", top: 0, opacity: 0.1 }]}>
           {segWeatherIcons["x"]}
         </T>
-      </>
+      </View>
     );
 
   return artWeatherIcons[id ?? "x"]({ size });
