@@ -1,19 +1,24 @@
 import { WeatherIconPack } from "@/src/weather";
 import { T } from "@/components/basics";
+import { useColors } from "@/constants/colors";
 
 type WeatherLetters = "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|" ";
 
 export const getSegment = (id?:WeatherLetters) => {
-  return ({ size }: { size: number }) => (
-    <>
-      <T style={{ fontFamily: "Weather Segment", fontSize: size*16 }}>
-        {id ?? " "}
-      </T>
-      <T style={{ fontFamily: "Weather Segment", fontSize: size*16, position: "absolute", top: 0, opacity: 0.1 }}>
-        {' '}
-      </T>
-    </>
-  );
+  
+  return ({ size }: { size: number }) => {
+    const colors = useColors();
+    return (
+      <>
+        <T style={{ color: colors.accent, fontFamily: "Weather Segment", fontSize: size*16 }}>
+          {id ?? " "}
+        </T>
+        <T style={{ color: colors.accent, fontFamily: "Weather Segment", fontSize: size*16, position: "absolute", top: 0, opacity: 0.1 }}>
+          {' '}
+        </T>
+      </>
+    );
+  };
 }
 
 export const segWeatherIcons:WeatherIconPack = {
