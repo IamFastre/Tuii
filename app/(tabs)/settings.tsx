@@ -187,7 +187,7 @@ export default function SettingsPage() {
             index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
             options={WeatherIPsOptions}
             onSubmit={onSubmitWeatherIP}
-            icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii" ? "code-slash" : "calculator"}
+            icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii" ? "code-slash" : "calculator-outline"}
             size='medium'
           />
 
