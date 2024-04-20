@@ -1,10 +1,11 @@
 import { Text, TextProps } from 'react-native';
+
 import general from '@/constants/general';
 import { useColors } from '@/constants/colors';
 
+
 export const T = (props: TextProps & { plain?:boolean }) : React.JSX.Element => {
   const colors = useColors();
-
   return (
     <Text
       {...props}
@@ -13,7 +14,9 @@ export const T = (props: TextProps & { plain?:boolean }) : React.JSX.Element => 
       style={[props.plain ? { } : { color: colors.tertiary, fontSize: general.text.fontSize, fontFamily: colors.others.fonts.R }, props.style]}
     />
   );
-}
+};
+
+
 export const L = (props: TextProps) : React.JSX.Element => (
   <Text {...props} style={[props.style, { fontFamily:useColors().others.fonts.L }]} />
 );
@@ -53,7 +56,6 @@ export const C = {
   ACCENT: (props: TextProps) : React.JSX.Element => (
     <Text {...props} style={[props.style, { color: useColors().accent }]} />
   ),
-  
   HIGHLIGHT: (props: TextProps) : React.JSX.Element => (
     <Text {...props} style={[props.style, { color: useColors().highlight }]} />
   ),
