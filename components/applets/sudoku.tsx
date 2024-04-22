@@ -1,44 +1,75 @@
 import { B, C, L, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
-import { DimensionValue, Pressable, View, StyleSheet } from "react-native";
+import { DimensionValue, Pressable, View, StyleSheet, ColorValue } from "react-native";
 import { EmptyBoard, GetDuplicates, SudSlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 
-export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSelected }: { value: SudSlotType; id: number; revealed?: boolean; locked?: boolean; faulty?: boolean; selected: number | undefined; setSelected: (v:number | undefined) => void; }) => {
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const config = {
+  duration: 500,
+  easing: Easing.bezier(0.5, 0.01, 0, 1),
+};
+
+const lockedConfig = {
+  duration: 750,
+  easing: Easing.inOut(Easing.quad),
+}
+
+export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSelected }:{ value:SudSlotType; id:number; revealed?:boolean; locked?:boolean; faulty?:boolean; selected:boolean | undefined; setSelected:(v:number | undefined) => void; }) => {
   const colors = useColors();
+  const lockedColor = colors.secondary + colors.opacity.mid;
+  const backgroundColor = useSharedValue<ColorValue>(lockedColor);
+  const dotOpacity = useSharedValue<number>(0);
+  const opacity = useSharedValue<number>(0);
+
+  useEffect(() => {
+    if (locked)
+      backgroundColor.value = withTiming(lockedColor, lockedConfig);
+    else if (selected)
+      backgroundColor.value = withTiming(colors.accent, config);
+    else 
+      backgroundColor.value = backgroundColor.value === lockedColor
+                            ? withDelay(250, withTiming("transparent", lockedConfig))
+                            : withTiming("transparent", config);
+
+    dotOpacity.value = withTiming(faulty ? 1 : 0, config);
+    opacity.value = withTiming(value ? 1 : 0);
+
+  }, [locked, revealed, selected, id, faulty, value]);
+
+  const dotStyle = useAnimatedStyle(() => ({
+    opacity: dotOpacity.value,
+    width: 8 * dotOpacity.value,
+  }));
+
+  const bg = useAnimatedStyle(() => ({
+    backgroundColor: backgroundColor.value
+  }));
 
   return (
     <>
-      <Pressable
-        style={{ ...styles.slot, borderColor: colors.secondary, backgroundColor: locked ? colors.secondary + colors.opacity.faint : selected === id ? colors.accent : "transparent", borderRadius: colors.others.section_radius/2 }}
+      <AnimatedPressable
+        style={[styles.slot, { borderColor: colors.secondary, borderRadius: colors.others.section_radius/2 }, bg]}
         onPress={() => {
           if (!locked && !revealed)
-            setSelected(selected === id ? undefined : id);
+            setSelected(selected ? undefined : id);
         }}
         android_disableSound
       >
-        {faulty ?
-          <View
-            style={{
-              position: "absolute",
-              top: 4,
-              left: 4,
-              width: 8,
-              aspectRatio: 1,
-              borderRadius: 9999,
-              backgroundColor: colors.hot,
-            }} />
-          :
-          null}
+        <Animated.View style={{ opacity }}>
+          <T style={[styles.slotText, { color: revealed ? colors.cold : selected ? colors.primary : colors.tertiary }]}>
+            {selected
+              ? <B>{value?.toString() ?? ""}</B>
+              : value?.toString() ?? ""}
+          </T>
+        </Animated.View>
 
-        <T style={{ ...styles.slotText, color: revealed ? colors.cold : selected === id ? colors.primary : colors.tertiary }}>
-          {selected === id
-            ? <B>{value?.toString() ?? ""}</B>
-            : value?.toString() ?? ""}
-        </T>
-
-      </Pressable>
+        <Animated.View
+          style={[{ position: "absolute", aspectRatio: 1, top: 4, left: 4, borderRadius: 9999, backgroundColor: colors.hot }, dotStyle]}
+        />
+      </AnimatedPressable>
 
       {(id + 1) % 3  === 0 && (id + 1) % 9  !== 0 ? <View style={[styles.miniSepH, { backgroundColor: colors.primary }]} /> : null}
       {(id + 1) % 27 === 0 && (id + 1) % 81 !== 0 ? <View style={[styles.miniSepV, { backgroundColor: colors.primary }]} /> : null}
@@ -46,7 +77,7 @@ export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSe
   );
 };
 
-export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_conflicts:boolean; }) => {
+export const Grid = ({ sudoku, show_conflicts }:{ sudoku:SudokuHook; show_conflicts:boolean; }) => {
   const colors = useColors();
   const duplicates = GetDuplicates(sudoku.board);
 
@@ -87,7 +118,7 @@ export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_confl
             revealed={slot !== null && isRevealed(r, c)}
             locked={slot !== null && isPoked(r, c)}
             faulty={show_conflicts && isFaulty(r, c)}
-            selected={sudoku.selected}
+            selected={r * 9 + c === sudoku.selected}
             setSelected={(v:number | undefined) => sudoku.selected = v}
             key={r * 9 + c} />
         ))
@@ -97,7 +128,7 @@ export const Grid = ({ sudoku, show_conflicts }: { sudoku:SudokuHook; show_confl
 };
 
 
-export const Number = ({ show_num_remaining, value, selected, solved, board, setBoard }: { show_num_remaining:boolean; value:SudSlotType; selected:number | undefined; solved:boolean; board:SudokuGrid; setBoard:(v:SudokuGrid) => void; }) => {
+export const Number = ({ show_num_remaining, value, selected, solved, board, setBoard }:{ show_num_remaining:boolean; value:SudSlotType; selected:number | undefined; solved:boolean; board:SudokuGrid; setBoard:(v:SudokuGrid) => void; }) => {
   const colors = useColors();
   const [isPressed, setIsPressed] = useState<boolean>(false);
   const amount = board.flat().filter(x => x === value).length;
@@ -148,7 +179,7 @@ export const Number = ({ show_num_remaining, value, selected, solved, board, set
 };
 
 
-export const Controls = ({ sudoku, show_num_remaining }: { sudoku:SudokuHook; show_num_remaining:boolean; }) => {
+export const Controls = ({ sudoku, show_num_remaining }:{ sudoku:SudokuHook; show_num_remaining:boolean; }) => {
   const colors = useColors();
 
   return (
