@@ -45,5 +45,18 @@ export interface ITheme {
       S: string;
     };
     background: () => React.JSX.Element | null;
-  }
+  };
+
+  brackets: {
+    left: {
+      curly: string;
+      square: string;
+      angle: string;
+    },
+    right: {
+      curly: string;
+      square: string;
+      angle: string;
+    },
+  };
 };

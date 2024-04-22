@@ -1,6 +1,6 @@
 import { ITheme } from "./interfaces";
 import { Ionicons } from '@expo/vector-icons';
-import defaults from "./defaults";
+import defaults, { no_brackets } from "./defaults";
 
 const theme = {
   ...defaults,
@@ -83,7 +83,9 @@ const theme = {
         />
       </>)
     },
-  }
+  },
+
+  ...no_brackets
 } as ITheme;
 
 export default theme;

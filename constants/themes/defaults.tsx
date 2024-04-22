@@ -1,24 +1,55 @@
 import { ITheme } from "./interfaces";
 
-export default {
+export const grades = {
   primary: "#121212",
   secondary: "#575757",
   tertiary: "#dddddd",
+};
 
+export const special = {
   accent: "#1ed760",
   highlight: "#5c14e3",
+}
 
+export const temps = {
   hot: "#d71e1e",
   cold: "#2054ff",
+}
 
+export const RBG = {
   red: "#d71e1e",
   green: "#00c43b",
   blue: "#3a7aff",
+};
 
+export const CYM = {
   cyan: "#27d4ff",
   yellow: "#ffea29",
   magenta: "#eb16c7",
-  
+};
+
+export const no_brackets = {
+  brackets: {
+    left: {
+      curly: "",
+      square: "",
+      angle: "",
+    },
+    right: {
+      curly: "",
+      square: "",
+      angle: "",
+    },
+  },
+};
+
+export default {
+  ...grades,
+  ...special,
+  ...temps,
+  ...RBG,
+  ...CYM,
+
   opacity: {
     faint: "45",
     mid: "65",
@@ -43,5 +74,18 @@ export default {
       S: 'Kode Bold',
     },
     background: () => null,
-  }
+  },
+
+  brackets: {
+    left: {
+      curly: "•-{ ",
+      square: "•-[ ",
+      angle: "•-< ",
+    },
+    right: {
+      curly: " }-•",
+      square: " ]-•",
+      angle: " >-•",
+    },
+  },
 } as ITheme;

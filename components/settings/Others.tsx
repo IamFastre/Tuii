@@ -2,24 +2,28 @@ import { ColorValue, StyleSheet, View } from "react-native";
 import { T, C } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 
-export const Title = ({title}:{title:string}) => (
-  <>
-    <T style={styles.titleText}>
-      <C.ACCENT>{'•-{ '}</C.ACCENT>
-      {title}
-      <C.ACCENT>{' }-•'}</C.ACCENT>
-    </T>
-    <T style={[styles.titleSep, { color: useColors().accent }]}>
-      {title.replaceAll(/./g, '_')}_
-    </T>
-  </>
+export const Title = ({title}:{title:string}) => {
+  const colors = useColors();
+
+  return (
+    <>
+      <T style={styles.titleText}>
+        <C.ACCENT>{colors.brackets.left.curly}</C.ACCENT>
+        {title}
+        <C.ACCENT>{colors.brackets.right.curly}</C.ACCENT>
+      </T>
+      <T style={[styles.titleSep, { color: colors.accent }]}>
+        {title.replaceAll(/./g, '_')}_
+      </T>
+    </>
 );
+}
 
 const styles = StyleSheet.create({
   titleText: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontSize: 20,
+    fontSize: 22,
     lineHeight: 25,
     marginTop: 30,
   },
