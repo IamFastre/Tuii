@@ -5,23 +5,23 @@ import { useColors } from '@/constants/colors';
 
 const icons = {
   dark: {
-    sudoku: require('@/assets/applet-icons/SudokuDark.png'),
-    tictactoe: require('@/assets/applet-icons/TicTacToeDark.png'),
+    sudoku: require('@/assets/applet-icons/dark/Sudoku.png'),
+    tictactoe: require('@/assets/applet-icons/dark/TicTacToe.png'),
   },
 
   light: {
-    sudoku: require('@/assets/applet-icons/SudokuLight.png'),
-    tictactoe: require('@/assets/applet-icons/TicTacToeLight.png'),
+    sudoku: require('@/assets/applet-icons/light/Sudoku.png'),
+    tictactoe: require('@/assets/applet-icons/light/TicTacToe.png'),
   },
 
   scarlatta: {
-    sudoku: require('@/assets/applet-icons/SudokuScarlatta.png'),
-    tictactoe: require('@/assets/applet-icons/TicTacToeScarlatta.png'),
+    sudoku: require('@/assets/applet-icons/scarlatta/Sudoku.png'),
+    tictactoe: require('@/assets/applet-icons/scarlatta/TicTacToe.png'),
   },
 
   e9999: {
-    sudoku: require('@/assets/applet-icons/SudokuDark.png'),
-    tictactoe: require('@/assets/applet-icons/TicTacToeDark.png'),
+    sudoku: require('@/assets/applet-icons/e9999/Sudoku.png'),
+    tictactoe: require('@/assets/applet-icons/e9999/TicTacToe.png'),
   },
 };
 
