@@ -172,8 +172,8 @@ export default function SettingsPage() {
 
           {/* Theme */}
           <OptionsSetting
-            title="Color Theme"
-            description={`The color palette used throughout the app.\nAvailable: ${Object.keys(themes).join(", ")}`}
+            title="Theme"
+            description={`The style used throughout the app.\nAvailable: ${Object.keys(themes).join(", ")}`}
             index={ThemeOptions.indexOf(options.theme)}
             options={ThemeOptions}
             onSubmit={onSubmitTheme}
@@ -183,7 +183,7 @@ export default function SettingsPage() {
 
           <OptionsSetting
             title="Weather Icons"
-            description={`The icon pack used the weather conditions.\nAvailable: ${Object.keys(iconPacks).join(", ")}`}
+            description={`The icon pack used for weather.\nAvailable: ${Object.keys(iconPacks).join(", ")}`}
             index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
             options={WeatherIPsOptions}
             onSubmit={onSubmitWeatherIP}
@@ -194,7 +194,7 @@ export default function SettingsPage() {
           {/* Word class button */}
           <BoolSetting
             title="Short Word Class"
-            description={"Uses short word class in word of the day.\neg. verb → v."}
+            description={"Use abbreviation in word of the day.\nExample: verb → v."}
             current={options.short_word_class}
             onSubmit={onSubmitWordClass}
             size='medium'
