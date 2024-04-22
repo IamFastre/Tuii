@@ -19,7 +19,7 @@ const theme = {
   statusbar: "light",
 
   others: {
-    weather_icon_pack: "ascii",
+    weather_icon_pack: "ascii-art",
     section_radius: 15,
     fonts: {
       L: 'Ubuntu',

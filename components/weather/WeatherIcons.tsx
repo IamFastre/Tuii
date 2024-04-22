@@ -8,7 +8,7 @@ import { segWeatherIcons } from "./retro-segments";
 import { imgWeatherIcons } from "./images";
 
 export const iconPacks = {
- ascii: asciiWeatherIcons,
+ "ascii-art": asciiWeatherIcons,
  segments: segWeatherIcons,
  openweathermap: imgWeatherIcons,
 };
