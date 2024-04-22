@@ -173,22 +173,24 @@ export default function SettingsPage() {
           {/* Theme */}
           <OptionsSetting
             title="Theme"
-            description={`The style used throughout the app.\nAvailable: ${Object.keys(themes).join(", ")}`}
+            description="The style used throughout the app."
             index={ThemeOptions.indexOf(options.theme)}
             options={ThemeOptions}
             onSubmit={onSubmitTheme}
             icon={options.theme === "system" ? "cog" : colors.icon}
             size='medium'
+            showOptions
           />
 
           <OptionsSetting
             title="Weather Icons"
-            description={`The icon pack used for weather.\nAvailable: ${Object.keys(iconPacks).join(", ")}`}
+            description="The icon pack used for weather."
             index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
             options={WeatherIPsOptions}
             onSubmit={onSubmitWeatherIP}
             icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii-art" ? "code-slash" : options.weather_icon_pack === "segments" ? "calculator-outline" : "partly-sunny"}
             size='medium'
+            showOptions
           />
 
           {/* Word class button */}

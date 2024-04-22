@@ -3,6 +3,13 @@ import { B, Button, C, L, T, TI } from "@/components/basics";
 import { State } from '@/src/general/types';
 import { useColors } from "@/constants/colors";
 
+interface TitleProps {
+  title: string;
+  description: string | React.JSX.Element | undefined;
+  experimental: boolean | undefined;
+  options?: string[];
+}
+
 interface SettingProp {
   title: string;
   description?: string | React.JSX.Element;
@@ -22,6 +29,7 @@ interface TextInputSettingProps extends SettingProp {
 interface OptionsSettingProps extends SettingProp {
   icon?: string;
   color?: ColorValue;
+  showOptions?:boolean;
   index: number;
   options?: string[];
 }
@@ -30,25 +38,35 @@ interface BoolSettingProps extends SettingProp {
   current: boolean;
 }
 
-const Title = ({title, description, experimental}:{title:string, description:string | React.JSX.Element | undefined, experimental:boolean | undefined}) => (
+const Title = (props:TitleProps) => (
   <View style={styles.titleContainer}>
-    <T>
-      <C.ACCENT>
-        <B>
-          •
-        </B>
-      </C.ACCENT>
-    </T>
     <View style={styles.titleView}>
+      <T>
+        <C.ACCENT>
+          <B>
+            {'• '}
+          </B>
+        </C.ACCENT>
+      </T>
       <T style={styles.title}>
-        <B>{title}</B>
+        <B>{props.title}</B>
         <C.SECONDARY>
           :
         </C.SECONDARY>
       </T>
-      {description ? <T style={styles.description}><C.SECONDARY>{description}</C.SECONDARY></T> : null}
-      {experimental ? <T style={styles.description}><C.HOT>{'{{ EXPERIMENTAL }}'}</C.HOT></T> : null}
     </View>
+
+    { props.options
+    ? <T style={styles.description}>
+        <C.SECONDARY>
+          <C.TERTIARY>Options: </C.TERTIARY>
+          {props.options.join(", ")}
+        </C.SECONDARY>
+      </T>
+    : null
+    }
+    { props.description ? <T style={styles.description}><C.SECONDARY>{props.description}</C.SECONDARY></T> : null }
+    { props.experimental ? <T style={styles.description}><C.HOT>{'{{ EXPERIMENTAL }}'}</C.HOT></T> : null }
   </View>
 );
 
@@ -75,7 +93,7 @@ export const TextInputSetting = (props:TextInputSettingProps) => {
 export const OptionsSetting = (props:OptionsSettingProps) => {
   return (
     <View style={styles.setting}>
-      <Title title={props.title} description={props.description} experimental={props.experimental} />
+      <Title title={props.title} description={props.description} experimental={props.experimental} options={props.showOptions ? props.options : undefined} />
       <Button
         title={props.options ? props.options[props.index] : undefined}
         style={{
@@ -121,20 +139,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 40,
-    marginHorizontal: 20,
+    marginRight: 10,
+    marginLeft: 20,
     marginBottom: 20,
     // backgroundColor: "red",
   },
 
   titleContainer: {
     flex: 1.34,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   
   titleView: {
-    flex: 1,
-    marginLeft: 10
+    flexDirection: "row",
   },
   
   title: {
@@ -145,8 +161,10 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontSize: 9,
+    opacity: 0.7,
+    fontSize: 10,
     marginRight: 5,
+    // backgroundColor: 'blue'
   },
 
   largeInput: {
