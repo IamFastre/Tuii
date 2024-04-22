@@ -46,8 +46,8 @@ const Title = ({title, description, experimental}:{title:string, description:str
           :
         </C.SECONDARY>
       </T>
-      {description ? <C.SECONDARY style={styles.description}>{description}</C.SECONDARY> : null}
-      {experimental ? <C.HOT style={styles.description}>{'{{ EXPERIMENTAL }}'}</C.HOT> : null}
+      {description ? <T style={styles.description}><C.SECONDARY>{description}</C.SECONDARY></T> : null}
+      {experimental ? <T style={styles.description}><C.HOT>{'{{ EXPERIMENTAL }}'}</C.HOT></T> : null}
     </View>
   </View>
 );
