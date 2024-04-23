@@ -1,17 +1,12 @@
 import{ useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { AxiosError } from "axios";
 import * as Clipboard from 'expo-clipboard';
 
 import { B, BI, C, L, LI, Section, T } from "@/components/basics";
-import { normalize } from "@/src/general/funcs";
-import { ITime } from "@/src/general/interfaces";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ITime, State, normalize, hashDateToLength } from "@/src/general";
+import { IWord, fetchDict, getDefinition, getClass, getPhonetic, getWord } from "@/src/todays-word";
 import quotes from "@/library/quotes.json";
-import { hashDateToLength } from "@/src/general/funcs";
-import { fetchDict, getDefinition, getClass, getPhonetic, getWord } from "@/src/todays-word/funcs";
-import { IWord } from "@/src/todays-word/interfaces";
-import { State } from "@/src/general/types";
-import { useColors } from "@/constants/colors";
-import { AxiosError } from "axios";
 
 const Copied = ({size}:{size?:number}) => (
   <T style={{ fontSize: size ?? 18 }}>
@@ -26,12 +21,9 @@ const Copied = ({size}:{size?:number}) => (
 );
 
 export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean}) => {
-  const colors = useColors();
-
   const [msg, setMsg] = useState<string>("loading...");
   const [word, setWord] = useState<IWord | undefined>(undefined);
   const [copied, setCopied] = useState<boolean>(false);
-  const [wordWidth, setWordWidth] = useState<number>(10);
 
   const refresh = () => {
     setMsg("loading...");
@@ -53,15 +45,15 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
   return (
     <Section
       title="Word of the day"
-      style={styles.card}
-      titleStyle={{ fontSize: 20 }}
-      containerStyle={{ padding: 20, justifyContent: 'center', alignItems: 'center', minHeight: 120 }}
+      style={styles.section}
+      titleStyle={styles.title}
+      containerStyle={styles.card}
       isCard
       centered
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+      <View style={styles.wotdHeader}>
         {/* Word */}
-        <T style={{ fontSize: 20, textAlign: 'center' }} selectable>
+        <T style={styles.wotd} selectable>
           <C.HIGHLIGHT>
             <BI>
               {word
@@ -77,23 +69,24 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
         </T>
 
         {/* Word class */}
-        <C.SECONDARY
-          onLayout={e => setWordWidth(Math.ceil(e.nativeEvent.layout.width))}
-          style={{ fontSize: 10, bottom: Platform.OS === "android" ? 2 : -1, right: -wordWidth, position: "absolute" }}
-        >
-          ({word ? getClass(word, date, shortClass) : "?"}.)
-        </C.SECONDARY>
+        <View style={styles.wotdClassContainer}>
+          <C.SECONDARY
+            style={styles.wotdClass}
+          >
+            ({word ? getClass(word, date, shortClass) : "?"}.)
+          </C.SECONDARY>
+          </View>
       </View>
 
       {/* Word phonetic */}
-      <T style={{ fontSize: 10, marginBottom: 7.5 }}>
+      <T style={styles.wotdPhonetics}>
         <C.SECONDARY>
           <L>{word ? getPhonetic(word) : "/?/"}</L>
         </C.SECONDARY>
       </T>
 
       <TouchableOpacity
-        style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+        style={styles.wotdBody}
         onLongPress={() => {
           setCopied(true);
           word ? Clipboard.setStringAsync(getDefinition(word, date).definition) : null;
@@ -106,7 +99,7 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
       :
       <>
         {/* Word definition */}
-        <T style={{ fontSize: 12, textAlign: 'center' }} selectable>
+        <T style={styles.wotdDefinition} selectable>
           <L>
             {word ? getDefinition(word, date).definition : <LI style={{ opacity: 0.5 }}>{msg}</LI>}
           </L>
@@ -114,10 +107,12 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
 
         {/* Word example */}
         { word && getDefinition(word, date).example ?
-        <T style={{ marginTop: 5, fontSize: 10, color: colors.secondary }} selectable>
-          <LI>
-            ({getDefinition(word, date).example})
-          </LI>
+        <T style={styles.wotdExample} selectable>
+          <C.SECONDARY>
+            <LI>
+              ({getDefinition(word, date).example})
+            </LI>
+          </C.SECONDARY>
         </T>
         : null }
       </>
@@ -133,10 +128,10 @@ export const TodaysQuote = ({date: time}:{date:ITime}) => {
 
   return (
     <Section
-        style={styles.card}
+        style={styles.section}
         title="Today's quote"
-        titleStyle={{ fontSize: 20 }}
-        containerStyle={{ padding: 20, justifyContent: 'center', alignItems: 'center', minHeight: 120 }}
+        titleStyle={styles.title}
+        containerStyle={styles.card}
         isCard
         centered
       >
@@ -153,7 +148,7 @@ export const TodaysQuote = ({date: time}:{date:ITime}) => {
         :
         <>
           {/* Quote body */}
-          <T style={{ marginTop: 10 }}>
+          <T style={styles.quoteBody}>
             <BI>{'“ '}</BI>
             <LI>
               {normalize(quote.quote)}
@@ -162,7 +157,7 @@ export const TodaysQuote = ({date: time}:{date:ITime}) => {
           </T>
 
           {/* Quote author */}
-          <T style={{ alignSelf: 'flex-start', marginTop: 7.5, marginLeft: 5 }}>
+          <T style={styles.quoteAuthor}>
             - {quote.author}
           </T>
         </>
@@ -173,9 +168,77 @@ export const TodaysQuote = ({date: time}:{date:ITime}) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
+  section: {
     margin: 10,
     marginBottom: 20,
     flex: 1
   },
+  
+  card: {
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 120
+  },
+
+  title: {
+    fontSize: 20
+  },
+
+  wotdHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
+  },
+
+  wotd: {
+    fontSize: 20,
+    textAlign: 'center'
+  },
+
+  wotdClassContainer: {
+    alignSelf: 'flex-end',
+    width: 0,
+    height: 0,
+    overflow: 'visible'
+  },
+
+  wotdClass: {
+    fontSize: 10,
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+  },
+
+  wotdPhonetics: {
+    fontSize: 10,
+    marginBottom: 7.5
+  },
+
+  wotdBody: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1
+  },
+
+  wotdDefinition: {
+    fontSize: 12,
+    textAlign: 'center'
+  },
+
+  wotdExample: {
+    marginTop: 5,
+    fontSize: 10,
+  },
+
+  quoteBody: {
+    marginTop: 10
+  },
+
+  quoteAuthor: {
+    alignSelf: 'flex-start',
+    marginTop: 7.5,
+    marginLeft: 5
+  }
 });

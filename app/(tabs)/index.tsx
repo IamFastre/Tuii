@@ -244,7 +244,7 @@ export default function HomePage() : React.JSX.Element {
         {/*                         { Word of the day }                        */}
         {/* ================================================================== */}
   
-        <View style={{ flexDirection: consts.height > consts.width ? 'column' : 'row', justifyContent: 'center', width: "100%"}}>
+        <View style={styles.cardsContainer}>
           <TodaysWord date={time} shortClass={options.short_word_class} />
           <TodaysQuote date={time} />
         </View>
@@ -388,5 +388,11 @@ const styles = StyleSheet.create({
   greetT: {
     fontSize: 18,
     textAlign: 'center',
+  },
+
+  cardsContainer: {
+    flexDirection: consts.height > consts.width ? 'column' : 'row',
+    justifyContent: 'center',
+    width: "100%"
   },
 });
