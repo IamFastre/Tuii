@@ -81,7 +81,7 @@ export default () => {
 
   return (
     <SettingsContext.Provider value={{ settings, updateSettings }}>
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.primary }]} onLayout={onLayoutRootView} mode="padding">
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.primary }} onLayout={onLayoutRootView} mode="padding">
         <Container style={{ flex: 1 }} behavior="padding">
 
           {/* ================================================================== */}
@@ -97,6 +97,7 @@ export default () => {
             >
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="applets/sudoku" options={screenOptions.applets} />
+            <Stack.Screen name="applets/tictactoe" options={screenOptions.applets} />
           </Stack>
           <StatusBar style={colors.statusbar}/>
         </Container>
@@ -107,13 +108,6 @@ export default () => {
 
 const screenOptions:{ [P:string]: NativeStackNavigationOptions } = {
   applets: {
-    animation: 'slide_from_right',
     orientation: 'portrait',
   }
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
-});

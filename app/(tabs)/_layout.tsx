@@ -15,6 +15,10 @@ interface TabIconProps {
   path:Href;
 }
 
+const HOME     = 'home';
+const APPLETS  = 'applet-list';
+const SETTINGS = 'settings'
+
 const TabIcon = ({icon, selected, path}:TabIconProps) => {
   const colors = useColors();
 
@@ -38,15 +42,15 @@ export default function HomeLayout() {
 
   return (
     <Tabs
-      tabBar={(props) => {
-        if (props.state.index > 2)
+      tabBar={({ state }) => {
+        if (state.index > 2)
           return null;
         
         return (
           <Section title="Tabs" style={styles.tabs} containerStyle={styles.tabsContainer}>
-            <TabIcon icon="home"     selected={props.state.index === 0} path="/(tabs)/" />
-            <TabIcon icon="apps"     selected={props.state.index === 1} path="/(tabs)/applet-list" />
-            <TabIcon icon="settings" selected={props.state.index === 2} path="/(tabs)/settings" />
+            <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home" />
+            <TabIcon icon="apps"     selected={state.routes[state.index].name === APPLETS}  path="/(tabs)/applet-list" />
+            <TabIcon icon="settings" selected={state.routes[state.index].name === SETTINGS} path="/(tabs)/settings" />
 
             <TouchableOpacity style={styles.tab} onPress={() => Exit()}>
               <Ionicons name='exit-outline' size={30} color={colors.hot} />
@@ -62,9 +66,9 @@ export default function HomeLayout() {
 
       backBehavior='history'
     >
-      <Tabs.Screen name='index' options={{ title: "Home" }} />
-      <Tabs.Screen name='applet-list' options={{ title: "Applets" }} />
-      <Tabs.Screen name='settings' options={{ title: "Settings" }} />
+      <Tabs.Screen name={HOME} options={{ title: "Home" }} />
+      <Tabs.Screen name={APPLETS} options={{ title: "Applets" }} />
+      <Tabs.Screen name={SETTINGS} options={{ title: "Settings" }} />
     </Tabs>
   );
 }
