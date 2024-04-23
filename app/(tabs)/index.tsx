@@ -19,8 +19,6 @@ export default function HomePage() : React.JSX.Element {
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [colonBlink, setColonBlink] = useState<boolean>(false);
-  const [unitWidth, setUnitWidth] = useState<number>(13);
-  const [feelsWidth, setFeelsWidth] = useState<number>(13);
   const [msg, setMsg] = useState<string>("loading...");
 
   const [greet, setGreet] = useState<string>(getGreet());
@@ -106,23 +104,27 @@ export default function HomePage() : React.JSX.Element {
             {/* Weather description */}
             <View style={styles.weatherTexts}>
               {/* Temperature */}
-              <View>
+              <View style={{ flexDirection: 'row' }}>
                 <T style={styles.weatherTempT} selectable>
                   <B>{Math.round((weather?.main.temp ?? 0)).toString()}</B>°
                 </T>
-                {/* Temperature unit */}
-                <T style={{...styles.weatherSubtextT, color: colors.secondary, ...styles.weatherUnit, right: -unitWidth}} onLayout={(event) => setUnitWidth(event.nativeEvent.layout.width)}>
-                  <B>
-                    <C.TERTIARY>
-                      {weather?.units === "imperial" ? "F" : "C"}
-                    </C.TERTIARY>
-                  </B>
-                </T>
                 {/* Feels like */}
-                <T style={{...styles.weatherSubtextT, color: colors.secondary, ...styles.weatherFeels, right: -feelsWidth}} onLayout={(event) => setFeelsWidth(Math.round(event.nativeEvent.layout.width * ((weather?.main.feels_like_difference ?? 0).toString().length / ((weather?.main.feels_like_difference ?? 0).toString().length + 1))) + 1)}>
-                  {(weather?.main.feels_like_difference ?? 0) >= 0 ? "+" : ""}
-                  {weather?.main.feels_like_difference ?? 0}
-                </T>
+                <View style={styles.weatherFeelsContainer}>
+                  <T style={[styles.weatherSubtextT, styles.weatherFeels, { color: colors.secondary }]}>
+                    {(weather?.main.feels_like_difference ?? 0) >= 0 ? "+" : ""}
+                    {weather?.main.feels_like_difference ?? 0}
+                  </T>
+                </View>
+                {/* Temperature unit */}
+                <View style={styles.weatherUnitContainer}>
+                  <T style={[styles.weatherSubtextT, styles.weatherUnit, { color: colors.secondary }]}>
+                    <B>
+                      <C.TERTIARY>
+                        {weather?.units === "imperial" ? "F" : "C"}
+                      </C.TERTIARY>
+                    </B>
+                  </T>
+                </View>
               </View>
               {/* Weather status */}
               <T style={styles.weatherMainT}>
@@ -302,15 +304,29 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
 
+  weatherUnitContainer: {
+    alignSelf: 'flex-start',
+    width: 0,
+    height: 0,
+    overflow: 'visible'
+  },
+
   weatherUnit: {
     position: "absolute",
-    right: 0,
+    left: 0,
     top: 0,
+  },
+
+  weatherFeelsContainer: {
+    alignSelf: 'flex-end',
+    width: 0,
+    height: 0,
+    overflow: 'visible'
   },
 
   weatherFeels: {
     position: "absolute",
-    right: 0,
+    left: 0,
     bottom: 0,
   },
 
