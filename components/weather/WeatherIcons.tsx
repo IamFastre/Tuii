@@ -20,7 +20,7 @@ export const WeatherIcon = ({id, size, theme, pack}:{ id?:WeatherIconID, size:nu
              : iconPacks[pack])[id];
 
   return (
-    <View style={{ marginVertical: 30 }}>
+    <View style={styles.icon}>
       <Icon size={size} />
     </View>
   );
@@ -28,10 +28,9 @@ export const WeatherIcon = ({id, size, theme, pack}:{ id?:WeatherIconID, size:nu
 
 const styles = StyleSheet.create({
   icon: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 250,
-    height: 200,
-    marginVertical: 25,
-  },
+    minHeight: 200,
+    marginVertical: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
