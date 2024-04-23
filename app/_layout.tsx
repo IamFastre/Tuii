@@ -79,6 +79,10 @@ export default () => {
   NavBar.setPositionAsync("absolute");
   }
 
+  const applets = {
+
+  }
+
   return (
     <SettingsContext.Provider value={{ settings, updateSettings }}>
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.primary }} onLayout={onLayoutRootView} mode="padding">

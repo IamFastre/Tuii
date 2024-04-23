@@ -18,7 +18,7 @@ export const Option = ({ title, description, path, icon, style }:OptionProps) =>
   const colors = useColors();
 
   return (
-    <TouchableOpacity onPress={() => router.push(path as any)}>
+    <TouchableOpacity onPress={() => router.navigate(path as any)}>
       <View style={[styles.option, { borderColor: colors.secondary, borderRadius: colors.others.section_radius }, style]}>
         <Image
           source={icon}
@@ -33,7 +33,7 @@ export const Option = ({ title, description, path, icon, style }:OptionProps) =>
             {description}
           </T>
         </View>
-        <TouchableOpacity onPress={() => router.push(path + '/settings' as any)} hitSlop={10}>
+        <TouchableOpacity onPress={() => router.navigate(path + '/settings' as any)} hitSlop={10}>
           <Ionicons name='options' color={colors.secondary} size={28} style={styles.optionSettings}/>
         </TouchableOpacity>
       </View>
