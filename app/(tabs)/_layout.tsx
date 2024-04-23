@@ -62,7 +62,7 @@ export default function HomeLayout() {
 
       backBehavior='history'
     >
-      <Tabs.Screen name='index' options={{ title: "Home", unmountOnBlur: false }} />
+      <Tabs.Screen name='index' options={{ title: "Home" }} />
       <Tabs.Screen name='applet-list' options={{ title: "Applets" }} />
       <Tabs.Screen name='settings' options={{ title: "Settings" }} />
     </Tabs>
