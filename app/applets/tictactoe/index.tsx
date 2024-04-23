@@ -103,8 +103,8 @@ export default () : React.JSX.Element => {
                     {'[ '}
                       <C.TERTIARY>
                         {xo.winner
-                        ? <><T style={{ color: xo.winner === 1 ? colors.red : colors.green }} plain>{NumberToLetter(xo.winner)}</T> Won!</>
-                        : `It's a tie!`}
+                        ? <><T style={{ color: xo.winner === 1 ? colors.red : colors.green }} plain>{NumberToLetter(xo.winner)}</T> Won</>
+                        : `Tie`}
                       </C.TERTIARY>
                     {' ]'}
                   </C.ACCENT>
@@ -112,7 +112,7 @@ export default () : React.JSX.Element => {
               </T>
               <T style={styles.winBody}>
                 <C.SECONDARY>
-                  {xo.winner ? <>Player <B>{NumberToLetter(xo.winner)}</B> has won this match!</> : `No one won this match, it's a tie!`}
+                  {xo.winner ? <>Player <B style={{ color: xo.winner === 1 ? colors.red : colors.green }}>{NumberToLetter(xo.winner)}</B> has won this match!</> : `No one won this match, it's a tie!`}
                 </C.SECONDARY>
               </T>
             </Section>
