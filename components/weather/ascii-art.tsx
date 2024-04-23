@@ -1,20 +1,24 @@
 import { WeatherIconPack } from "@/src/weather";
 import { T, B, C } from "../basics";
+import { useColors } from "@/constants/colors";
 
 export const ASCIIWeatherIcons = {
-  None: ({size}:{size:number}) => (
-    <T style={{ textAlignVertical: "center", fontSize: size * 2.5 }}>
-      <B>
-        <C.RED>
-          {'•-{ '}
-          <C.TERTIARY>
-            ???
-          </C.TERTIARY>
-          {' }-•'}
-        </C.RED>
-      </B>
-    </T>
-  ),
+  None: ({size}:{size:number}) => {
+    const colors = useColors();
+    return (
+      <T style={{ textAlignVertical: "center", fontSize: size * 2.5 }}>
+        <B>
+          <C.RED>
+            {colors.brackets.left.curly}
+            <C.TERTIARY>
+              ???
+            </C.TERTIARY>
+            {colors.brackets.right.curly}
+          </C.RED>
+        </B>
+      </T>
+    );
+  },
 
   ClearD: ({size}:{size:number}) => (
     <T style={{ textAlignVertical: "center", fontSize: size*0.9 }}>

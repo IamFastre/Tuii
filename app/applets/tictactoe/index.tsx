@@ -9,6 +9,7 @@ import { B, Button, C, L, Section, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 import { CountEmpty, GetWinningPos, NumberToLetter, useXO } from "@/src/tictactoe";
 import { Grid } from "@/components/applets/TicTacToe";
+import { removeAt } from "@/src/general/funcs";
 
 export default () : React.JSX.Element => {
   const colors = useColors();
@@ -38,6 +39,9 @@ export default () : React.JSX.Element => {
     }
   }, [CountEmpty(xo.board)]);
 
+  const l = colors.brackets.left.angle;
+  const r = colors.brackets.right.angle;
+
   return (
     <View style={{ flex:1 }}>
       <Header title='TIC-TAC-TOE' options={"/applets/tictactoe/settings"} size="small" />
@@ -46,15 +50,11 @@ export default () : React.JSX.Element => {
         <View style={styles.scoreBoard}>
             <T style={{ fontFamily: colors.others.fonts.S, textAlign: 'center', fontSize: 32 }}>
               <C.ACCENT>
-                { colors.theme === "scarlatta"
-                ? <C.SECONDARY>{'❁  '}</C.SECONDARY>
-                : <>•<C.SECONDARY>{'-< '}</C.SECONDARY></>
-                }
+                {l[0]}
+                <C.SECONDARY>{removeAt(l, 0)}</C.SECONDARY>
                   Score
-                { colors.theme === "scarlatta"
-                ? <C.SECONDARY>{'  ❁'}</C.SECONDARY>
-                : <><C.SECONDARY>{' >-'}</C.SECONDARY>•</>
-                }
+                <C.SECONDARY>{removeAt(r, r.length-1)}</C.SECONDARY>
+                {r[r.length-1]}
               </C.ACCENT>
             </T>
             <T style={[styles.scoreNums, { fontFamily: colors.others.fonts.S }]}>
@@ -67,12 +67,12 @@ export default () : React.JSX.Element => {
             <Grid xo={xo} vs_cpu={config.vs_cpu} />
               <T style={styles.turn}>
                 <C.SECONDARY>
-                  {'•-[ '}
+                  {colors.brackets.left.square}
                   <L>
                     <B>{xo.turn === 1 ? <C.RED>X</C.RED> : <C.GREEN>O</C.GREEN>}</B>
                     's turn
                   </L>
-                  {' ]-•'}
+                  {colors.brackets.right.square}
                 </C.SECONDARY>
               </T>
           </View>

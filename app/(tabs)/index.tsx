@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View, RefreshControl, Platform } from 'react-na
 import { AxiosError } from 'axios';
 
 import { B, Button, C, Section, T, Sep } from '@/components/basics';
-import { getTime, getGreet } from '@/src/general/funcs';
+import { getTime, getGreet, removeAt } from '@/src/general/funcs';
 import { ITime } from "@/src/general/interfaces";
 import { IForecast, WeatherIconID, fetchWeather } from '@/src/weather';
 import { WeatherIcon } from '@/components/weather/WeatherIcons';
@@ -70,6 +70,9 @@ export default function HomePage() : React.JSX.Element {
   }, [greet, time]);
 
 
+  const l = colors.brackets.left.curly;
+  const r = colors.brackets.right.curly;
+
   return (
     <>
     <Section title="Home Page" style={{ flex:1 }}>
@@ -123,11 +126,11 @@ export default function HomePage() : React.JSX.Element {
               </View>
               {/* Weather status */}
               <T style={styles.weatherMainT}>
-                <C.ACCENT>•</C.ACCENT>
-                <C.SECONDARY>{'-{ '}</C.SECONDARY>
+                <C.ACCENT>{l[0]}</C.ACCENT>
+                <C.SECONDARY>{removeAt(l, 0)}</C.SECONDARY>
                 {weather?.weather[0].main ?? msg}
-                <C.SECONDARY>{' }-'}</C.SECONDARY>
-                <C.ACCENT>•</C.ACCENT>
+                <C.SECONDARY>{removeAt(r, r.length-1)}</C.SECONDARY>
+                <C.ACCENT>{r[r.length-1]}</C.ACCENT>
               </T>
               <T style={[styles.weatherSubtextT, { color: colors.secondary }]}>
                 ({weather?.weather[0].description ?? "..."})

@@ -85,7 +85,17 @@ const theme = {
     },
   },
 
-  ...no_brackets
+  brackets: {
+    left: {
+      ...no_brackets.brackets.left,
+      angle: " ❁  "
+    },
+
+    right: {
+      ...no_brackets.brackets.right,
+      angle: "  ❁ "
+    }
+  },
 } as ITheme;
 
 export default theme;

@@ -132,3 +132,7 @@ export function prev<T>(list: T[], current: T) {
 export function deepCopy<T>(v:T) : T {
   return JSON.parse(JSON.stringify(v)) as T;
 }
+
+export function removeAt(str:string, index:number) {
+  return str.slice(0,index) + str.slice(index+1);
+}

@@ -1,4 +1,4 @@
-import defaults from "./defaults";
+import defaults, { no_brackets } from "./defaults";
 import { ITheme } from "./interfaces";
 
 export default {
@@ -45,5 +45,19 @@ export default {
       S: 'Digital-7',
     },
     background: () => null,
-  }
+  },
+
+  brackets: {
+    left: {
+      curly: "{{ ",
+      square: "[ ",
+      angle: "•-< ",
+    },
+
+    right: {
+      curly: " }}",
+      square: " ]",
+      angle: " >-•",
+    }
+  },
 } as ITheme;

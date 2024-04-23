@@ -13,9 +13,9 @@ export function Header({title, options, size}:{ title:string; options:string; si
         <Ionicons name='chevron-back-sharp' size={35} color={colors.hot} />
       </TouchableOpacity>
       <T style={{ fontSize: size === "small" ? 22 : size === "large" ? 30 : 26 }}>
-        <C.ACCENT>•-{'{ '}</C.ACCENT>
+        <C.ACCENT>{colors.brackets.left.curly}</C.ACCENT>
         <B>{title}</B>
-        <C.ACCENT>{' }'}-•</C.ACCENT>
+        <C.ACCENT>{colors.brackets.right.curly}</C.ACCENT>
       </T>
       <TouchableOpacity style={styles.settingsButton} onPress={() => router.push(options as any)}>
         <Ionicons name='options' size={30} color={colors.accent} />
