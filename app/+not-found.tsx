@@ -20,7 +20,7 @@ export default function NotFound() : React.JSX.Element {
           textStyle={styles.buttonText}
           title="Home"
           icon={ {name:"home-sharp", size: 16} }
-          onPress={() => router.replace("/(tabs)")}
+          onPress={() => router.replace("/(tabs)/home")}
         />
         <T style={[styles.qmark, { color: colors.secondary }]}>?</T>
       </Section>
