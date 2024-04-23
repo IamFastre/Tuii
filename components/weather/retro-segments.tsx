@@ -1,6 +1,7 @@
 import { WeatherIconPack } from "@/src/weather";
 import { T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
+import { View } from "react-native";
 
 type WeatherLetters = "A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|" ";
 
@@ -9,14 +10,14 @@ export const getSegment = (id?:WeatherLetters) => {
   return ({ size }: { size: number }) => {
     const colors = useColors();
     return (
-      <>
+      <View>
         <T style={{ color: colors.accent, fontFamily: "DSEGWeather", fontSize: size*16 }}>
           {id ?? " "}
         </T>
         <T style={{ color: colors.secondary, fontFamily: "DSEGWeather", fontSize: size*16, position: "absolute", top: 0, opacity: 0.1 }}>
           {' '}
         </T>
-      </>
+      </View>
     );
   };
 }
