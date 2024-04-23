@@ -4,21 +4,10 @@ import { AxiosError } from "axios";
 import * as Clipboard from 'expo-clipboard';
 
 import { B, BI, C, L, LI, Section, T } from "@/components/basics";
-import { ITime, State, normalize, hashDateToLength } from "@/src/general";
+import { ITime, State } from "@/src/general";
 import { IWord, fetchDict, getDefinition, getClass, getPhonetic, getWord } from "@/src/todays-word";
-import quotes from "@/library/quotes.json";
 
-const Copied = ({size}:{size?:number}) => (
-  <T style={{ fontSize: size ?? 18 }}>
-    {'>>-•{ '}
-    <LI>
-      <C.HIGHLIGHT>
-        Copied
-      </C.HIGHLIGHT>
-    </LI>
-    {' }•-<<'}
-  </T>
-);
+import { Copied } from "./copied";
 
 export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean}) => {
   const [msg, setMsg] = useState<string>("loading...");
@@ -122,50 +111,6 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
   );
 };
 
-export const TodaysQuote = ({date: time}:{date:ITime}) => {
-  const quote = quotes[hashDateToLength(time, quotes.length)];
-  const [copied, setCopied] = useState<boolean>(false);
-
-  return (
-    <Section
-        style={styles.section}
-        title="Today's quote"
-        titleStyle={styles.title}
-        containerStyle={styles.card}
-        isCard
-        centered
-      >
-        <TouchableOpacity
-          onLongPress={() => {
-            setCopied(true);
-            Clipboard.setStringAsync(`${normalize(quote.quote)}\n- ${quote.author}`);
-            setTimeout(() => setCopied(false), 2000);
-          }}
-        >
-        { copied
-        ? // Copied component //
-          <Copied />
-        :
-        <>
-          {/* Quote body */}
-          <T style={styles.quoteBody}>
-            <BI>{'“ '}</BI>
-            <LI>
-              {normalize(quote.quote)}
-            </LI>
-            <BI>{' ”'}</BI>
-          </T>
-
-          {/* Quote author */}
-          <T style={styles.quoteAuthor}>
-            - {quote.author}
-          </T>
-        </>
-        }
-      </TouchableOpacity>
-    </Section>
-  );
-};
 
 const styles = StyleSheet.create({
   section: {
@@ -231,14 +176,4 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 10,
   },
-
-  quoteBody: {
-    marginTop: 10
-  },
-
-  quoteAuthor: {
-    alignSelf: 'flex-start',
-    marginTop: 7.5,
-    marginLeft: 5
-  }
 });
