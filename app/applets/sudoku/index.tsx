@@ -37,7 +37,7 @@ export default () : React.JSX.Element => {
               <Grid sudoku={sudoku} show_conflicts={config.show_conflicts} />
 
               {config.show_empty_count ?
-              <T style={{ textAlign: 'center', marginTop: 15 }}>
+              <T style={styles.remaining}>
                 <L>
                   <C.SECONDARY>
                     Remaining: <C.HIGHLIGHT>{CountEmpty(sudoku.board)}</C.HIGHLIGHT>
@@ -146,11 +146,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  remaining: {
+    textAlign: 'center',
+    marginTop: 10
+  },
+
   actions: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginTop: 15,
+    marginVertical: 5,
     paddingHorizontal: 15,
     width: "100%",
   },

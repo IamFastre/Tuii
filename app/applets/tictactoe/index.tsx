@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   },
 
   turn: {
+    textAlign: 'center',
     marginTop: 10,
   },
 
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginTop: 15,
+    marginVertical: 5,
     paddingHorizontal: 15,
     width: "100%",
   },
