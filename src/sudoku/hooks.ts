@@ -17,6 +17,15 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
   const [poked, setPoked] = useState<Position[]>([]);
   const [revealed, setRevealed] = useState<Position[]>([]);
 
+  const saveObj:ISudokuSave = {
+    board,
+    level,
+    poked,
+    revealed,
+    solution,
+    type: "sudokuSave"
+  };
+
   const generate = () => {
     const sol = MakeBoard();
     const puz = Poke(deepCopy(sol), LevelToNumber(lvl));
@@ -29,7 +38,7 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
     setSelected(undefined);
     setRevealed([]);
 
-    setStored('sudokuSaved', { board: puz, level: lvl, poked: pok, revealed: [], solution: sol, type: "sudokuSave" })
+    setStored('sudokuSaved', { ...saveObj, board: puz, level: lvl, poked: pok, revealed: [], solution: sol })
   };
 
   const resume = async () => {
@@ -58,27 +67,26 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
 
     setBoard(current => {
       current[r][c] = solution[r][c];
-      setStored('sudokuSaved', { board: current, level, poked, revealed, solution, type: "sudokuSave" })
+      setStored('sudokuSaved', { ...saveObj, board: current, revealed: [...revealed, [r,c]]})
       return current;
     });
     setSelected(undefined);
   };
 
   const revealBoard = () => {
-    setRevealed(r => r.concat(GetEmpty(board)));
+    const r2 = revealed.concat(GetEmpty(board));
+    setRevealed(r2);
     setBoard(b => {
-      const r2:Position[] = [];
       const b2 = b.map((row, r) => {
         return row.map((slot, c) => {
           if (slot === null) {
-            r2.push([r, c]);
             return solution[r][c];
           }
           return slot;
         });
       })
 
-      setStored('sudokuSaved', { board: b2, level, poked, revealed: r2, solution, type: "sudokuSave" })
+      setStored('sudokuSaved', { ...saveObj, board: b2, revealed: r2 })
       return b2;
     });
     setSelected(undefined);
@@ -117,7 +125,7 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
     set board(value:SudokuGrid) {
       if (!solved) {
         setBoard(value);
-        setStored('sudokuSaved', { board: value, level, poked, revealed, solution, type: "sudokuSave" })
+        setStored('sudokuSaved', { ...saveObj, board: value })
       }
     },
 
