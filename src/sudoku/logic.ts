@@ -151,3 +151,19 @@ export function GetPosition(num:number) : Position {
 export function GetIndex([r, c]:Position) : number {
   return r * 9 + c;
 }
+
+/* ========================================================================== */
+
+export function IsSolved(board:SudokuGrid, solution:SudokuGrid) {
+  if (CountEmpty(board))
+    return false;
+
+  for (let r = 0; r < board.length; r++) {
+    for (let c = 0; c <  board[r].length; c++) {
+      if (board[r][c] !== solution[r][c])
+        return false;
+    }
+  }
+
+  return true;
+}

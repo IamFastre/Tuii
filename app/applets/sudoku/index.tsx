@@ -15,7 +15,7 @@ export default () : React.JSX.Element => {
   const [showWin, setShowWin] = useState<boolean>(true);
 
   const { sudoku:config } = useContext(SettingsContext).settings;
-  const sudoku = useSudoku(config.level);
+  const sudoku = useSudoku(true, config.level);
 
   const dismissWin = () => setShowWin(false);
 

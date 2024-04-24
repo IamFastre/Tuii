@@ -1,6 +1,7 @@
 import themes from "@/constants/themes";
 import { DefaultStored } from '@/src/general/storage';
 import { iconPacks } from "@/components/weather/WeatherIcons";
+import { Position, SudokuGrid } from "@/src/sudoku";
 
 export const UserGenderOptions:UserGender[] = ["male", "female", "other"];
 export const UnitsOptions:Units[] = ["metric", "imperial"];
@@ -53,6 +54,15 @@ export interface ISudoku {
   show_empty_count: boolean;
   show_num_remaining: boolean;
   type: "sudoku";
+}
+
+export interface ISudokuSave {
+  level: SudokuLevel;
+  solution: SudokuGrid;
+  board: SudokuGrid;
+  poked: Position[];
+  revealed: Position[];
+  type: "sudokuSave";
 }
 
 export interface ITicTacToe {
