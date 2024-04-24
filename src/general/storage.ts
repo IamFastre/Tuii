@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
 
 import { Print } from "./funcs";
-import { ITicTacToe, ISudoku, IMetrics, IOptions, IUser, StoredKey, StoredValue } from "./interfaces";
+import { ITicTacToe, ISudoku, IMetrics, IOptions, IUser, StoredKey } from "./interfaces";
 
 export const DefaultSettings = {
   user: {
@@ -53,16 +53,16 @@ export const DefaultStored = {
   ...DefaultSettings,
 };
 
-export async function getStored<T extends StoredKey>(type: T) {
+export async function getStored<T extends StoredKey>(type: T) : Promise<typeof DefaultStored[T]> {
   try {
     let options = await AsyncStorage.getItem(type);
     if (options !== null)
-      return _.merge({ }, DefaultStored[type], JSON.parse(options)) as typeof DefaultSettings[T];
+      return _.merge({ }, DefaultStored[type], JSON.parse(options)) as typeof DefaultStored[T];
   } catch (e) {
     Print((e as any).toString(), 'error');
   }
 
-  return DefaultStored[type] as typeof DefaultSettings[T];
+  return DefaultStored[type] as typeof DefaultStored[T];
 }
 
 export async function setStored<T>(type:StoredKey, value:T) {

@@ -1,5 +1,5 @@
 import themes from "@/constants/themes";
-import { DefaultSettings } from '@/src/general/storage';
+import { DefaultStored } from '@/src/general/storage';
 import { iconPacks } from "@/components/weather/WeatherIcons";
 
 export const UserGenderOptions:UserGender[] = ["male", "female", "other"];
@@ -22,8 +22,8 @@ export type SudokuLevel = "easy" | "medium" | "hard" | "max";
 export type TTTPlayer = 1 | 2;
 export type TTTLevel = "easy" | "medium" | "hard";
 
-export type StoredKey = keyof typeof DefaultSettings;
-export type StoredValue = typeof DefaultSettings[StoredKey];
+export type StoredKey = keyof typeof DefaultStored;
+export type StoredValue = typeof DefaultStored[StoredKey];
 
 export interface IUser {
   name: string;
