@@ -53,16 +53,16 @@ export const DefaultStored = {
   ...DefaultSettings,
 };
 
-export async function getStored<T extends StoredValue>(type: StoredKey) {
+export async function getStored<T extends StoredKey>(type: T) {
   try {
     let options = await AsyncStorage.getItem(type);
     if (options !== null)
-      return _.merge({ }, DefaultStored[type], JSON.parse(options));
+      return _.merge({ }, DefaultStored[type], JSON.parse(options)) as typeof DefaultSettings[T];
   } catch (e) {
     Print((e as any).toString(), 'error');
   }
 
-  return DefaultStored[type] as T;
+  return DefaultStored[type] as typeof DefaultSettings[T];
 }
 
 export async function setStored<T>(type:StoredKey, value:T) {

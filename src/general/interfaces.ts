@@ -22,8 +22,8 @@ export type SudokuLevel = "easy" | "medium" | "hard" | "max";
 export type TTTPlayer = 1 | 2;
 export type TTTLevel = "easy" | "medium" | "hard";
 
-export type StoredValue = IUser | IMetrics | IOptions;
 export type StoredKey = keyof typeof DefaultSettings;
+export type StoredValue = typeof DefaultSettings[StoredKey];
 
 export interface IUser {
   name: string;
