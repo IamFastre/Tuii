@@ -1,5 +1,5 @@
-import { View, StyleSheet, KeyboardTypeOptions, Pressable, ViewStyle, ColorValue } from "react-native";
-import { B, Button, C, L, T, TI } from "@/components/basics";
+import { View, StyleSheet, KeyboardTypeOptions, ColorValue } from "react-native";
+import { B, Button, C, T, TI } from "@/components/basics";
 import { State } from '@/src/general/types';
 import { useColors } from "@/constants/colors";
 
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginRight: 10,
     marginLeft: 20,
-    marginBottom: 20,
+    marginBottom: 30,
     // backgroundColor: "red",
   },
 
