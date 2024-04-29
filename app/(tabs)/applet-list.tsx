@@ -50,6 +50,3 @@ export default function AppletsPage() : React.JSX.Element {
     </View>
   );
 }
-
-export const styles = StyleSheet.create({
-});

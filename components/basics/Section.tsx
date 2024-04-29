@@ -40,6 +40,7 @@ export function Section(props:SectionProps) : React.JSX.Element {
 
     headerView: {
       position: "absolute",
+      top: 0,
       alignSelf: props.centered ? "center" : "flex-start",
       marginTop: props.isCard ? -13 : -2.5,
       marginLeft: props.isCard ? 0 : 30,
@@ -75,7 +76,7 @@ export function Section(props:SectionProps) : React.JSX.Element {
               height: self.container.borderWidth * 2,
               width: "105%",
               left: "-2.5%",
-              top: self.header.fontSize * 2 / 3 - self.container.borderWidth,
+              top: ((self.container.margin as number) - (self.headerView.marginTop as number)) - self.container.borderWidth / 2,
               backgroundColor: props.bg ?? self.screen.backgroundColor,
               zIndex: 1,
             }}
