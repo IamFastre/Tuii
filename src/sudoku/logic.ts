@@ -104,6 +104,9 @@ export function GetEmpty(board:SudokuGrid) : Position[] {
 }
 
 export function GetDuplicates(board:SudokuGrid) : Position[] {
+  if (board.length === 0)
+    return [];
+
   var list:Position[] = [];
 
   // Checking rows

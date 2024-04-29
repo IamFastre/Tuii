@@ -1,4 +1,4 @@
-import { B, C, L, T } from "@/components/basics";
+import { B, C, I, L, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 import { DimensionValue, Pressable, View, StyleSheet, ColorValue } from "react-native";
 import { EmptyBoard, GetDuplicates, SudSlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
@@ -110,7 +110,7 @@ export const Grid = ({ sudoku, show_conflicts }:{ sudoku:SudokuHook; show_confli
 
   return (
     <View style={[styles.grid, { borderColor: colors.accent, borderRadius: colors.others.section_radius/2 }]}>
-      {(sudoku.board ?? EmptyBoard).map((rows, r) => (
+      { sudoku.ready ? (sudoku.board ?? EmptyBoard).map((rows, r) => (
         rows.map((slot, c) => (
           <GridChild
             value={slot}
@@ -122,13 +122,28 @@ export const Grid = ({ sudoku, show_conflicts }:{ sudoku:SudokuHook; show_confli
             setSelected={(v:number | undefined) => sudoku.selected = v}
             key={r * 9 + c} />
         ))
-      )).flat()}
+      )).flat()
+    : <View style={{ width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center', padding: 3, borderColor: colors.secondary, borderWidth: 1, borderRadius: colors.others.section_radius/2 }}>
+        <T style={{ fontSize: 20 }}>
+          <C.NONE>
+            ...
+          </C.NONE>
+          <C.SECONDARY>
+            <I>
+              Loading
+              <C.ACCENT>
+                ...
+              </C.ACCENT>
+            </I>
+          </C.SECONDARY>
+        </T>
+      </View>}
     </View>
   );
 };
 
 
-export const Number = ({ show_num_remaining, value, selected, solved, board, setBoard }:{ show_num_remaining:boolean; value:SudSlotType; selected:number | undefined; solved:boolean; board:SudokuGrid; setBoard:(v:SudokuGrid) => void; }) => {
+export const Number = ({ show_num_remaining, ready, value, selected, solved, board, setBoard }:{ show_num_remaining:boolean; ready:boolean; value:SudSlotType; selected:number | undefined; solved:boolean; board:SudokuGrid; setBoard:(v:SudokuGrid) => void; }) => {
   const colors = useColors();
   const [isPressed, setIsPressed] = useState<boolean>(false);
   const amount = board.flat().filter(x => x === value).length;
@@ -170,7 +185,7 @@ export const Number = ({ show_num_remaining, value, selected, solved, board, set
                   </C.HIGHLIGHT>}
               </B>
             </T>
-            {show_num_remaining ? <T style={[styles.buttonCount, { color: colors.accent }]}>{9 - amount}</T> : null}
+            {show_num_remaining ? <T style={[styles.buttonCount, { color: colors.accent }]}>{ready ? (9 - amount) : "?"}</T> : null}
           </>
           : <Ionicons name={isPressed ? "backspace" : "backspace-outline"} size={styles.buttonText.fontSize * 1.5} color={colors.hot} />}
       </View>
@@ -192,6 +207,7 @@ export const Controls = ({ sudoku, show_num_remaining }:{ sudoku:SudokuHook; sho
           <Number
             key={i}
             value={val}
+            ready={sudoku.ready}
             selected={sudoku.selected}
             solved={sudoku.solved}
             board={sudoku.board}
@@ -205,6 +221,7 @@ export const Controls = ({ sudoku, show_num_remaining }:{ sudoku:SudokuHook; sho
           <Number
             key={i}
             value={val}
+            ready={sudoku.ready}
             selected={sudoku.selected}
             solved={sudoku.solved}
             board={sudoku.board}

@@ -3,12 +3,12 @@ import { Pressable, StyleSheet, View } from "react-native";
 
 import { Section, Button, C, L, T, B } from "@/components/basics";
 import { SettingsContext } from '@/components/Contexts';
-import { Header } from '@/components/applets/Header';
 
 import { Grid, Controls } from '@/components/applets/Sudoku';
 import { CountEmpty, GetPosition, LevelToNumber, useSudoku } from "@/src/sudoku";
 import { useColors } from "@/constants/colors";
 import { Ionicons } from '@expo/vector-icons';
+import { Page } from "@/components/screens";
 
 export default () : React.JSX.Element => {
   const colors = useColors();
@@ -27,111 +27,104 @@ export default () : React.JSX.Element => {
   }, [CountEmpty(sudoku.board)])
 
   return (
-    <View style={{ flex:1 }}>
-      <Header title='SUDOKU' options={"/applets/sudoku/settings"}/>
-      <Section style={{ flex:1 }}>
-        { sudoku.ready ?
+    <Page title={"SUDOKU"} options={"/applets/sudoku/settings"}>
+      <Pressable style={styles.container} onPress={() => {sudoku.selected = undefined; setShowWin(true)}} android_disableSound>
+        <View style={styles.board}>
+          <Grid sudoku={sudoku} show_conflicts={config.show_conflicts} />
 
-        <Pressable style={styles.container} onPress={() => {sudoku.selected = undefined; setShowWin(true)}} android_disableSound>
-            <View style={styles.board}>
-              <Grid sudoku={sudoku} show_conflicts={config.show_conflicts} />
+          {config.show_empty_count ?
+          <T style={styles.remaining}>
+            <L>
+              <C.SECONDARY>
+                Remaining: <C.HIGHLIGHT>{sudoku.ready ? CountEmpty(sudoku.board) : "??"}</C.HIGHLIGHT>
+              </C.SECONDARY>
+            </L>
+          </T>
+          : null}
+        </View>
+        <View style={styles.actions}>
+          <Button
+            title="Reveal Board"
+            style={styles.action}
+            textStyle={styles.actionText}
+            icon={{ name:'eye' }}
+            onPress={sudoku.revealBoard}
+          />
+          <Button
+            title="Reveal Slot"
+            style={styles.action}
+            textStyle={styles.actionText}
+            icon={{ name:'pencil' }}
+            onPress={() => sudoku.selected !== undefined ? sudoku.revealSlot(GetPosition(sudoku.selected)) : null}
+          />
+          <Button
+            title="New"
+            style={styles.action}
+            textStyle={styles.actionText}
+            icon={{ name:'refresh-circle' }}
+            onPress={() => {
+              sudoku.regenerate();
+            }}
+          />
+        </View>
 
-              {config.show_empty_count ?
-              <T style={styles.remaining}>
-                <L>
-                  <C.SECONDARY>
-                    Remaining: <C.HIGHLIGHT>{CountEmpty(sudoku.board)}</C.HIGHLIGHT>
-                  </C.SECONDARY>
-                </L>
-              </T>
-              : null}
+        <View style={{ flex: 2 }} />
+
+        <Controls
+          sudoku={sudoku}
+          show_num_remaining={config.show_num_remaining}
+        />
+
+        <View style={{ flex: 1 }} />
+      </Pressable>
+
+    {
+      sudoku.solved && showWin ? 
+      <Pressable style={[styles.winContainer, { backgroundColor: colors.primary + colors.opacity.most }]} onPress={dismissWin} android_disableSound>
+        <Pressable android_disableSound>
+          <Section containerStyle={styles.winMessageContainer} centered>
+            <View style={[styles.winIcon, { backgroundColor: colors.accent }]}>
+              <Ionicons name={sudoku.revealed.length === LevelToNumber(sudoku.level) ? "star-outline" : "star"} size={40} color={colors.tertiary}/>
             </View>
+            <T style={styles.winTitle}>
+              <B>
+                <C.ACCENT>
+                  {'[ '}
+                    <C.TERTIARY>
+                      {sudoku.revealed.length === LevelToNumber(sudoku.level) ? "Congrats?" : "Congrats!"}
+                    </C.TERTIARY>
+                  {' ]'}
+                </C.ACCENT>
+              </B>
+            </T>
 
-            <View style={styles.actions}>
-              <Button
-                title="Reveal Board"
-                style={styles.action}
-                textStyle={styles.actionText}
-                icon={{ name:'eye' }}
-                onPress={sudoku.revealBoard}
-              />
-              <Button
-                title="Reveal Slot"
-                style={styles.action}
-                textStyle={styles.actionText}
-                icon={{ name:'pencil' }}
-                onPress={() => sudoku.selected !== undefined ? sudoku.revealSlot(GetPosition(sudoku.selected)) : null}
-              />
-              <Button
-                title="New"
-                style={styles.action}
-                textStyle={styles.actionText}
-                icon={{ name:'refresh-circle' }}
-                onPress={() => {
-                  sudoku.regenerate();
-                }}
-              />
-            </View>
-
-            <View style={{ flex: 2 }} />
-
-            <Controls
-              sudoku={sudoku}
-              show_num_remaining={config.show_num_remaining}
-            />
-
-            <View style={{ flex: 1 }} />
-        </Pressable>
-
-        : null }
-      {
-        sudoku.solved && showWin ? 
-        <Pressable style={[styles.winContainer, { backgroundColor: colors.primary + colors.opacity.most }]} onPress={dismissWin} android_disableSound>
-          <Pressable android_disableSound>
-            <Section containerStyle={styles.winMessageContainer} centered>
-              <View style={[styles.winIcon, { backgroundColor: colors.accent }]}>
-                <Ionicons name={sudoku.revealed.length === LevelToNumber(sudoku.level) ? "star-outline" : "star"} size={40} color={colors.tertiary}/>
-              </View>
-              <T style={styles.winTitle}>
-                <B>
-                  <C.ACCENT>
-                    {'[ '}
-                      <C.TERTIARY>
-                        {sudoku.revealed.length === LevelToNumber(sudoku.level) ? "Congrats?" : "Congrats!"}
-                      </C.TERTIARY>
-                    {' ]'}
-                  </C.ACCENT>
-                </B>
+            <T style={styles.winBody}>
+              <C.SECONDARY>
+                You have {sudoku.revealed.length === LevelToNumber(sudoku.level) ? "revealed" : "completed"} {sudoku.level === "easy" ? "an" : "a"} <C.TERTIARY><B>{sudoku.level}</B></C.TERTIARY> sudoku puzzle.
+              </C.SECONDARY>
+            </T>
+            <View style={styles.winStats}>
+              <T>
+                  Slots Solved:   <C.ACCENT>{sudoku.poked.length - sudoku.revealed.length - CountEmpty(sudoku.board)}</C.ACCENT>
               </T>
-
-              <T style={styles.winBody}>
+              <T>
+                  Slots Revealed: <C.ACCENT>{sudoku.revealed.length}</C.ACCENT>
+              </T>
+            </View>
+            { sudoku.revealed.length === LevelToNumber(sudoku.level) ?
+              <T style={styles.winShame}>
                 <C.SECONDARY>
-                  You have {sudoku.revealed.length === LevelToNumber(sudoku.level) ? "revealed" : "completed"} {sudoku.level === "easy" ? "an" : "a"} <C.TERTIARY><B>{sudoku.level}</B></C.TERTIARY> sudoku puzzle.
+                  Have you even tried?!
+                  { sudoku.level === "easy" ? "\nLike, dude, it was on easy." : "" }
                 </C.SECONDARY>
-              </T>
-              <View style={styles.winStats}>
-                <T>
-                    Slots Solved:   <C.ACCENT>{sudoku.poked.length - sudoku.revealed.length - CountEmpty(sudoku.board)}</C.ACCENT>
-                </T>
-                <T>
-                    Slots Revealed: <C.ACCENT>{sudoku.revealed.length}</C.ACCENT>
-                </T>
-              </View>
-              { sudoku.revealed.length === LevelToNumber(sudoku.level) ?
-                <T style={styles.winShame}>
-                  <C.SECONDARY>
-                    Have you even tried?!
-                    { sudoku.level === "easy" ? "\nLike, dude, it was on easy." : "" }
-                  </C.SECONDARY>
-                </T> 
-              : null }
-            </Section>
-          </Pressable>
+              </T> 
+            : null }
+          </Section>
         </Pressable>
-        : null
-      }
-      </Section>
-    </View>
+      </Pressable>
+      : null
+    }
+    </Page>
   );
 }
 
