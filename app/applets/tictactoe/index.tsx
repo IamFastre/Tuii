@@ -4,12 +4,12 @@ import { View, StyleSheet, Pressable } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { SettingsContext } from "@/components/Contexts";
-import { Header } from "@/components/applets/Header";
 import { B, Button, C, L, Section, T } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 import { CountEmpty, GetWinningPos, NumberToLetter, useXO } from "@/src/tictactoe";
 import { Grid } from "@/components/applets/TicTacToe";
 import { removeAt } from "@/src/general/funcs";
+import { Page } from "@/components/screens";
 
 export default () : React.JSX.Element => {
   const colors = useColors();
@@ -43,9 +43,7 @@ export default () : React.JSX.Element => {
   const r = colors.brackets.right.angle;
 
   return (
-    <View style={{ flex:1 }}>
-      <Header title='TIC-TAC-TOE' options={"/applets/tictactoe/settings"} size="small" />
-      <Section style={{ flex:1 }}>
+    <Page title='TIC-TAC-TOE' options={"/applets/tictactoe/settings"} size="small">
         <Pressable style={styles.container} onPress={() => setShowWin(true)} android_disableSound>
         <View style={styles.scoreBoard}>
             <T style={{ fontFamily: colors.others.fonts.S, textAlign: 'center', fontSize: 32 }}>
@@ -120,8 +118,7 @@ export default () : React.JSX.Element => {
         </Pressable>
         : null
       }
-      </Section>
-    </View>
+    </Page>
   );
 }
 
