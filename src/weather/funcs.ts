@@ -8,7 +8,7 @@ import { DefaultStored } from '../general/storage';
 const API_KEY = "e2b654197a0b322446ef267c83c71a2a";
 var lastUpdated:number | undefined = undefined;
 
-export async function fetchWeather(city:string, units:Units, set:State<IForecast>) {
+export async function fetchWeather(city:string, units:Units, set:State<IForecast | null>) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city ?? DefaultStored['metrics'].city}&units=${units ?? DefaultStored['metrics'].units}&appid=${API_KEY}`;
 
   const now = Date.now();
@@ -34,6 +34,7 @@ export async function fetchWeather(city:string, units:Units, set:State<IForecast
   } catch (e) {
     let error = e as AxiosError;
     Print((e as any).toString(), 'error');
+    set(null)
     throw error;
   }
 

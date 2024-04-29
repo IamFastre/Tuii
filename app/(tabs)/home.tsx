@@ -33,9 +33,9 @@ export default function HomePage() : React.JSX.Element {
     setMsg("Loading...")
     setRefreshing(true);
     updateData();
-    fetchWeather(metrics.city, metrics.units, updateWeather as State<IForecast>)
+    fetchWeather(metrics.city, metrics.units, updateWeather)
       .catch((e:AxiosError) => {
-        updateWeather(null);
+        setRefreshing(false);
         setTimeout(() =>
         setMsg(e.response?.status === 404
           ? "Wrong input"
@@ -46,7 +46,7 @@ export default function HomePage() : React.JSX.Element {
 
     setTimeout(() => {
       setRefreshing(false);
-    }, 1000);
+    }, 750);
 
   }, [metrics.city, metrics.units]);
 
