@@ -43,6 +43,10 @@ export const BI = (props: TextProps) : React.JSX.Element => (
 
 
 export const C = {
+  NONE: (props: TextProps) : React.JSX.Element => (
+    <Text {...props} style={[props.style, { color: "transparent" }]} />
+  ),
+
   PRIMARY: (props: TextProps) : React.JSX.Element => (
     <Text {...props} style={[props.style, { color: useColors().primary }]} />
   ),
