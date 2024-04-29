@@ -2,11 +2,12 @@ import { WeatherIconID, WeatherIconPack } from "@/src/weather";
 import { Image } from "expo-image"
 import { StyleSheet } from "react-native";
 
+const failure = require("@/assets/weather-icons/failure.png");
 export const getImage = (id?:WeatherIconID) => () => (
   <Image
     transition={500}
     style={styles.img}
-    source={`https://openweathermap.org/img/wn/${id}@4x.png`}
+    source={id ? `https://openweathermap.org/img/wn/${id}@4x.png` : failure}
   />
 );
 
