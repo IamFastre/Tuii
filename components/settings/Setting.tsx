@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 20,
     marginVertical: 15,
-    // backgroundColor: "red",
   },
 
   titleContainer: {
@@ -157,37 +156,31 @@ const styles = StyleSheet.create({
     width: "100%",
     fontSize: 16,
     textAlignVertical: "center",
-    // backgroundColor: 'blue'
   },
 
   description: {
     opacity: 0.7,
     fontSize: 10,
     marginRight: 5,
-    // backgroundColor: 'blue'
   },
 
   largeInput: {
     flex: 3,
     height: "100%",
-    // backgroundColor: "purple"
   },
 
   input: {
     flex: 2,
     height: "100%",
-    // backgroundColor: "purple"
   },
 
   mediumInput: {
     flex: 1,
     height: "100%",
-    // backgroundColor: "purple"
   },
 
   smallInput: {
     flex: 0.5,
     height: "100%",
-    // backgroundColor: "purple"
   },
 });
