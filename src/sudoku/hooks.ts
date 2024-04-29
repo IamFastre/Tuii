@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { ISudokuSave, SudokuLevel } from '@/src/general/interfaces';
-import { deepCopy } from '@/src/general/funcs';
+import { deepCopy, getStored, setStored } from '@/src/general';
 
 import { GetEmpty, IsSolved, LevelToNumber, MakeBoard, Poke } from './logic';
 import { Position, SudokuGrid, SudokuHook } from './types';
-import { getStored, setStored } from '../general';
 
 export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
   const [level, setLevel] = useState<SudokuLevel>(lvl);
@@ -16,15 +15,6 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
   const [board, setBoard] = useState<SudokuGrid>([]);
   const [poked, setPoked] = useState<Position[]>([]);
   const [revealed, setRevealed] = useState<Position[]>([]);
-
-  const saveObj:ISudokuSave = {
-    board,
-    level,
-    poked,
-    revealed,
-    solution,
-    type: "sudokuSave"
-  };
 
   const generate = () => {
     const sol = MakeBoard();
@@ -37,8 +27,6 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
     setPoked(pok);
     setSelected(undefined);
     setRevealed([]);
-
-    setStored('sudokuSaved', { ...saveObj, board: puz, level: lvl, poked: pok, revealed: [], solution: sol })
   };
 
   const resume = async () => {
@@ -67,17 +55,15 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
 
     setBoard(current => {
       current[r][c] = solution[r][c];
-      setStored('sudokuSaved', { ...saveObj, board: current, revealed: [...revealed, [r,c]]})
       return current;
     });
     setSelected(undefined);
   };
 
   const revealBoard = () => {
-    const r2 = revealed.concat(GetEmpty(board));
-    setRevealed(r2);
+    setRevealed(revealed.concat(GetEmpty(board)));
     setBoard(b => {
-      const b2 = b.map((row, r) => {
+      return b.map((row, r) => {
         return row.map((slot, c) => {
           if (slot === null) {
             return solution[r][c];
@@ -85,9 +71,6 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
           return slot;
         });
       })
-
-      setStored('sudokuSaved', { ...saveObj, board: b2, revealed: r2 })
-      return b2;
     });
     setSelected(undefined);
   };
@@ -107,6 +90,10 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
     start();
   }, []);
 
+  useEffect(() => {
+    setStored('sudokuSaved', { board, level, poked, revealed, solution, type: "sudokuSave" });
+  }, [JSON.stringify(board), JSON.stringify(revealed), JSON.stringify(solution)]);
+
   return {
     ready,
     solution,
@@ -123,10 +110,7 @@ export function useSudoku(restoreGame:boolean, lvl:SudokuLevel) : SudokuHook {
     },
 
     set board(value:SudokuGrid) {
-      if (!solved) {
-        setBoard(value);
-        setStored('sudokuSaved', { ...saveObj, board: value })
-      }
+      solved ? null : setBoard(value);
     },
 
     get solved() : boolean {
