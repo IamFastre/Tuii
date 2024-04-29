@@ -56,6 +56,7 @@ const Title = (props:TitleProps) => (
       </T>
     </View>
 
+    { props.description ? <T style={styles.description}><C.SECONDARY>{props.description}</C.SECONDARY></T> : null }
     { props.options
     ? <T style={styles.description}>
         <C.SECONDARY>
@@ -65,7 +66,6 @@ const Title = (props:TitleProps) => (
       </T>
     : null
     }
-    { props.description ? <T style={styles.description}><C.SECONDARY>{props.description}</C.SECONDARY></T> : null }
     { props.experimental ? <T style={styles.description}><C.HOT>{'{{ EXPERIMENTAL }}'}</C.HOT></T> : null }
   </View>
 );

@@ -5,12 +5,10 @@ import { C, L, Section, T, Button, Sep } from '@/components/basics';
 import { ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
 import { OptionsSetting, TextInputSetting, Title, BoolSetting } from '@/components/settings';
 import { resetSettings, setStored } from '@/src/general/storage';
-import consts from '@/constants/consts';
+import appConsts from '@/constants/consts';
 import { useColors } from '@/constants/colors';
 import { updateFullscreen, move } from '@/src/general/funcs';
 import { SettingsContext } from '@/components/Contexts';
-import themes from '@/constants/themes';
-import { iconPacks } from '@/components/weather/WeatherIcons';
 
 export default function SettingsPage() {
   const colors = useColors();
@@ -115,6 +113,7 @@ export default function SettingsPage() {
     <Section title="Settings" style={{ flex:1 }}>
         <ScrollView style={{ flex:1 }} contentContainerStyle={styles.homeContainer}>
           {/* ========= User settings ========= */}
+          <Sep margin={7.5} noThickness />
           <Title title='User'/>
 
           {/* Username */}
@@ -143,7 +142,7 @@ export default function SettingsPage() {
             icon={user.gender === "male" ? "male" : user.gender === "female" ? "female" : "build-outline"}
           />
 
-          <Sep />
+          <Sep margin={consts.margin} />
 
           {/* ========= Weather settings ========= */}
           <Title title='Weather'/>
@@ -165,7 +164,7 @@ export default function SettingsPage() {
             icon={metrics.units === "metric" ? "flask-outline" : "footsteps-outline"}
           />
 
-          <Sep />
+          <Sep margin={consts.margin} />
 
           {/* ========= Appearance ========= */}
           <Title title='Appearance'/>
@@ -202,7 +201,7 @@ export default function SettingsPage() {
             size='medium'
           />
 
-          <Sep />
+          <Sep margin={consts.margin} />
 
           {/* ========= Other settings ========= */}
           <Title title='Others'/>
@@ -284,7 +283,7 @@ export default function SettingsPage() {
             <C.ACCENT>{' }-•'}</C.ACCENT>
             {'\n'}
             <L style={{ fontSize: 11 }}>
-              (v{consts.version})
+              (v{appConsts.version})
             </L>
             {'\n'}
             <C.SECONDARY style={{ fontSize: 12 }}>
@@ -305,6 +304,10 @@ export default function SettingsPage() {
       </ScrollView>
     </Section>
   );
+}
+
+const consts = {
+  margin: 20
 }
 
 const styles = StyleSheet.create({

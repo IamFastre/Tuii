@@ -17,7 +17,6 @@ export default function TicTacToeSettings() {
   return (
     <Modal subtitle='TIC-TAC-TOE'>
       <Title title="Game" />
-      <Sep noThickness />
 
       <OptionsSetting
         title="Difficulty"

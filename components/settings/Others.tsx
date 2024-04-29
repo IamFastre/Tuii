@@ -1,4 +1,4 @@
-import { ColorValue, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { T, C } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 
@@ -25,14 +25,15 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: 22,
     lineHeight: 25,
-    marginTop: 30,
+    marginTop: 15,
+    marginBottom: 5,
   },
 
   titleSep: {
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 20,
-    top: -10,
+    top: -16,
     lineHeight: 20,
   },
 });

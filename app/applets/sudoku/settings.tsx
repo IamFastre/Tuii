@@ -16,8 +16,6 @@ export default function SudokuSettings() {
     <Modal subtitle="SUDOKU">
       <Title title="Game" />
 
-      <Sep noThickness />
-
       <OptionsSetting
         title="Difficulty"
         description={"Decide how many empty slots are there to be initially.\neasy: 36, medium: 48, hard: 57, max: 64"}
