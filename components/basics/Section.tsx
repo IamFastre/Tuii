@@ -1,5 +1,4 @@
-import{ useState } from "react";
-import { View, StyleSheet, ViewStyle, TextStyle, LayoutChangeEvent, LayoutRectangle, ColorValue } from "react-native";
+import { ScrollView, View, StyleSheet, ViewStyle, TextStyle, LayoutChangeEvent, ColorValue } from "react-native";
 
 import { useColors } from "@/constants/colors";
 import { T } from "./T";
@@ -12,12 +11,15 @@ export interface SectionProps {
   children?: React.ReactNode;
   isCard?: boolean;
   centered?: boolean;
+  scrollable?: boolean;
+  stickyIndices?: number[];
   bg?: ColorValue;
   onLayout?: (event: LayoutChangeEvent) => void;
 }
 
 export function Section(props:SectionProps) : React.JSX.Element {
   const colors = useColors();
+  const Container = props.scrollable ? ScrollView : View;
 
   const self = StyleSheet.create({
     screen: {
@@ -86,9 +88,9 @@ export function Section(props:SectionProps) : React.JSX.Element {
           </T>
         </View>
       : null }
-      <View style={self.container}>
+      <Container style={self.container} stickyHeaderIndices={props.stickyIndices}>
         {props.children}
-      </View>
+      </Container>
     </View>
   );
 }
