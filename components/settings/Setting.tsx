@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginRight: 10,
     marginLeft: 20,
-    marginBottom: 30,
+    marginVertical: 15,
     // backgroundColor: "red",
   },
 
