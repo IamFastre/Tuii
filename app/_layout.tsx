@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { KeyboardAvoidingView, View, StyleSheet, Platform } from "react-native";
+import { KeyboardAvoidingView, View, Platform } from "react-native";
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack/src/types";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
@@ -77,10 +77,6 @@ export default () => {
   if (Platform.OS === "android") {
     NavBar.setBackgroundColorAsync("transparent");
   NavBar.setPositionAsync("absolute");
-  }
-
-  const applets = {
-
   }
 
   return (
