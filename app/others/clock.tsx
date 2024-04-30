@@ -5,6 +5,7 @@ import { useColors } from '@/constants/colors';
 import { Circle, G, Line, Path, Rect, Svg } from 'react-native-svg';
 import Reanimated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
 import { getTime, ITime } from '@/src/general';
+import { Page } from '@/components/screens';
 
 const Animated = {
   Circle: Reanimated.createAnimatedComponent(Circle),
@@ -31,7 +32,7 @@ export default function AppletsPage() : React.JSX.Element {
 
   return (
     <View style={{ flex:1 }}>
-      <Section title="Clock Test" style={{ flex:1 }} containerStyle={{ alignItems: 'center', justifyContent: 'center' }} centered>
+      <Page title="CLOCK" containerStyle={{ alignItems: 'center', justifyContent: 'center' }}>
         <Pressable style={{ aspectRatio: 1, width: 400 }}>
           <Svg
             height="100%"
@@ -96,7 +97,7 @@ export default function AppletsPage() : React.JSX.Element {
             <Circle cx={50} cy={50} r={2} fill={colors.hot} />
           </Svg>
         </Pressable>
-        <View style={{ gap: 15 }}>
+        <View style={{ gap: 15, paddingHorizontal: 50 }}>
           <Button
             title='Toggle Show Dashes'
             style={{
@@ -114,7 +115,7 @@ export default function AppletsPage() : React.JSX.Element {
             onPress={() => setIsCircle(!isCircle)}
           />
         </View>
-      </Section>
+      </Page>
     </View>
   );
 }

@@ -13,13 +13,14 @@ interface TabIconProps {
   icon:string;
   selected:boolean;
   path:Href;
+  other?:Href;
 }
 
 const HOME     = 'home';
 const APPLETS  = 'applet-list';
 const SETTINGS = 'settings'
 
-const TabIcon = ({icon, selected, path}:TabIconProps) => {
+const TabIcon = ({icon, selected, path, other}:TabIconProps) => {
   const colors = useColors();
 
   let router = useRouter();
@@ -27,6 +28,8 @@ const TabIcon = ({icon, selected, path}:TabIconProps) => {
     <TouchableOpacity
       style={styles.tab}
       onPress={() => router.navigate(path as any)}
+      onLongPress={other ? () => router.navigate(other as any) : undefined}
+      delayLongPress={1000}
     >
       <Ionicons
         name={(icon + (selected ? "" : "-outline")) as any}
@@ -48,7 +51,7 @@ export default function HomeLayout() {
         
         return (
           <Section title="Tabs" style={styles.tabs} containerStyle={styles.tabsContainer}>
-            <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home" />
+            <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home" other="/others/clock" />
             <TabIcon icon="apps"     selected={state.routes[state.index].name === APPLETS}  path="/(tabs)/applet-list" />
             <TabIcon icon="settings" selected={state.routes[state.index].name === SETTINGS} path="/(tabs)/settings" />
 

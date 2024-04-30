@@ -4,7 +4,7 @@ import { T, Section, C, B } from '@/components/basics';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '@/constants/colors';
 
-export function Header({title, options, size}:{ title:string; options:string; size?:"small" | "large"; }) : React.JSX.Element {
+export function Header({title, options, size}:{ title:string; options?:string; size?:"small" | "large"; }) : React.JSX.Element {
   const colors = useColors();
 
   return (
@@ -17,9 +17,11 @@ export function Header({title, options, size}:{ title:string; options:string; si
         <B>{title}</B>
         <C.ACCENT>{colors.brackets.right.curly}</C.ACCENT>
       </T>
-      <TouchableOpacity style={styles.settingsButton} onPress={() => router.navigate(options as any)}>
-        <Ionicons name='options' size={30} color={colors.accent} />
-      </TouchableOpacity>
+      { options ?
+        <TouchableOpacity style={styles.settingsButton} onPress={() => router.navigate(options as any)}>
+          <Ionicons name='options' size={30} color={colors.accent} />
+        </TouchableOpacity>
+      : null }
     </Section>
   );
 }
