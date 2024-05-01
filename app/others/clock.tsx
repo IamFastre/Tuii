@@ -1,20 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { Button, Section, T} from '@/components/basics';
+import { Button, Section, T } from '@/components/basics';
 import { useColors } from '@/constants/colors';
 import { Circle, G, Line, Path, Rect, Svg } from 'react-native-svg';
-import Reanimated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
 import { getTime, ITime } from '@/src/general';
 import { Page } from '@/components/screens';
 
-const Animated = {
-  Circle: Reanimated.createAnimatedComponent(Circle),
-  Line: Reanimated.createAnimatedComponent(Line),
-};
-
 export default function AppletsPage() : React.JSX.Element {
   const colors = useColors();
-  const second = useSharedValue<number>(0);
   const [time, setTime] = useState<ITime>(getTime());
   const [showDashes, setShowDashes] = useState<boolean>(true);
   const [isCircle, setIsCircle] = useState<boolean>(true);
@@ -25,10 +18,6 @@ export default function AppletsPage() : React.JSX.Element {
     }, 200);
     return () => clearInterval(int);
   }, [time]);
-
-  useEffect(() => {
-    second.value = withTiming((time.second/60) * 360, { duration: 500, easing: Easing.inOut(Easing.quad) });
-  }, [time.second])
 
   return (
     <View style={{ flex:1 }}>
@@ -85,11 +74,11 @@ export default function AppletsPage() : React.JSX.Element {
               strokeLinecap='square'
               strokeWidth={1}
             />
-            <Animated.Line
+            <Line
               x1={50} y1={55}
               x2={50} y2={22.5}
               origin={[50, 50]}
-              rotation={second}
+              rotation={time.second*6}
               stroke={colors.hot}
               strokeLinecap='round'
               strokeWidth={0.75}
