@@ -2,6 +2,7 @@ import { ScrollView, View, StyleSheet, ViewStyle, TextStyle, LayoutChangeEvent, 
 
 import { useColors } from "@/constants/colors";
 import { T } from "./T";
+import { useState } from "react";
 
 export interface SectionProps {
   title?: string;
@@ -19,6 +20,7 @@ export interface SectionProps {
 
 export function Section(props:SectionProps) : React.JSX.Element {
   const colors = useColors();
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const Container = props.scrollable ? ScrollView : View;
 
   const self = StyleSheet.create({
@@ -33,7 +35,7 @@ export function Section(props:SectionProps) : React.JSX.Element {
       margin: props.isCard ? 0 : 10,
       overflow: "hidden",
       borderWidth: 1,
-      borderColor: colors.secondary,
+      borderColor: isHovered ? colors.accent : colors.secondary,
       borderRadius: colors.others.section_radius,
       ...props.containerStyle
     },
@@ -62,7 +64,7 @@ export function Section(props:SectionProps) : React.JSX.Element {
   });
 
   return (
-    <View style={self.screen} onLayout={props.onLayout}>
+    <View style={self.screen} onLayout={props.onLayout} onPointerEnter={e => setIsHovered(true)} onPointerLeave={e => setIsHovered(false)}>
       { props.title
       ? <View
           style={{
