@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { SplashScreen, Tabs, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 
 import { Section } from '@/components/basics';
 import { Exit } from '@/src/general/funcs';
@@ -28,8 +29,13 @@ const TabIcon = ({icon, selected, path, other}:TabIconProps) => {
     <TouchableOpacity
       style={styles.tab}
       onPress={() => router.navigate(path as any)}
-      onLongPress={other ? () => router.navigate(other as any) : undefined}
-      delayLongPress={1000}
+      onLongPress={() => {
+        if (other) {
+          router.navigate(other as any);
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
+      }}
+      delayLongPress={750}
     >
       <Ionicons
         name={(icon + (selected ? "" : "-outline")) as any}
