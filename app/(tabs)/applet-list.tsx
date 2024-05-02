@@ -2,6 +2,8 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { Section, Sep } from '@/components/basics';
 import { Option } from '../../components/applets/Option';
 import { useColors } from '@/constants/colors';
+import { useContext } from 'react';
+import { TabsContext } from '@/components/Contexts';
 
 const icons = {
   dark: {
@@ -27,10 +29,11 @@ const icons = {
 
 export default function AppletsPage() : React.JSX.Element {
   const colors = useColors();
+  const { isClicked } = useContext(TabsContext);
 
   return (
     <View style={{ flex:1 }}>
-      <Section title="Applets" style={{ flex:1 }}>
+      <Section title="Applets" style={{ flex:1 }} containerStyle={isClicked ? { borderColor: colors.accent } : { }}>
         <ScrollView style={{flex: 1}}>
           <Sep noThickness margin={10} />
           <Option

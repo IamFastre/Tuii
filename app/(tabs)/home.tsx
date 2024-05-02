@@ -12,7 +12,7 @@ import { State } from '@/src/general/types';
 import { TodaysQuote, TodaysWord } from '@/components/home';
 import { useColors } from '@/constants/colors';
 import consts from '@/constants/consts';
-import { SettingsContext } from '@/components/Contexts';
+import { SettingsContext, TabsContext } from '@/components/Contexts';
  
 export default function HomePage() : React.JSX.Element {
   const colors = useColors();
@@ -26,6 +26,7 @@ export default function HomePage() : React.JSX.Element {
 
   const updateData = useContext(SettingsContext).updateSettings;
   const { user, metrics, options } = useContext(SettingsContext).settings;
+  const { isClicked } = useContext(TabsContext);
   
   const [weather, updateWeather] = useState<IForecast | null>(null);
 
@@ -73,7 +74,7 @@ export default function HomePage() : React.JSX.Element {
 
   return (
     <>
-    <Section title="Home Page" style={{ flex:1 }}>
+    <Section title="Home Page" style={{ flex:1 }} containerStyle={isClicked ? { borderColor: colors.accent } : { }}>
       <colors.others.background />
       <ScrollView
         showsVerticalScrollIndicator={false}

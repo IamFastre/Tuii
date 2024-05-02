@@ -7,6 +7,8 @@ import { Section } from '@/components/basics';
 import { Exit } from '@/src/general/funcs';
 import { Href } from 'expo-router/build/link/href';
 import { useColors } from '@/constants/colors';
+import { useState } from 'react';
+import { TabsContext } from '@/components/Contexts';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,27 +17,34 @@ interface TabIconProps {
   selected:boolean;
   path:Href;
   other?:Href;
+  reclick?: () => void;
 }
 
 const HOME     = 'home';
 const APPLETS  = 'applet-list';
 const SETTINGS = 'settings'
 
-const TabIcon = ({icon, selected, path, other}:TabIconProps) => {
+const TabIcon = ({icon, selected, path, other, reclick}:TabIconProps) => {
   const colors = useColors();
+  const router = useRouter();
 
-  let router = useRouter();
   return (
     <TouchableOpacity
       style={styles.tab}
-      onPress={() => router.navigate(path as any)}
+      onPress={() => {
+        if (selected)
+          reclick ? reclick() : null;
+        else
+          router.navigate(path as any);
+      }}
+
+      delayLongPress={750}
       onLongPress={() => {
         if (other) {
           router.navigate(other as any);
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         }
       }}
-      delayLongPress={750}
     >
       <Ionicons
         name={(icon + (selected ? "" : "-outline")) as any}
@@ -48,37 +57,45 @@ const TabIcon = ({icon, selected, path, other}:TabIconProps) => {
 
 export default function HomeLayout() {
   const colors = useColors();
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleReclick = () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 350);
+  };
 
   return (
-    <Tabs
-      tabBar={({ state }) => {
-        if (state.index > 2)
-          return null;
-        
-        return (
-          <Section title="Tabs" style={styles.tabs} containerStyle={styles.tabsContainer}>
-            <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home" other="/others/clock" />
-            <TabIcon icon="apps"     selected={state.routes[state.index].name === APPLETS}  path="/(tabs)/applet-list" />
-            <TabIcon icon="settings" selected={state.routes[state.index].name === SETTINGS} path="/(tabs)/settings" />
+    <TabsContext.Provider value={{ isClicked }}>
+      <Tabs
+        tabBar={({ state }) => {
+          if (state.index > 2)
+            return null;
+          
+          return (
+            <Section title="Tabs" style={styles.tabs} containerStyle={styles.tabsContainer}>
+              <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home" other="/others/clock" reclick={handleReclick} />
+              <TabIcon icon="apps"     selected={state.routes[state.index].name === APPLETS}  path="/(tabs)/applet-list" reclick={handleReclick} />
+              <TabIcon icon="settings" selected={state.routes[state.index].name === SETTINGS} path="/(tabs)/settings" reclick={handleReclick} />
 
-            <TouchableOpacity style={styles.tab} onPress={() => Exit()}>
-              <Ionicons name='exit-outline' size={30} color={colors.hot} />
-            </TouchableOpacity>
-          </Section>
-        );
-      }}
+              <TouchableOpacity style={styles.tab} onPress={() => Exit()}>
+                <Ionicons name='exit-outline' size={30} color={colors.hot} />
+              </TouchableOpacity>
+            </Section>
+          );
+        }}
 
-      screenOptions={{
-        headerShown: false,
-        freezeOnBlur: true,
-      }}
+        screenOptions={{
+          headerShown: false,
+          freezeOnBlur: true,
+        }}
 
-      backBehavior='history'
-    >
-      <Tabs.Screen name={HOME} options={{ title: "Home" }} />
-      <Tabs.Screen name={APPLETS} options={{ title: "Applets" }} />
-      <Tabs.Screen name={SETTINGS} options={{ title: "Settings" }} />
-    </Tabs>
+        backBehavior='history'
+      >
+        <Tabs.Screen name={HOME} options={{ title: "Home" }} />
+        <Tabs.Screen name={APPLETS} options={{ title: "Applets" }} />
+        <Tabs.Screen name={SETTINGS} options={{ title: "Settings" }} />
+      </Tabs>
+    </TabsContext.Provider>
   );
 }
 

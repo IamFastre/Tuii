@@ -8,7 +8,7 @@ import { resetSettings, setStored } from '@/src/general/storage';
 import appConsts from '@/constants/consts';
 import { useColors } from '@/constants/colors';
 import { updateFullscreen, move } from '@/src/general/funcs';
-import { SettingsContext } from '@/components/Contexts';
+import { SettingsContext, TabsContext } from '@/components/Contexts';
 
 export default function SettingsPage() {
   const colors = useColors();
@@ -18,6 +18,7 @@ export default function SettingsPage() {
 
   const updateData = useContext(SettingsContext).updateSettings;
   const { user, metrics, options } = useContext(SettingsContext).settings;
+  const { isClicked } = useContext(TabsContext);
 
   const onMount = () => {
     updateData();
@@ -110,7 +111,7 @@ export default function SettingsPage() {
   /* ======================================================================== */
 
   return (
-    <Section title="Settings" style={{ flex:1 }}>
+    <Section title="Settings" style={{ flex:1 }} containerStyle={isClicked ? { borderColor: colors.accent } : { }}>
         <ScrollView style={{ flex:1 }} contentContainerStyle={styles.homeContainer}>
           {/* ========= User settings ========= */}
           <Sep margin={7.5} noThickness />
