@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { SplashScreen, Tabs, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -42,7 +42,7 @@ const TabIcon = ({icon, selected, path, other, reclick}:TabIconProps) => {
       onLongPress={() => {
         if (other) {
           router.navigate(other as any);
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          Platform.OS !== "web" ? Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success) : null;
         }
       }}
     >
