@@ -187,7 +187,7 @@ export default function SettingsPage() {
             index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
             options={WeatherIPsOptions}
             onSubmit={onSubmitWeatherIP}
-            icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii-art" ? "code-slash" : options.weather_icon_pack === "segments" ? "calculator-outline" : "partly-sunny"}
+            icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii-art" ? "code-slash" : options.weather_icon_pack === "segments" ? "calculator-outline" : "partly-sunny-outline"}
             size='medium'
             showOptions
           />
@@ -246,7 +246,7 @@ export default function SettingsPage() {
                   onPress={() => {
                       setResetPressed(true);
                     }}
-                    icon={{ name: "reload-circle" }}
+                    icon={{ name: "reload" }}
                 /> : <>
                 <Button
                   title={"Yes"}
@@ -258,7 +258,7 @@ export default function SettingsPage() {
                     updateData();
                     setResetPressed(false);
                   }}
-                  icon={{ name: "checkmark-circle" }}
+                  icon={{ name: "checkmark" }}
                 />
                 <Button
                   title={"No"}
@@ -266,7 +266,7 @@ export default function SettingsPage() {
                   onPress={() => {
                       setResetPressed(false);
                     }}
-                    icon={{ name: "close-circle" }}
+                    icon={{ name: "close" }}
                 />
                 </>
               }

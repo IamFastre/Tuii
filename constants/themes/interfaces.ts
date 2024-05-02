@@ -22,6 +22,7 @@ export interface ITheme {
   magenta: `#${string}`;
 
   opacity: {
+    translucent: string;
     faint: string;
     mid: string;
     most: string;

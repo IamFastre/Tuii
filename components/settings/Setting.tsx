@@ -96,8 +96,8 @@ export const OptionsSetting = (props:OptionsSettingProps) => {
       <Title title={props.title} description={props.description} experimental={props.experimental} options={props.showOptions ? props.options : undefined} />
       <Button
         title={props.options ? props.options[props.index] : undefined}
+        color={props.color}
         style={{
-          ...(props.color ? { borderColor: props.color } : {}),
           ...(props.size === "small" ?
               styles.smallInput :
               props.size === "medium" ?
@@ -109,7 +109,7 @@ export const OptionsSetting = (props:OptionsSettingProps) => {
         onPress={() => props.onSubmit()}
         onLongPress={() => props.onSubmit(false)}
         delayLongPress={350}
-        icon={props.icon ? { name: props.icon, size: 12, color: props.color } : undefined}
+        icon={props.icon ? { name: props.icon, color: props.color } : undefined}
         disabled={props.disabled}
       />
     </View>
@@ -124,9 +124,10 @@ export const BoolSetting = (props:BoolSettingProps) => {
       <Title title={props.title} description={props.description} experimental={props.experimental} />
       <Button
         title={props.current ? "true" : "false"}
-        style={{...(props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input), borderColor: props.current ? colors.accent : colors.hot}}
+        color={props.current ? colors.accent : colors.hot}
+        style={{...(props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input) }}
         onPress={() => props.onSubmit()}
-        icon={{ name: props.current ? "checkmark-circle-outline" : "close-circle-outline", size: 12 }}
+        icon={{ name: props.current ? "checkmark-outline" : "close-outline" }}
         disabled={props.disabled}
       />
     </View>

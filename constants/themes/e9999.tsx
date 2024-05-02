@@ -10,23 +10,6 @@ export default {
   accent: "#333613",
   highlight: "#152010",
 
-  hot: "#d71e1e",
-  cold: "#2054ff",
-
-  red: "#d71e1e",
-  green: "#07882E",
-  blue: "#3a7aff",
-
-  cyan: "#27d4ff",
-  yellow: "#ffea29",
-  magenta: "#eb16c7",
-  
-  opacity: {
-    faint: "45",
-    mid: "65",
-    most: "d0",
-  },
-
   icon: "game-controller-sharp",
   statusbar: "dark",
   theme: "e9999",

@@ -79,7 +79,7 @@ export default () : React.JSX.Element => {
                 title="Replay"
                 style={styles.action}
                 textStyle={styles.actionText}
-                icon={{ name:'refresh-circle' }}
+                icon={{ name:'refresh' }}
                 onPress={() => xo.restart()}
               />
           </View>

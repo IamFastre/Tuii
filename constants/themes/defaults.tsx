@@ -51,13 +51,14 @@ export default {
   ...CYM,
 
   opacity: {
+    translucent: "20",
     faint: "45",
     mid: "65",
     most: "d0",
   },
 
   theme: "dark",
-  icon: "moon",
+  icon: "moon-outline",
   statusbar: "light",
 
   others: {

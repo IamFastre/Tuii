@@ -47,7 +47,7 @@ export default () : React.JSX.Element => {
             title="Reveal Board"
             style={styles.action}
             textStyle={styles.actionText}
-            icon={{ name:'eye' }}
+            icon={{ name:'eye-outline' }}
             onPress={sudoku.revealBoard}
           />
           <Button
@@ -61,7 +61,7 @@ export default () : React.JSX.Element => {
             title="New"
             style={styles.action}
             textStyle={styles.actionText}
-            icon={{ name:'refresh-circle' }}
+            icon={{ name:'refresh' }}
             onPress={() => {
               sudoku.regenerate();
             }}

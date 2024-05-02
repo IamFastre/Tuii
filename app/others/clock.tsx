@@ -89,18 +89,14 @@ export default function AppletsPage() : React.JSX.Element {
         <View style={{ gap: 15, paddingHorizontal: 50 }}>
           <Button
             title='Toggle Show Dashes'
-            style={{
-              padding: 10,
-              borderColor: showDashes ? colors.cold : colors.hot
-            }}
+            pressableStyle={{ padding: 10 }}
+            color={showDashes ? colors.cold : colors.hot}
             onPress={() => setShowDashes(!showDashes)}
           />
           <Button
             title='Toggle Circle/Square'
-            style={{
-              padding: 10,
-              borderColor: isCircle ? colors.cold : colors.hot
-            }}
+            pressableStyle={{ padding: 10 }}
+            color={isCircle ? colors.cold : colors.hot}
             onPress={() => setIsCircle(!isCircle)}
           />
         </View>

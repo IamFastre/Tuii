@@ -256,16 +256,16 @@ export default function HomePage() : React.JSX.Element {
       title={refreshing ? "Refreshing" : ""}
       style={{
         display: options.show_refresh_button ? "flex" : "none",
-        alignSelf: 'center',
+        alignSelf: "center",
         position: "absolute",
         bottom: 0,
         zIndex: 5,
-        width: "auto",
-        paddingVertical: refreshing ? 0 : 5,
-        paddingHorizontal: 5
+        aspectRatio: refreshing ? 5 : 1,
       }}
-      icon={{ name: 'reload-circle' }}
+      icon={{ name: "reload-circle" }}
       onPress={onRefresh}
+      radiusFactor={2}
+      opaque
     />
     </>
   );

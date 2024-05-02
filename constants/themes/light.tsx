@@ -11,12 +11,13 @@ export default {
   highlight: "#4a00ff",
 
   opacity: {
+    translucent: "10",
     faint: "20",
     mid: "45",
     most: "d0",
   },
 
   theme: "light",
-  icon: "sunny",
+  icon: "sunny-outline",
   statusbar: "dark",
 } as ITheme;
