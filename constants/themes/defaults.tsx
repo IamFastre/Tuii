@@ -24,7 +24,7 @@ export const RBG = {
 
 export const CYM = {
   cyan: "#27d4ff",
-  yellow: "#ffea29",
+  yellow: "#DBB024",
   magenta: "#eb16c7",
 };
 
