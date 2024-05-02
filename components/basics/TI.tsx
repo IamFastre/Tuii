@@ -21,7 +21,7 @@ export const TI = (props:TIProps) => {
 
   return (
     <View style={[styles.textInputView, props.style, { borderColor: isDeleting ? colors.hot : isPressed ? colors.accent : colors.secondary }]}>
-      <T style={{ color: colors.accent, fontFamily: colors.others.fonts.L }}>{'>'}</T>
+      <T style={{ color: colors.accent }}>{'>'}</T>
       <TextInput
         style={[styles.textInput, { color: colors.accent, fontFamily: colors.others.fonts.L }]}
         value={props.value}
