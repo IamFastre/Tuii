@@ -1,4 +1,4 @@
-import defaults, { no_brackets } from "./defaults";
+import defaults from "./defaults";
 import { ITheme } from "./interfaces";
 
 export default {
@@ -9,6 +9,10 @@ export default {
 
   accent: "#333613",
   highlight: "#152010",
+
+  red: "#B10000",
+  green: "#056B2C",
+  blue: "#1A4DBB",
 
   icon: "game-controller-sharp",
   statusbar: "dark",

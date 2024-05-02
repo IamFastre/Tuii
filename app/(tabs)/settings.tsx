@@ -112,7 +112,7 @@ export default function SettingsPage() {
 
   return (
     <Section title="Settings" style={{ flex:1 }} containerStyle={isClicked ? { borderColor: colors.accent } : { }}>
-        <ScrollView style={{ flex:1 }} contentContainerStyle={styles.homeContainer}>
+        <ScrollView style={{ flex:1 }} contentContainerStyle={styles.homeContainer} showsVerticalScrollIndicator={false}>
           {/* ========= User settings ========= */}
           <Sep margin={7.5} noThickness />
           <Title title='User'/>
@@ -141,6 +141,7 @@ export default function SettingsPage() {
             options={UserGenderOptions}
             onSubmit={onSubmitGender}
             icon={user.gender === "male" ? "male" : user.gender === "female" ? "female" : "build-outline"}
+            color={user.gender === "male" ? colors.blue : user.gender === "female" ? colors.magenta : colors.yellow}
           />
 
           <Sep margin={consts.margin} />
@@ -163,6 +164,7 @@ export default function SettingsPage() {
             options={UnitsOptions}
             onSubmit={onSubmitUnits}
             icon={metrics.units === "metric" ? "flask-outline" : "footsteps-outline"}
+            color={metrics.units === "metric" ? colors.highlight : colors.accent}
           />
 
           <Sep margin={consts.margin} />

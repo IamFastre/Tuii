@@ -124,7 +124,7 @@ export const BoolSetting = (props:BoolSettingProps) => {
       <Title title={props.title} description={props.description} experimental={props.experimental} />
       <Button
         title={props.current ? "true" : "false"}
-        color={props.current ? colors.accent : colors.hot}
+        color={props.current ? colors.green : colors.red}
         style={{...(props.size === "small" ? styles.smallInput : props.size === "medium" ? styles.mediumInput : props.size === "large" ? styles.largeInput : styles.input) }}
         onPress={() => props.onSubmit()}
         icon={{ name: props.current ? "checkmark-outline" : "close-outline" }}
