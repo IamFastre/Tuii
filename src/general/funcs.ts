@@ -36,6 +36,7 @@ export function getTime() : ITime {
     offset: currentdate.getTimezoneOffset(),
     offsetH: Math.floor(currentdate.getTimezoneOffset() / 60),
     offsetM: currentdate.getTimezoneOffset() % 60,
+    stamp: currentdate.valueOf(),
   };
 }
 

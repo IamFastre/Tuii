@@ -1,4 +1,4 @@
-import{ useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, RefreshControl, Platform } from 'react-native';
 import { AxiosError } from 'axios';
 
@@ -7,12 +7,11 @@ import { getTime, getGreet, removeAt } from '@/src/general/funcs';
 import { ITime } from "@/src/general/interfaces";
 import { IForecast, WeatherIconID, fetchWeather } from '@/src/weather';
 import { WeatherIcon } from '@/components/weather/WeatherIcons';
-import { State } from '@/src/general/types';
 
+import { SettingsContext, TabsContext } from '@/components/Contexts';
 import { TodaysQuote, TodaysWord } from '@/components/home';
 import { useColors } from '@/constants/colors';
 import consts from '@/constants/consts';
-import { SettingsContext, TabsContext } from '@/components/Contexts';
  
 export default function HomePage() : React.JSX.Element {
   const colors = useColors();
@@ -56,17 +55,17 @@ export default function HomePage() : React.JSX.Element {
   }, [metrics.city, metrics.units])
 
   useEffect(() => {
-    updateData();
-    setColonBlink(!colonBlink);
-  }, [time.second])
-
-  useEffect(() => {
     const int = setInterval(() => {
       setGreet(getGreet());
       setTime(getTime());
     }, 200);
     return () => clearInterval(int);
   }, [greet, time]);
+
+  useEffect(() => {
+    updateData();
+    setColonBlink(!colonBlink);
+  }, [Math.floor(time.stamp / 500)])
 
 
   const l = colors.brackets.left.curly;

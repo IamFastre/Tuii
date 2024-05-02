@@ -83,6 +83,7 @@ export interface ITime {
   offset: number;
   offsetH: number;
   offsetM: number;
+  stamp: number;
 }
 
 export interface ILocation {
