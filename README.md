@@ -6,8 +6,8 @@
 </p>
 
 
-**`Tuii`** (pronounced `/tou·wee/`; stylized `{ Tuii }` or `{+}`) is a multipurpose app with random features and stuff.
-<br>
+**`Tuii`** (stylized as `{ Tuii }` or `{+}`) is a multipurpose app with random features and stuff.
+&#10;
 It's made with **React Native Expo** and works on all that Expo works on _(namely; Android, iOS, Web)_
 
 ## Style
