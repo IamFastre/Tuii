@@ -21,7 +21,7 @@ export interface ClockProps {
 }
 
 const Background = ({ type, fill, stroke }:{ type:ClockBGStyle; fill:ColorValue; stroke:ColorValue; }) => {
-  return (
+  return type !== "none" ? (
     type === "circle"
     ? <Circle
         r={40}
@@ -49,8 +49,8 @@ const Background = ({ type, fill, stroke }:{ type:ClockBGStyle; fill:ColorValue;
         c1.34,2.32,3.82,3.75,6.5,3.75l37.49,0c2.68,0,5.16-1.43,6.5-3.75L94,53.75c1.34-2.32,1.34-5.18,0-7.5l-18.75-32.5
         C73.9,11.43,71.43,10,68.75,10z"
       />
-    : null
-  );
+    : <G/>
+  ) : null;
 }
 
 const Dashes = ({ type, fill }:{ type:ClockDHStyle; fill:ColorValue; }) => {
@@ -77,8 +77,7 @@ const Dashes = ({ type, fill }:{ type:ClockDHStyle; fill:ColorValue; }) => {
   ) : null;
 };
 
-const Digits = ({ time, degree, dashes, color }:{ time:number; degree:number; dashes?:boolean; color:ColorValue; }) => {
-  const colors = useColors();
+const Digit = ({ time, degree, dashes, color }:{ time:number; degree:number; dashes?:boolean; color:ColorValue; }) => {
   return (
     <View
       style={{
@@ -91,8 +90,8 @@ const Digits = ({ time, degree, dashes, color }:{ time:number; degree:number; da
       <T
         style={{
           fontSize: dashes ? 18 : 24,
-          color: color ?? colors.accent,
-          fontFamily: colors.others.fonts.S,
+          color: color,
+          fontFamily: useColors().others.fonts.S,
           transform: [{ rotate: `-${degree}deg` }]
         }}
       >
@@ -102,13 +101,110 @@ const Digits = ({ time, degree, dashes, color }:{ time:number; degree:number; da
   );
 };
 
+const Digits = ({ dashes, color }:{ dashes?:boolean; color:ColorValue; }) => {
+  return dashes ? (
+    <>
+      <Digit time={1}  degree={30}  dashes={dashes} color={color} />
+      <Digit time={2}  degree={60}  dashes={dashes} color={color} />
+      <Digit time={3}  degree={90}  dashes={dashes} color={color} />
+      <Digit time={4}  degree={120} dashes={dashes} color={color} />
+      <Digit time={5}  degree={150} dashes={dashes} color={color} />
+      <Digit time={6}  degree={180} dashes={dashes} color={color} />
+      <Digit time={7}  degree={210} dashes={dashes} color={color} />
+      <Digit time={8}  degree={240} dashes={dashes} color={color} />
+      <Digit time={9}  degree={270} dashes={dashes} color={color} />
+      <Digit time={10} degree={300} dashes={dashes} color={color} />
+      <Digit time={11} degree={330} dashes={dashes} color={color} />
+      <Digit time={12} degree={0}   dashes={dashes} color={color} />
+    </>
+  ) : null;
+};
+
+const Icon = ({ show, isDay, margin }:{ show?:boolean; isDay:boolean; margin:number; }) => {
+  const colors = useColors();
+  return show ? (
+    <Ionicons
+      name={isDay ? 'sunny-outline' : 'moon'}
+      color={isDay ? colors.yellow : colors.cold}
+      size={40}
+      style={{
+        position: "absolute",
+        alignSelf: "center",
+        top: margin,
+      }}
+    />
+  ) : null;
+};
+
+const DigitalClock = ({ show, time, color, margin }:{ show?:boolean; time:ITime; color:ColorValue; margin:number; }) => {
+  const colors = useColors();
+  const [colonBlink, setColonBlink] = useState<boolean>(false);
+
+  useEffect(() => {
+    setColonBlink(!colonBlink);
+  }, [Math.floor(time.stamp / 500)])
+
+  return show ? (
+    <T
+      style={{
+        position: "absolute",
+        alignSelf: "center",
+        bottom: margin,
+        fontSize: 32,
+        fontFamily: colors.others.fonts.S,
+        opacity: 0.6,
+        color: color
+      }}
+    >
+      {time.hour < 10 ? `0${time.hour}` : time.hour}
+      <C.HOT style={{ opacity: colonBlink ? 1 : 0.25 }}>:</C.HOT>
+      {time.minute < 10 ? `0${time.minute}` : time.minute}
+    </T>
+  ) : null;
+};
+
+const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
+  const colors = useColors();
+  return (
+    <>
+      <Line
+        x1={50} y1={50}
+        x2={50} y2={32}
+        origin={[50, 50]}
+        rotation={(time.hour + time.minute/60)*30}
+        stroke={color}
+        strokeLinecap='square'
+        strokeWidth={1.5}
+      />
+      <Line
+        x1={50} y1={50}
+        x2={50} y2={27.5}
+        origin={[50, 50]}
+        rotation={time.minute*6}
+        stroke={color}
+        strokeLinecap='square'
+        strokeWidth={1}
+      />
+      <Line
+        x1={50} y1={55}
+        x2={50} y2={22.5}
+        origin={[50, 50]}
+        rotation={time.second*6}
+        stroke={colors.hot}
+        strokeLinecap='round'
+        strokeWidth={0.75}
+      />
+      <Circle cx={50} cy={50} r={1.5} stroke={colors.hot} strokeWidth={0.75} />
+    </>
+  );
+};
+
 export const Clock = ({ scale, color, dashes, background, showDigital, showIcon, showNumbers, backgroundAffected }:ClockProps) => {
   const colors = useColors();
   const [time, setTime] = useState<ITime>(getTime());
-  const [colonBlink, setColonBlink] = useState<boolean>(false);
 
   const showDashes = dashes !== "none";
-  const othersPos  = showDashes && showNumbers ? 150 : showDashes || showNumbers ? 130 : 100;
+  const innerObjectsMargin  = showDashes && showNumbers ? 150 : showDashes || showNumbers ? 130 : 100;
 
   const isDay  = (18 > time.hour && time.hour >= 6);
   const light  = colors.statusbar === "light" ? colors.tertiary : colors.primary;
@@ -125,10 +221,6 @@ export const Clock = ({ scale, color, dashes, background, showDigital, showIcon,
   }
 
   useEffect(() => {
-    setColonBlink(!colonBlink);
-  }, [Math.floor(time.stamp / 500)])
-
-  useEffect(() => {
     const int = setInterval(() => {
       setTime(getTime());
     }, 200);
@@ -142,85 +234,12 @@ export const Clock = ({ scale, color, dashes, background, showDigital, showIcon,
         <Dashes type={dashes} fill={high} />
       </Svg>
 
-      { showNumbers ?
-        <>
-          <Digits time={1}  degree={30}  dashes={showDashes} color={high} />
-          <Digits time={2}  degree={60}  dashes={showDashes} color={high} />
-          <Digits time={3}  degree={90}  dashes={showDashes} color={high} />
-          <Digits time={4}  degree={120} dashes={showDashes} color={high} />
-          <Digits time={5}  degree={150} dashes={showDashes} color={high} />
-          <Digits time={6}  degree={180} dashes={showDashes} color={high} />
-          <Digits time={7}  degree={210} dashes={showDashes} color={high} />
-          <Digits time={8}  degree={240} dashes={showDashes} color={high} />
-          <Digits time={9}  degree={270} dashes={showDashes} color={high} />
-          <Digits time={10} degree={300} dashes={showDashes} color={high} />
-          <Digits time={11} degree={330} dashes={showDashes} color={high} />
-          <Digits time={12} degree={0}   dashes={showDashes} color={high} />
-        </>
-        : null
-      }    
-      {
-        showIcon ?
-        <Ionicons
-          name={isDay ? 'sunny-outline' : 'moon'}
-          color={isDay ? colors.yellow : colors.cold}
-          size={40}
-          style={{
-            position: "absolute",
-            alignSelf: "center",
-            top: othersPos,
-          }}
-        />
-        : null
-      }
-      {
-        showDigital ?
-        <T
-          style={{
-            position: "absolute",
-            alignSelf: "center",
-            bottom: othersPos,
-            fontSize: 32,
-            fontFamily: colors.others.fonts.S,
-            opacity: 0.6,
-            color: analog
-          }}
-        >
-          {time.hour < 10 ? `0${time.hour}` : time.hour}
-          <C.HOT style={{ opacity: colonBlink ? 1 : 0.25 }}>:</C.HOT>
-          {time.minute < 10 ? `0${time.minute}` : time.minute}
-        </T>
-        : null
-      }
+      <Digits dashes={showDashes} color={high} />    
+      <Icon show={showIcon} isDay={isDay} margin={innerObjectsMargin} />
+      <DigitalClock show={showDigital} time={time} color={analog} margin={innerObjectsMargin} />
+
       <Svg {...props}>
-        <Line
-          x1={50} y1={50}
-          x2={50} y2={32}
-          origin={[50, 50]}
-          rotation={(time.hour + time.minute/60)*30}
-          stroke={analog}
-          strokeLinecap='square'
-          strokeWidth={1.5}
-        />
-        <Line
-          x1={50} y1={50}
-          x2={50} y2={27.5}
-          origin={[50, 50]}
-          rotation={time.minute*6}
-          stroke={analog}
-          strokeLinecap='square'
-          strokeWidth={1}
-        />
-        <Line
-          x1={50} y1={55}
-          x2={50} y2={22.5}
-          origin={[50, 50]}
-          rotation={time.second*6}
-          stroke={colors.hot}
-          strokeLinecap='round'
-          strokeWidth={0.75}
-        />
-        <Circle cx={50} cy={50} r={1.5} stroke={colors.hot} strokeWidth={0.75} />
+        <Analogs time={time} color={analog} />
       </Svg>
     </View>
   );
@@ -236,7 +255,7 @@ export default function ClockPage() : React.JSX.Element {
           scale={0.8}
           dashes='60-dashes'
           background='circle'
-          showNumbers={false}
+          showNumbers={true}
           showDigital={true}
           showIcon={true}
           backgroundAffected={true}
