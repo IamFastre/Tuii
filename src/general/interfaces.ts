@@ -13,12 +13,13 @@ export const SudokuLevelOptions:SudokuLevel[] = ["easy", "medium", "hard", "max"
 export const TTTLevelOptions:TTTLevel[] = ["easy", "medium", "hard"];
 export const TTTPlayers:TTTPlayer[] = [1, 2];
 
-export type UserGender  = "male" | "female" | "other";
-export type Units       = "metric" | "imperial";
-export type Themes      = "system" | keyof typeof themes;
-export type WeatherIP   = "theme-default" | keyof typeof iconPacks;
-export type ClockFGStyle  = "analogs" | "accent" | "highlight";
-export type ClockBGStyle  = "circle" | "square";
+export type UserGender    = "male" | "female" | "other";
+export type Units         = "metric" | "imperial";
+export type Themes        = "system" | keyof typeof themes;
+export type WeatherIP     = "theme-default" | keyof typeof iconPacks;
+export type ClockFGColors = "analogs" | "accent" | "highlight";
+export type ClockDHStyle  = "none" | "12-dashes" | "60-dashes" | "12-dots" | "8-circle";
+export type ClockBGStyle  = "none" | "circle" | "square" | "hexagon";
 
 export type SudokuLevel = "easy" | "medium" | "hard" | "max";
 
@@ -47,7 +48,8 @@ export interface IOptions {
   show_refresh_button: boolean;
   short_word_class: boolean;
   show_timezone: boolean;
-  clock_foreground_style: ClockFGStyle;
+  clock_foreground_color: ClockFGColors;
+  clock_dashes_style: ClockDHStyle;
   clock_background_style: ClockBGStyle;
   clock_show_dashes: boolean;
   clock_show_number: boolean;
