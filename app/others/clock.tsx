@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, ColorValue } from 'react-native';
 
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Circle, G, Line, Path, Rect, Svg, SvgProps } from 'react-native-svg';
 
 import { useColors } from '@/constants/colors';
@@ -124,8 +124,8 @@ const Digits = ({ dashes, color }:{ dashes?:boolean; color:ColorValue; }) => {
 const Icon = ({ show, isDay, margin }:{ show?:boolean; isDay:boolean; margin:number; }) => {
   const colors = useColors();
   return show ? (
-    <Ionicons
-      name={isDay ? 'sunny-sharp' : 'moon-sharp'}
+    <MaterialCommunityIcons
+      name={isDay ? 'white-balance-sunny' : 'moon-waning-crescent'}
       color={isDay ? colors.yellow : colors.cold}
       size={isDay ? 40 : 35}
       style={{
