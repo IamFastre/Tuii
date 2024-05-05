@@ -33,6 +33,7 @@ export const DefaultSettings = {
     clock_show_dashes: true,
     clock_show_number: true,
     clock_show_digital: true,
+    clock_show_digital_background: true,
     clock_show_icons: true,
     clock_background_affected: true,
 

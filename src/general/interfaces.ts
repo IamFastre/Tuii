@@ -54,6 +54,7 @@ export interface IOptions {
   clock_show_dashes: boolean;
   clock_show_number: boolean;
   clock_show_digital: boolean;
+  clock_show_digital_background: boolean;
   clock_show_icons: boolean;
   clock_background_affected: boolean;
 

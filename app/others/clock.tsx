@@ -15,6 +15,7 @@ export interface ClockProps {
   dashes: ClockDHStyle;
   background: ClockBGStyle;
   showDigital?: boolean;
+  showDigitalBackground?: boolean;
   showIcon?: boolean;
   showNumbers?: boolean;
   backgroundAffected?: boolean;
@@ -136,7 +137,7 @@ const Icon = ({ show, isDay, margin }:{ show?:boolean; isDay:boolean; margin:num
   ) : null;
 };
 
-const DigitalClock = ({ show, time, color, margin }:{ show?:boolean; time:ITime; color:ColorValue; margin:number; }) => {
+const DigitalClock = ({ show, time, hasBackground, color, backgroundColor, margin }:{ show?:boolean; time:ITime; hasBackground?:boolean; color:ColorValue; backgroundColor:ColorValue; margin:number; }) => {
   const colors = useColors();
   const [colonBlink, setColonBlink] = useState<boolean>(false);
 
@@ -150,10 +151,13 @@ const DigitalClock = ({ show, time, color, margin }:{ show?:boolean; time:ITime;
         position: "absolute",
         alignSelf: "center",
         bottom: margin,
-        fontSize: 32,
+        fontSize: hasBackground ? 28 : 32,
         fontFamily: colors.others.fonts.S,
-        opacity: 0.75,
-        color: color
+        opacity: hasBackground ? 0.9 : 0.75,
+        color: hasBackground ? backgroundColor : color,
+        backgroundColor: hasBackground ? color : "transparent",
+        padding: 5,
+        borderRadius: 10
       }}
     >
       {time.hour < 10 ? `0${time.hour}` : time.hour}
@@ -199,7 +203,7 @@ const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
   );
 };
 
-export const Clock = ({ scale, color, dashes, background, showDigital, showIcon, showNumbers, backgroundAffected }:ClockProps) => {
+export const Clock = ({ scale, color, dashes, background, showDigital, showDigitalBackground, showIcon, showNumbers, backgroundAffected }:ClockProps) => {
   const colors = useColors();
   const [time, setTime] = useState<ITime>(getTime());
 
@@ -236,7 +240,7 @@ export const Clock = ({ scale, color, dashes, background, showDigital, showIcon,
 
       <Digits dashes={showDashes} color={high} />    
       <Icon show={showIcon} isDay={isDay} margin={innerObjectsMargin} />
-      <DigitalClock show={showDigital} time={time} color={analog} margin={innerObjectsMargin} />
+      <DigitalClock show={showDigital} time={time} hasBackground={showDigitalBackground} color={analog} backgroundColor={bgclr} margin={innerObjectsMargin} />
 
       <Svg {...props}>
         <Analogs time={time} color={analog} />
@@ -257,6 +261,7 @@ export default function ClockPage() : React.JSX.Element {
           background='circle'
           showNumbers={true}
           showDigital={true}
+          showDigitalBackground={true}
           showIcon={true}
           backgroundAffected={true}
         />
