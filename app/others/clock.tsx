@@ -124,9 +124,9 @@ const Icon = ({ show, isDay, margin }:{ show?:boolean; isDay:boolean; margin:num
   const colors = useColors();
   return show ? (
     <Ionicons
-      name={isDay ? 'sunny-outline' : 'moon'}
+      name={isDay ? 'sunny-sharp' : 'moon-sharp'}
       color={isDay ? colors.yellow : colors.cold}
-      size={40}
+      size={isDay ? 40 : 35}
       style={{
         position: "absolute",
         alignSelf: "center",
@@ -152,7 +152,7 @@ const DigitalClock = ({ show, time, color, margin }:{ show?:boolean; time:ITime;
         bottom: margin,
         fontSize: 32,
         fontFamily: colors.others.fonts.S,
-        opacity: 0.6,
+        opacity: 0.75,
         color: color
       }}
     >
@@ -174,7 +174,7 @@ const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
         rotation={(time.hour + time.minute/60)*30}
         stroke={color}
         strokeLinecap='square'
-        strokeWidth={1.5}
+        strokeWidth={2}
       />
       <Line
         x1={50} y1={50}
@@ -183,7 +183,7 @@ const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
         rotation={time.minute*6}
         stroke={color}
         strokeLinecap='square'
-        strokeWidth={1}
+        strokeWidth={1.25}
       />
       <Line
         x1={50} y1={55}
