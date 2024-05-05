@@ -3,7 +3,7 @@
     "name": "Tuii",
     "slug": "Tuii",
     "scheme": "tuii",
-    "version": "0.7.3",
+    "version": "0.7.5",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "primaryColor": "#121212",
