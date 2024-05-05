@@ -27,6 +27,7 @@ export const DefaultSettings = {
     show_refresh_button: Platform.OS === 'web',
     short_word_class: true,
     show_timezone: true,
+    clock_style: "digital",
 
     clock_foreground_color: "accent",
     clock_dashes_style: "12-dashes",

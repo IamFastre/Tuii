@@ -7,6 +7,7 @@ export const UserGenderOptions:UserGender[] = ["male", "female", "other"];
 export const UnitsOptions:Units[] = ["metric", "imperial"];
 export const ThemeOptions:Themes[] = ["system", ...Object.keys(themes) as Themes[]];
 export const WeatherIPsOptions:WeatherIP[] = ["theme-default", ...Object.keys(iconPacks) as WeatherIP[]];
+export const ClockStyleOptions:ClockStyle[] = ["digital", "analog"];
 export const ClockFGOptions:ClockFGColors[] = ["analogs", "accent", "highlight"];
 export const ClockDHOptions:ClockDHStyle[]  = ["12-dashes", "60-dashes", "12-dots", "8-circle", "none"];
 export const ClockBGOptions:ClockBGStyle[]  = ["circle", "square", "hexagon", "none"];
@@ -20,6 +21,7 @@ export type UserGender    = "male" | "female" | "other";
 export type Units         = "metric" | "imperial";
 export type Themes        = "system" | keyof typeof themes;
 export type WeatherIP     = "theme-default" | keyof typeof iconPacks;
+export type ClockStyle    = "digital" | "analog";
 export type ClockFGColors = "analogs" | "accent" | "highlight";
 export type ClockDHStyle  = "none" | "12-dashes" | "60-dashes" | "12-dots" | "8-circle";
 export type ClockBGStyle  = "none" | "circle" | "square" | "hexagon";
@@ -51,6 +53,7 @@ export interface IOptions {
   show_refresh_button: boolean;
   short_word_class: boolean;
   show_timezone: boolean;
+  clock_style: ClockStyle;
 
   clock_foreground_color: ClockFGColors;
   clock_dashes_style: ClockDHStyle;

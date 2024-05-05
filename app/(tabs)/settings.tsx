@@ -2,7 +2,7 @@ import{ useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { C, L, Section, T, Button, Sep } from '@/components/basics';
-import { ClockBGOptions, ClockDHOptions, ClockFGOptions, ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
+import { ClockBGOptions, ClockDHOptions, ClockFGOptions, ClockStyleOptions, ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
 import { OptionsSetting, TextInputSetting, Title, BoolSetting, Subtitle } from '@/components/settings';
 import { resetSettings, setStored } from '@/src/general/storage';
 import appConsts from '@/constants/consts';
@@ -134,6 +134,7 @@ export default function SettingsPage() {
             showOptions
           />
 
+          {/* Weather icons */}
           <OptionsSetting
             title="Weather Icons"
             description="The icon pack used for weather."
@@ -161,98 +162,138 @@ export default function SettingsPage() {
           />
 
           <Subtitle title='Clock'/>
-          <OptionsSetting
-            title="Foreground color"
-            description="The color used for dashes and numbers."
-            index={ClockFGOptions.indexOf(options.clock_foreground_color)}
-            options={ClockFGOptions}
-            onSubmit={(forward: boolean = true) => {
-              setStored('options', { ...options, clock_foreground_color: move(forward)(ClockFGOptions, options.clock_foreground_color) });
-              updateData();
-            }}
-            icon={'color-filter-outline'}
-            color={options.clock_foreground_color === 'accent' ? colors.accent : options.clock_foreground_color === "highlight" ? colors.highlight : colors.tertiary}
-            size='medium'
-            showOptions
-          />
-          <OptionsSetting
-            title="Background style"
-            description="The style of the clock body itself."
-            index={ClockBGOptions.indexOf(options.clock_background_style)}
-            options={ClockBGOptions}
-            onSubmit={(forward: boolean = true) => {
-              setStored('options', { ...options, clock_background_style: move(forward)(ClockBGOptions, options.clock_background_style) });
-              updateData();
-            }}
-            icon={options.clock_background_style === "square" ? "square" : options.clock_background_style === "circle" ? "circle" : options.clock_background_style === "hexagon" ? "hexagon" : "x" }
-            pack={Feather}
-            size='medium'
-            showOptions
-          />
-          <OptionsSetting
-            title="Dashes style"
-            description="The style used for dashes around the clock."
-            index={ClockDHOptions.indexOf(options.clock_dashes_style)}
-            options={ClockDHOptions}
-            onSubmit={(forward: boolean = true) => {
-              setStored('options', { ...options, clock_dashes_style: move(forward)(ClockDHOptions, options.clock_dashes_style) });
-              updateData();
-            }}
-            size='medium'
-            showOptions
-          />
-          <BoolSetting
-            title="Show Numbers"
-            description={"Show the numbers around the clock."}
-            current={options.clock_show_numbers}
-            onSubmit={() => {
-              setStored('options', { ...options, clock_show_numbers: !options.clock_show_numbers });
-              updateData();
-            }}
-            size='medium'
-          />
-          <BoolSetting
-            title="Show Icon"
-            description={"Show the current period of the day icon (day/night)."}
-            current={options.clock_show_icons}
-            onSubmit={() => {
-              setStored('options', { ...options, clock_show_icons: !options.clock_show_icons });
-              updateData();
-            }}
-            size='medium'
-          />
-          <BoolSetting
-            title="Show Digital"
-            description={"Show the digital clock beneath the analogs."}
-            current={options.clock_show_digital}
-            onSubmit={() => {
-              setStored('options', { ...options, clock_show_digital: !options.clock_show_digital });
-              updateData();
-            }}
-            size='medium'
-          />
-          <BoolSetting
-            title="Show Digital Background"
-            description={"Give the digital clock a background."}
-            current={options.clock_show_digital_background}
-            onSubmit={() => {
-              setStored('options', { ...options, clock_show_digital_background: !options.clock_show_digital_background });
-              updateData();
-            }}
-            size='medium'
-          />
-          <BoolSetting
-            title="Timely Background"
-            description={"The clock's background goes dark at night and light at day."}
-            current={options.clock_background_affected}
-            onSubmit={() => {
-              setStored('options', { ...options, clock_background_affected: !options.clock_background_affected });
-              updateData();
-            }}
-            size='medium'
-          />
 
-
+          {/* Timezone */}
+          <OptionsSetting
+            title="Clock Style"
+            description="Choose which clock type you prefer."
+            index={ClockStyleOptions.indexOf(options.clock_style)}
+            options={ClockStyleOptions}
+            onSubmit={(forward: boolean = true) => {
+              setStored('options', { ...options, clock_style: move(forward)(ClockStyleOptions, options.clock_style) });
+              updateData();
+            }}
+            icon={options.clock_style === "digital" ? "watch-outline" : "time-outline" }
+            size='medium'
+            showOptions
+          />
+          {/* Timezone */}
+          <BoolSetting
+            title="Timezone"
+            description="Show timezone offset under current time."
+            current={options.show_timezone}
+            onSubmit={() => {
+              setStored('options', { ...options, show_timezone: !options.show_timezone });
+              updateData();
+            }}
+            size='medium'
+          />
+  
+          { options.clock_style === "analog" ?
+            <>
+              {/* Clock foreground color */}
+              <OptionsSetting
+                title="Foreground Color"
+                description="The color used for dashes and numbers."
+                index={ClockFGOptions.indexOf(options.clock_foreground_color)}
+                options={ClockFGOptions}
+                onSubmit={(forward: boolean = true) => {
+                  setStored('options', { ...options, clock_foreground_color: move(forward)(ClockFGOptions, options.clock_foreground_color) });
+                  updateData();
+                }}
+                icon={'color-filter-outline'}
+                color={options.clock_foreground_color === 'accent' ? colors.accent : options.clock_foreground_color === "highlight" ? colors.highlight : colors.tertiary}
+                size='medium'
+                showOptions
+              />
+              {/* Clock background style */}
+              <OptionsSetting
+                title="Background Style"
+                description="The style of the clock body itself."
+                index={ClockBGOptions.indexOf(options.clock_background_style)}
+                options={ClockBGOptions}
+                onSubmit={(forward: boolean = true) => {
+                  setStored('options', { ...options, clock_background_style: move(forward)(ClockBGOptions, options.clock_background_style) });
+                  updateData();
+                }}
+                icon={options.clock_background_style === "square" ? "square" : options.clock_background_style === "circle" ? "circle" : options.clock_background_style === "hexagon" ? "hexagon" : "x" }
+                pack={Feather}
+                size='medium'
+                showOptions
+              />
+              {/* Clock dashes style */}
+              <OptionsSetting
+                title="Dashes Style"
+                description="The style used for dashes around the clock."
+                index={ClockDHOptions.indexOf(options.clock_dashes_style)}
+                options={ClockDHOptions}
+                onSubmit={(forward: boolean = true) => {
+                  setStored('options', { ...options, clock_dashes_style: move(forward)(ClockDHOptions, options.clock_dashes_style) });
+                  updateData();
+                }}
+                size='medium'
+                showOptions
+              />
+              {/* Clock number */}
+              <BoolSetting
+                title="Show Numbers"
+                description={"Show the numbers around the clock."}
+                current={options.clock_show_numbers}
+                onSubmit={() => {
+                  setStored('options', { ...options, clock_show_numbers: !options.clock_show_numbers });
+                  updateData();
+                }}
+                size='medium'
+              />
+              {/* Clock day/night icon */}
+              <BoolSetting
+                title="Show Icon"
+                description={"Show the current period of the day icon (day/night)."}
+                current={options.clock_show_icons}
+                onSubmit={() => {
+                  setStored('options', { ...options, clock_show_icons: !options.clock_show_icons });
+                  updateData();
+                }}
+                size='medium'
+              />
+              {/* Clock inner digital clock */}
+              <BoolSetting
+                title="Show Digital"
+                description={"Show the digital clock beneath the analogs."}
+                current={options.clock_show_digital}
+                onSubmit={() => {
+                  setStored('options', { ...options, clock_show_digital: !options.clock_show_digital });
+                  updateData();
+                }}
+                size='medium'
+              />
+              {/* Clock inner digital clock background */}
+              <BoolSetting
+                title="Show Digital Background"
+                description={"Give the digital clock a background."}
+                current={options.clock_show_digital_background}
+                onSubmit={() => {
+                  setStored('options', { ...options, clock_show_digital_background: !options.clock_show_digital_background });
+                  updateData();
+                }}
+                size='medium'
+                disabled={!options.clock_show_digital}
+              />
+              {/* Clock timely background color */}
+              <BoolSetting
+                title="Timely Background Color"
+                description={"The clock's background goes dark at night and light at day."}
+                current={options.clock_background_affected}
+                onSubmit={() => {
+                  setStored('options', { ...options, clock_background_affected: !options.clock_background_affected });
+                  updateData();
+                }}
+                size='medium'
+                disabled={options.clock_background_style === "none"}
+              />
+            </>
+          : null }
+  
           {/* ========= Other settings ========= */}
           <Sep margin={consts.margin} />
           <Title title='Others'/>
@@ -268,18 +309,6 @@ export default function SettingsPage() {
             }}
             size='medium'
           />
-
-          <BoolSetting
-            title="Timezone"
-            description="Show timezone offset under current time."
-            current={options.show_timezone}
-            onSubmit={() => {
-              setStored('options', { ...options, show_timezone: !options.show_timezone });
-              updateData();
-            }}
-            size='medium'
-          />
-
           {/* Full screen */}
           <BoolSetting
             title="Full screen"

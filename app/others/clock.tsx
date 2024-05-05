@@ -10,8 +10,10 @@ import { C, T } from '@/components/basics';
 import { ClockBGStyle, ClockDHStyle, ClockFGColors, getTime, ITime } from '@/src/general';
 
 export interface ClockProps {
+  time: ITime;
   scale: number;
   color: ClockFGColors;
+  margin?: number;
   dashes: ClockDHStyle;
   background: ClockBGStyle;
   showDigital?: boolean;
@@ -203,9 +205,8 @@ const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
   );
 };
 
-export const Clock = ({ scale, color, dashes, background, showDigital, showDigitalBackground, showIcon, showNumbers, backgroundAffected }:ClockProps) => {
+export const AnalogClock = ({ time, scale, color, margin, dashes, background, showDigital, showDigitalBackground, showIcon, showNumbers, backgroundAffected }:ClockProps) => {
   const colors = useColors();
-  const [time, setTime] = useState<ITime>(getTime());
 
   const showDashes = dashes !== "none";
   const innerObjectsMargin  = showDashes && showNumbers ? 150 : showDashes || showNumbers ? 130 : 100;
@@ -224,15 +225,9 @@ export const Clock = ({ scale, color, dashes, background, showDigital, showDigit
     width: "100%",
   }
 
-  useEffect(() => {
-    const int = setInterval(() => {
-      setTime(getTime());
-    }, 200);
-    return () => clearInterval(int);
-  }, [time]);
 
   return (
-    <View style={{ aspectRatio: 1, width: 500, transform: [{ scale }] }}>
+    <View style={{ aspectRatio: 1, width: 500, margin: -(500 * (1-scale) / 2 + (250 * scale * 0.2)) + (margin ?? 0), transform: [{ scale }] }}>
       <Svg {...props}>
         <Background type={background} fill={bgclr} stroke={analog} />
         <Dashes type={dashes} fill={high} />
@@ -251,10 +246,20 @@ export const Clock = ({ scale, color, dashes, background, showDigital, showDigit
 
 
 export default function ClockPage() : React.JSX.Element {
+  const [time, setTime] = useState<ITime>(getTime());
+
+  useEffect(() => {
+    const int = setInterval(() => {
+      setTime(getTime());
+    }, 200);
+    return () => clearInterval(int);
+  }, [time]);
+
   return (
     <View style={{ flex:1 }}>
       <Page title="CLOCK" containerStyle={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Clock
+        <AnalogClock
+          time={time}
           color='analogs'
           scale={0.8}
           dashes='60-dashes'

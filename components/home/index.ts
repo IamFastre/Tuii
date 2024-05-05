@@ -1,2 +1,3 @@
-export * from './todaysWord';
-export * from './todaysQuote';
+export * from './TodaysWord';
+export * from './TodaysQuote';
+export * from './Time';
