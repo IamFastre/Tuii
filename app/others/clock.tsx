@@ -16,11 +16,11 @@ export interface ClockProps {
   margin?: number;
   dashes: ClockDHStyle;
   background: ClockBGStyle;
-  showDigital?: boolean;
-  showDigitalBackground?: boolean;
-  showIcon?: boolean;
-  showNumbers?: boolean;
-  backgroundAffected?: boolean;
+  showDigital: boolean;
+  showDigitalBackground: boolean;
+  showIcon: boolean;
+  showNumbers: boolean;
+  backgroundAffected: boolean;
 }
 
 const Background = ({ type, fill, stroke }:{ type:ClockBGStyle; fill:ColorValue; stroke:ColorValue; }) => {
@@ -80,7 +80,7 @@ const Dashes = ({ type, fill }:{ type:ClockDHStyle; fill:ColorValue; }) => {
   ) : null;
 };
 
-const Digit = ({ time, degree, dashes, color }:{ time:number; degree:number; dashes?:boolean; color:ColorValue; }) => {
+const Digit = ({ time, degree, dashes, color }:{ time:string; degree:number; dashes?:boolean; color:ColorValue; }) => {
   return (
     <View
       style={{
@@ -104,21 +104,21 @@ const Digit = ({ time, degree, dashes, color }:{ time:number; degree:number; das
   );
 };
 
-const Digits = ({ dashes, color }:{ dashes?:boolean; color:ColorValue; }) => {
-  return dashes ? (
+const Digits = ({ show, dashes, color }:{ show:boolean; dashes?:boolean; color:ColorValue; }) => {
+  return show ? (
     <>
-      <Digit time={1}  degree={30}  dashes={dashes} color={color} />
-      <Digit time={2}  degree={60}  dashes={dashes} color={color} />
-      <Digit time={3}  degree={90}  dashes={dashes} color={color} />
-      <Digit time={4}  degree={120} dashes={dashes} color={color} />
-      <Digit time={5}  degree={150} dashes={dashes} color={color} />
-      <Digit time={6}  degree={180} dashes={dashes} color={color} />
-      <Digit time={7}  degree={210} dashes={dashes} color={color} />
-      <Digit time={8}  degree={240} dashes={dashes} color={color} />
-      <Digit time={9}  degree={270} dashes={dashes} color={color} />
-      <Digit time={10} degree={300} dashes={dashes} color={color} />
-      <Digit time={11} degree={330} dashes={dashes} color={color} />
-      <Digit time={12} degree={0}   dashes={dashes} color={color} />
+      <Digit time={"1"}  degree={30}  dashes={dashes} color={color} />
+      <Digit time={"2"}  degree={60}  dashes={dashes} color={color} />
+      <Digit time={"3"}  degree={90}  dashes={dashes} color={color} />
+      <Digit time={"4"}  degree={120} dashes={dashes} color={color} />
+      <Digit time={"5"}  degree={150} dashes={dashes} color={color} />
+      <Digit time={"6"}  degree={180} dashes={dashes} color={color} />
+      <Digit time={"7"}  degree={210} dashes={dashes} color={color} />
+      <Digit time={"8"}  degree={240} dashes={dashes} color={color} />
+      <Digit time={"9"}  degree={270} dashes={dashes} color={color} />
+      <Digit time={"10"} degree={300} dashes={dashes} color={color} />
+      <Digit time={"11"} degree={330} dashes={dashes} color={color} />
+      <Digit time={"12"} degree={0}   dashes={dashes} color={color} />
     </>
   ) : null;
 };
@@ -148,24 +148,29 @@ const DigitalClock = ({ show, time, hasBackground, color, backgroundColor, margi
   }, [Math.floor(time.stamp / 500)])
 
   return show ? (
-    <T
+    <View
       style={{
         position: "absolute",
         alignSelf: "center",
         bottom: margin,
-        fontSize: hasBackground ? 28 : 32,
-        fontFamily: colors.others.fonts.S,
         opacity: hasBackground ? 0.9 : 0.75,
-        color: hasBackground ? backgroundColor : color,
         backgroundColor: hasBackground ? color : "transparent",
         padding: 5,
-        borderRadius: 10
+        borderRadius: 10,
       }}
     >
-      {time.hour < 10 ? `0${time.hour}` : time.hour}
-      <C.HOT style={{ opacity: colonBlink ? 1 : 0.25 }}>:</C.HOT>
-      {time.minute < 10 ? `0${time.minute}` : time.minute}
-    </T>
+      <T
+        style={{
+          fontSize: hasBackground ? 28 : 32,
+          fontFamily: colors.others.fonts.S,
+          color: hasBackground ? backgroundColor : color,
+        }}
+      >
+        {time.hour < 10 ? `0${time.hour}` : time.hour}
+        <C.HOT style={{ opacity: colonBlink ? 1 : 0.25 }}>:</C.HOT>
+        {time.minute < 10 ? `0${time.minute}` : time.minute}
+      </T>
+    </View>
   ) : null;
 };
 
@@ -233,7 +238,7 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
         <Dashes type={dashes} fill={high} />
       </Svg>
 
-      <Digits dashes={showDashes} color={high} />    
+      <Digits show={showNumbers} dashes={showDashes} color={high} />    
       <Icon show={showIcon} isDay={isDay} margin={innerObjectsMargin} />
       <DigitalClock show={showDigital} time={time} hasBackground={showDigitalBackground} color={analog} backgroundColor={bgclr} margin={innerObjectsMargin} />
 
