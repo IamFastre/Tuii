@@ -17,6 +17,8 @@ export type UserGender  = "male" | "female" | "other";
 export type Units       = "metric" | "imperial";
 export type Themes      = "system" | keyof typeof themes;
 export type WeatherIP   = "theme-default" | keyof typeof iconPacks;
+export type ClockFGStyle  = "analogs" | "accent" | "highlight";
+export type ClockBGStyle  = "circle" | "square";
 
 export type SudokuLevel = "easy" | "medium" | "hard" | "max";
 
@@ -45,6 +47,14 @@ export interface IOptions {
   show_refresh_button: boolean;
   short_word_class: boolean;
   show_timezone: boolean;
+  clock_foreground_style: ClockFGStyle;
+  clock_background_style: ClockBGStyle;
+  clock_show_dashes: boolean;
+  clock_show_number: boolean;
+  clock_show_digital: boolean;
+  clock_show_icons: boolean;
+  clock_background_affected: boolean;
+
   type: "options";
 }
 
