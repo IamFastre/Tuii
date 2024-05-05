@@ -1,7 +1,7 @@
 import{ useState } from 'react';
 import { StyleSheet, View, ViewStyle, TextStyle, GestureResponderEvent, Pressable, ColorValue } from 'react-native';
 import { useColors } from '@/constants/colors';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { T } from './T';
 import general from '@/constants/general';
 
@@ -10,6 +10,7 @@ export type ButtonIcon = {
   color?: ColorValue;
   size?: number;
   style?: TextStyle;
+  pack?: typeof Ionicons | typeof Feather | typeof MaterialCommunityIcons;
 };
 
 export interface ButtonProps {
@@ -86,6 +87,8 @@ export function Button(props: ButtonProps): React.JSX.Element {
   let left  = (props.icon ? "" : "•") + (props.left  ?? "[");
   let right = (props.right ?? "]") + (props.icon ? "" : "•");
 
+  const Icon = props.icon?.pack ?? Ionicons;
+
   return (
     <View style={self.container}>
       <View style={self.opaque} />
@@ -101,7 +104,7 @@ export function Button(props: ButtonProps): React.JSX.Element {
         {
           props.icon
           ? <View style={self.icon}>
-                <Ionicons
+                <Icon
                   name={props.icon.name as any}
                   size={(props.icon.size ?? self.text.fontSize - 2 ?? general.text.fontSize) * 1.75}
                   color={isPressed ? colors.secondary : (props.icon.color ?? self.container.borderColor)}

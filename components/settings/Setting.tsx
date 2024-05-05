@@ -1,5 +1,5 @@
 import { View, StyleSheet, KeyboardTypeOptions, ColorValue } from "react-native";
-import { B, Button, C, T, TI } from "@/components/basics";
+import { B, Button, ButtonIcon, C, T, TI } from "@/components/basics";
 import { State } from '@/src/general/types';
 import { useColors } from "@/constants/colors";
 
@@ -29,6 +29,7 @@ interface TextInputSettingProps extends SettingProp {
 interface OptionsSettingProps extends SettingProp {
   icon?: string;
   color?: ColorValue;
+  pack?: ButtonIcon["pack"];
   showOptions?:boolean;
   index: number;
   options?: string[];
@@ -109,7 +110,7 @@ export const OptionsSetting = (props:OptionsSettingProps) => {
         onPress={() => props.onSubmit()}
         onLongPress={() => props.onSubmit(false)}
         delayLongPress={350}
-        icon={props.icon ? { name: props.icon, color: props.color } : undefined}
+        icon={props.icon ? { name: props.icon, color: props.color, pack: props.pack } : undefined}
         disabled={props.disabled}
       />
     </View>
