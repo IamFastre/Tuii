@@ -75,7 +75,7 @@ You can adjust the difficulty and whether you play against the CPU or play with 
 
 This is where you customize and adjust stuff as you like. It kind of looks like this:
 <div align="center">
-  <img alt="Settings screen" width="100" src="./preview/screenshots/feature-settings.png">
+  <img alt="Settings screen" width="100" src="./preview/screenshots/screen-settings.png">
 </div>
 
 ## References
