@@ -4,7 +4,7 @@ import { DimensionValue, Pressable, View, StyleSheet, ColorValue } from "react-n
 import { EmptyBoard, GetDuplicates, SudSlotType, SudokuGrid, SudokuHook } from "@/src/sudoku";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withTiming, withSequence } from "react-native-reanimated";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const config = {
@@ -12,21 +12,28 @@ const config = {
   easing: Easing.bezier(0.5, 0.01, 0, 1),
 };
 
+const opacityConfig = {
+  duration: 200,
+  easing: Easing.inOut(Easing.quad),
+};
+
 const lockedConfig = {
   duration: 750,
   easing: Easing.inOut(Easing.quad),
-}
+};
 
-export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSelected }:{ value:SudSlotType; id:number; revealed?:boolean; locked?:boolean; faulty?:boolean; selected:boolean | undefined; setSelected:(v:number | undefined) => void; }) => {
+export const GridChild = ({ value: givenValue, id, revealed, locked, faulty, selected, setSelected }:{ value:SudSlotType; id:number; revealed?:boolean; locked?:boolean; faulty?:boolean; selected:boolean | undefined; setSelected:(v:number | undefined) => void; }) => {
   const colors = useColors();
   const lockedColor = colors.secondary + colors.opacity.mid;
+  const [value, setValue] = useState<SudSlotType>(givenValue);
   const backgroundColor = useSharedValue<ColorValue>(lockedColor);
   const dotOpacity = useSharedValue<number>(0);
   const opacity = useSharedValue<number>(0);
 
   useEffect(() => {
-    if (locked)
+    if (locked) {
       backgroundColor.value = withTiming(lockedColor, lockedConfig);
+    }
     else if (selected)
       backgroundColor.value = withTiming(colors.accent, config);
     else 
@@ -35,9 +42,16 @@ export const GridChild = ({ value, id, revealed, locked, faulty, selected, setSe
                             : withTiming("transparent", config);
 
     dotOpacity.value = withTiming(faulty ? 1 : 0, config);
-    opacity.value = withTiming(value ? 1 : 0);
 
-  }, [locked, revealed, selected, id, faulty, value]);
+  }, [locked, revealed, selected, faulty]);
+
+  useEffect(() => {
+    setTimeout(() => setValue(givenValue), opacityConfig.duration);
+    opacity.value = withSequence(
+      withTiming(0, opacityConfig),
+      withTiming(givenValue ? 1 : 0, locked ? lockedConfig : opacityConfig)
+    );
+  }, [givenValue])
 
   const dotStyle = useAnimatedStyle(() => ({
     opacity: dotOpacity.value,
@@ -120,7 +134,8 @@ export const Grid = ({ sudoku, show_conflicts }:{ sudoku:SudokuHook; show_confli
             faulty={show_conflicts && isFaulty(r, c)}
             selected={r * 9 + c === sudoku.selected}
             setSelected={(v:number | undefined) => sudoku.selected = v}
-            key={r * 9 + c} />
+            key={r * 9 + c}
+          />
         ))
       )).flat()
     : <View style={{ width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center', padding: 3, borderColor: colors.secondary, borderWidth: 1, borderRadius: colors.others.section_radius/2 }}>
