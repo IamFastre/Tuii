@@ -20,8 +20,12 @@ export const TodaysWord = ({date, shortClass}:{date:ITime, shortClass?:boolean})
       .catch((e:AxiosError) =>
         setTimeout(() =>
           setMsg(e.response?.status === 404
-                ? `Seems our dictionary doesn't have this word.\n(${getWord(date)})`
-                : "Please check your internet connection..."
+            ? `Seems our dictionary doesn't have this word.\n(${getWord(date)})`
+            : e.response?.status && JSON.stringify(e.response.status)[0] === "5"
+            ? "A server error has occurred."
+            : !e.response?.status
+            ? "Please check your internet connection..."
+            : "An unknown error has occurred."
           )
         , 250)
       );
