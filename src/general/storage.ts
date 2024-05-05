@@ -27,14 +27,14 @@ export const DefaultSettings = {
     show_refresh_button: Platform.OS === 'web',
     short_word_class: true,
     show_timezone: true,
+
     clock_foreground_color: "accent",
     clock_dashes_style: "12-dashes",
     clock_background_style: "circle",
-    clock_show_dashes: true,
-    clock_show_number: true,
+    clock_show_numbers: true,
+    clock_show_icons: true,
     clock_show_digital: true,
     clock_show_digital_background: true,
-    clock_show_icons: true,
     clock_background_affected: true,
 
     type: "options",

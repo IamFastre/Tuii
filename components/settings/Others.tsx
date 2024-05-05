@@ -16,8 +16,22 @@ export const Title = ({title}:{title:string}) => {
         {title.replaceAll(/./g, '_')}_
       </T>
     </>
-);
-}
+  );
+};
+
+export const Subtitle = ({title}:{title:string}) => {
+  const colors = useColors();
+
+  return (
+    <>
+      <T style={styles.titleText}>
+        <C.ACCENT>{colors.brackets.left.square[colors.brackets.left.square.length - 2]} </C.ACCENT>
+        {title}
+        <C.ACCENT> {colors.brackets.right.square[1]}</C.ACCENT>
+      </T>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   titleText: {

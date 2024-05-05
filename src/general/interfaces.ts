@@ -7,6 +7,9 @@ export const UserGenderOptions:UserGender[] = ["male", "female", "other"];
 export const UnitsOptions:Units[] = ["metric", "imperial"];
 export const ThemeOptions:Themes[] = ["system", ...Object.keys(themes) as Themes[]];
 export const WeatherIPsOptions:WeatherIP[] = ["theme-default", ...Object.keys(iconPacks) as WeatherIP[]];
+export const ClockFGOptions:ClockFGColors[] = ["analogs", "accent", "highlight"];
+export const ClockDHOptions:ClockDHStyle[]  = ["12-dashes", "60-dashes", "12-dots", "8-circle", "none"];
+export const ClockBGOptions:ClockBGStyle[]  = ["circle", "square", "hexagon", "none"];
 
 export const SudokuLevelOptions:SudokuLevel[] = ["easy", "medium", "hard", "max"];
 
@@ -48,14 +51,14 @@ export interface IOptions {
   show_refresh_button: boolean;
   short_word_class: boolean;
   show_timezone: boolean;
+
   clock_foreground_color: ClockFGColors;
   clock_dashes_style: ClockDHStyle;
   clock_background_style: ClockBGStyle;
-  clock_show_dashes: boolean;
-  clock_show_number: boolean;
+  clock_show_numbers: boolean;
+  clock_show_icons: boolean;
   clock_show_digital: boolean;
   clock_show_digital_background: boolean;
-  clock_show_icons: boolean;
   clock_background_affected: boolean;
 
   type: "options";

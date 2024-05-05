@@ -2,13 +2,14 @@ import{ useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { C, L, Section, T, Button, Sep } from '@/components/basics';
-import { ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
-import { OptionsSetting, TextInputSetting, Title, BoolSetting } from '@/components/settings';
+import { ClockBGOptions, ClockDHOptions, ClockFGOptions, ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
+import { OptionsSetting, TextInputSetting, Title, BoolSetting, Subtitle } from '@/components/settings';
 import { resetSettings, setStored } from '@/src/general/storage';
 import appConsts from '@/constants/consts';
 import { useColors } from '@/constants/colors';
 import { updateFullscreen, move } from '@/src/general/funcs';
 import { SettingsContext, TabsContext } from '@/components/Contexts';
+import { Feather } from '@expo/vector-icons';
 
 export default function SettingsPage() {
   const colors = useColors();
@@ -33,79 +34,10 @@ export default function SettingsPage() {
     return onUnmount;
   }, []);
 
-  /* ======================================================================== */
-  /*                             { User Options }                             */
-  /* ======================================================================== */
-
   const [name, setName] = useState<string>("");
   const [age, setAge] = useState<string>("");
-
-  const onSubmitUsername = () => {
-    setStored('user', { ...user, name });
-    updateData();
-  };
-
-  const onSubmitAge = () => {
-    setStored('user', { ...user, age:parseInt(age) });
-    updateData();
-  };
-
-  const onSubmitGender = (forward:boolean = true) => {
-    setStored('user', { ...user, gender: move(forward)(UserGenderOptions, user.gender) });
-    updateData();
-  };
-
-
-  /* ======================================================================== */
-  /*                            { Weather Options }                           */
-  /* ======================================================================== */
-
   const [city, setCity] = useState<string>("");
 
-  const onSubmitCity = () => {
-    setStored('metrics', { ...metrics, city });
-    updateData();
-  };
-
-  const onSubmitUnits = (forward:boolean = true) => {
-    setStored('metrics', { ...metrics, units: move(forward)(UnitsOptions, metrics.units) });
-    updateData();
-  };
-
-
-  /* ======================================================================== */
-  /*                             { Other Options }                            */
-  /* ======================================================================== */
-
-  const onSubmitTheme = (forward:boolean = true) => {
-    setStored('options', { ...options, theme: move(forward)(ThemeOptions, options.theme) });
-    updateData();
-  };
-
-  const onSubmitWordClass = () => {
-    setStored('options', { ...options, short_word_class: !options.short_word_class });
-    updateData();
-  };
-
-  const onSubmitWeatherIP = (forward:boolean = true) => {
-    setStored('options', { ...options, weather_icon_pack: move(forward)(WeatherIPsOptions, options.weather_icon_pack) });
-    updateData();
-  };
-
-  const onSubmitRefreshButton = () => {
-    setStored('options', { ...options, show_refresh_button: !options.show_refresh_button });
-    updateData();
-  };
-
-  const onSubmitTimezoneButton = () => {
-    setStored('options', { ...options, show_timezone: !options.show_timezone });
-    updateData();
-  };
-
-  const onSubmitFullscreen = () => {
-    updateFullscreen(!fullscreen);
-    setFullscreen(!fullscreen);
-  };
 
   /* ======================================================================== */
   /* ======================================================================== */
@@ -123,7 +55,10 @@ export default function SettingsPage() {
             state={name}
             setState={setName}
             placeholder={user.name}
-            onSubmit={onSubmitUsername}
+            onSubmit={() => {
+              setStored('user', { ...user, name });
+              updateData();
+            }}
           />
           {/* Age */}
           <TextInputSetting
@@ -131,7 +66,10 @@ export default function SettingsPage() {
             state={age}
             setState={setAge}
             placeholder={user.age?.toString()}
-            onSubmit={onSubmitAge}
+            onSubmit={() => {
+              setStored('user', { ...user, age: parseInt(age) });
+              updateData();
+            }}
             keyboardType='numeric'
           />
           {/* Gender */}
@@ -139,14 +77,17 @@ export default function SettingsPage() {
             title="Gender"
             index={UserGenderOptions.indexOf(user.gender)}
             options={UserGenderOptions}
-            onSubmit={onSubmitGender}
+            onSubmit={(forward: boolean = true) => {
+              setStored('user', { ...user, gender: move(forward)(UserGenderOptions, user.gender) });
+              updateData();
+            }}
             icon={user.gender === "male" ? "male" : user.gender === "female" ? "female" : "build-outline"}
             color={user.gender === "male" ? colors.blue : user.gender === "female" ? colors.magenta : colors.yellow}
           />
 
-          <Sep margin={consts.margin} />
 
           {/* ========= Weather settings ========= */}
+          <Sep margin={consts.margin} />
           <Title title='Weather'/>
 
           {/* City */}
@@ -155,21 +96,27 @@ export default function SettingsPage() {
             state={city}
             setState={setCity}
             placeholder={metrics.city}
-            onSubmit={onSubmitCity}
+            onSubmit={() => {
+              setStored('metrics', { ...metrics, city });
+              updateData();
+            }}
           />
           {/* Units */}
           <OptionsSetting
             title="Units"
             index={UnitsOptions.indexOf(metrics.units)}
             options={UnitsOptions}
-            onSubmit={onSubmitUnits}
+            onSubmit={(forward: boolean = true) => {
+              setStored('metrics', { ...metrics, units: move(forward)(UnitsOptions, metrics.units) });
+              updateData();
+            }}
             icon={metrics.units === "metric" ? "flask-outline" : "footsteps-outline"}
             color={metrics.units === "metric" ? colors.highlight : colors.accent}
           />
 
-          <Sep margin={consts.margin} />
 
           {/* ========= Appearance ========= */}
+          <Sep margin={consts.margin} />
           <Title title='Appearance'/>
 
           {/* Theme */}
@@ -178,7 +125,10 @@ export default function SettingsPage() {
             description="The style used throughout the app."
             index={ThemeOptions.indexOf(options.theme)}
             options={ThemeOptions}
-            onSubmit={onSubmitTheme}
+            onSubmit={(forward: boolean = true) => {
+              setStored('options', { ...options, theme: move(forward)(ThemeOptions, options.theme) });
+              updateData();
+            }}
             icon={options.theme === "system" ? "cog" : colors.icon}
             size='medium'
             showOptions
@@ -189,7 +139,10 @@ export default function SettingsPage() {
             description="The icon pack used for weather."
             index={WeatherIPsOptions.indexOf(options.weather_icon_pack)}
             options={WeatherIPsOptions}
-            onSubmit={onSubmitWeatherIP}
+            onSubmit={(forward: boolean = true) => {
+              setStored('options', { ...options, weather_icon_pack: move(forward)(WeatherIPsOptions, options.weather_icon_pack) });
+              updateData();
+            }}
             icon={options.weather_icon_pack === "theme-default" ? "color-palette-outline" : options.weather_icon_pack === "ascii-art" ? "code-slash" : options.weather_icon_pack === "segments" ? "calculator-outline" : "partly-sunny-outline"}
             size='medium'
             showOptions
@@ -200,13 +153,108 @@ export default function SettingsPage() {
             title="Short Word Class"
             description={"Use abbreviation in word of the day.\nExample: verb → v."}
             current={options.short_word_class}
-            onSubmit={onSubmitWordClass}
+            onSubmit={() => {
+              setStored('options', { ...options, short_word_class: !options.short_word_class });
+              updateData();
+            }}
             size='medium'
           />
 
-          <Sep margin={consts.margin} />
+          <Subtitle title='Clock'/>
+          <OptionsSetting
+            title="Foreground color"
+            description="The color used for dashes and numbers."
+            index={ClockFGOptions.indexOf(options.clock_foreground_color)}
+            options={ClockFGOptions}
+            onSubmit={(forward: boolean = true) => {
+              setStored('options', { ...options, clock_foreground_color: move(forward)(ClockFGOptions, options.clock_foreground_color) });
+              updateData();
+            }}
+            icon={'color-filter-outline'}
+            color={options.clock_foreground_color === 'accent' ? colors.accent : options.clock_foreground_color === "highlight" ? colors.highlight : colors.tertiary}
+            size='medium'
+            showOptions
+          />
+          <OptionsSetting
+            title="Background style"
+            description="The style of the clock body itself."
+            index={ClockBGOptions.indexOf(options.clock_background_style)}
+            options={ClockBGOptions}
+            onSubmit={(forward: boolean = true) => {
+              setStored('options', { ...options, clock_background_style: move(forward)(ClockBGOptions, options.clock_background_style) });
+              updateData();
+            }}
+            icon={options.clock_background_style === "square" ? "square" : options.clock_background_style === "circle" ? "circle" : options.clock_background_style === "hexagon" ? "hexagon" : "x" }
+            pack={Feather}
+            size='medium'
+            showOptions
+          />
+          <OptionsSetting
+            title="Dashes style"
+            description="The style used for dashes around the clock."
+            index={ClockDHOptions.indexOf(options.clock_dashes_style)}
+            options={ClockDHOptions}
+            onSubmit={(forward: boolean = true) => {
+              setStored('options', { ...options, clock_dashes_style: move(forward)(ClockDHOptions, options.clock_dashes_style) });
+              updateData();
+            }}
+            size='medium'
+            showOptions
+          />
+          <BoolSetting
+            title="Show Numbers"
+            description={"Show the numbers around the clock."}
+            current={options.clock_show_numbers}
+            onSubmit={() => {
+              setStored('options', { ...options, clock_show_numbers: !options.clock_show_numbers });
+              updateData();
+            }}
+            size='medium'
+          />
+          <BoolSetting
+            title="Show Icon"
+            description={"Show the current period of the day icon (day/night)."}
+            current={options.clock_show_icons}
+            onSubmit={() => {
+              setStored('options', { ...options, clock_show_icons: !options.clock_show_icons });
+              updateData();
+            }}
+            size='medium'
+          />
+          <BoolSetting
+            title="Show Digital"
+            description={"Show the digital clock beneath the analogs."}
+            current={options.clock_show_digital}
+            onSubmit={() => {
+              setStored('options', { ...options, clock_show_digital: !options.clock_show_digital });
+              updateData();
+            }}
+            size='medium'
+          />
+          <BoolSetting
+            title="Show Digital Background"
+            description={"Give the digital clock a background."}
+            current={options.clock_show_digital_background}
+            onSubmit={() => {
+              setStored('options', { ...options, clock_show_digital_background: !options.clock_show_digital_background });
+              updateData();
+            }}
+            size='medium'
+          />
+          <BoolSetting
+            title="Timely Background"
+            description={"The clock's background goes dark at night and light at day."}
+            current={options.clock_background_affected}
+            onSubmit={() => {
+              setStored('options', { ...options, clock_background_affected: !options.clock_background_affected });
+              updateData();
+            }}
+            size='medium'
+          />
+
 
           {/* ========= Other settings ========= */}
+          <Sep margin={consts.margin} />
           <Title title='Others'/>
 
           {/* Refresh button */}
@@ -214,7 +262,10 @@ export default function SettingsPage() {
             title="Refresh Button"
             description="Show weather refresh button anyway."
             current={options.show_refresh_button}
-            onSubmit={onSubmitRefreshButton}
+            onSubmit={() => {
+              setStored('options', { ...options, show_refresh_button: !options.show_refresh_button });
+              updateData();
+            }}
             size='medium'
           />
 
@@ -222,7 +273,10 @@ export default function SettingsPage() {
             title="Timezone"
             description="Show timezone offset under current time."
             current={options.show_timezone}
-            onSubmit={onSubmitTimezoneButton}
+            onSubmit={() => {
+              setStored('options', { ...options, show_timezone: !options.show_timezone });
+              updateData();
+            }}
             size='medium'
           />
 
@@ -232,7 +286,10 @@ export default function SettingsPage() {
             description={"Hide both navigation (android only) and status bar."}
             experimental
             current={fullscreen}
-            onSubmit={onSubmitFullscreen}
+            onSubmit={() => {
+              updateFullscreen(!fullscreen);
+              setFullscreen(!fullscreen);
+            }}
             size='medium'
           />
 
