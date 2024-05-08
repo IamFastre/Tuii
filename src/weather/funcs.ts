@@ -8,7 +8,7 @@ import { DefaultStored } from '../general/storage';
 var lastUpdated:number | undefined = undefined;
 
 export async function fetchWeather(city:string, units:Units, set:State<IForecast | null>) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city ?? DefaultStored['metrics'].city}&units=${units ?? DefaultStored['metrics'].units}&appid=${process.env.WEATHER_KEY}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city ?? DefaultStored['metrics'].city}&units=${units ?? DefaultStored['metrics'].units}&appid=${process.env.EXPO_PUBLIC_WEATHER_KEY}`;
 
   const now = Date.now();
   if (lastUpdated && (now - lastUpdated <= 2500)) {
