@@ -2,6 +2,7 @@
 
 # my gitignores
 build/
+.env
 
 # dependencies
 node_modules/
