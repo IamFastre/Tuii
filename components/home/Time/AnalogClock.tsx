@@ -227,7 +227,7 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
   const light  = colors.statusbar === "light" ? colors.tertiary : colors.primary;
   const dark   = colors.statusbar !== "light" ? colors.tertiary : colors.primary;
   const bgclr  = !backgroundAffected ? colors.primary  : isDay ? light : dark;
-  const analog = background !== "none" ? bgclr : !backgroundAffected ? colors.tertiary : isDay ? dark : light;
+  const analog = !backgroundAffected ? colors.tertiary : isDay ? dark : light;
   const high   = color === "analogs" ? analog : color === "accent" ? colors.accent : colors.highlight;
 
   const props:SvgProps = {

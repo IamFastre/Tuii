@@ -29,7 +29,7 @@ export const DefaultSettings = {
     show_timezone: true,
     clock_style: "digital",
 
-    clock_foreground_color: "accent",
+    clock_foreground_color: "analogs",
     clock_dashes_style: "12-dashes",
     clock_background_style: "circle",
     clock_show_numbers: true,
