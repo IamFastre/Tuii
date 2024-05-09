@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { SplashScreen, Tabs, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,7 +7,6 @@ import * as Haptics from 'expo-haptics';
 import { Section } from '@/components/basics';
 import { Exit } from '@/src/general/funcs';
 import { useColors } from '@/constants/colors';
-import { useState } from 'react';
 import { TabsContext } from '@/components/Contexts';
 
 SplashScreen.preventAutoHideAsync();
