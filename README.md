@@ -86,4 +86,4 @@ This is where you customize and adjust stuff as you like. It kind of looks like 
 <br>
 <br>
 
-_(these screenshots were taken on an iPhone 11, but it should be roughly the same everywhere else)_
+_(these screenshots were taken on an iPhone 11, but it should be roughly the same everywhere else.)_
