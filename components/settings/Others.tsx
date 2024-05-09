@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { LayoutChangeEvent, Pressable, StyleSheet, View } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
 import Animated,  { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 
 import { T, C } from "@/components/basics";
@@ -12,14 +11,16 @@ export const Title = ({ title }:{ title:string; }) => {
 
   return (
     <>
-      <T style={[styles.titleText, styles.titleTextContainer]}>
-        <C.ACCENT>{colors.brackets.left.curly}</C.ACCENT>
-        {title}
-        <C.ACCENT>{colors.brackets.right.curly}</C.ACCENT>
-      </T>
-      <T style={[styles.titleSep, { color: colors.accent }]}>
-        {title.replaceAll(/./g, '_')}_
-      </T>
+      <View style={styles.titleTextContainer}>
+        <T style={styles.titleText}>
+          <C.ACCENT>{colors.brackets.left.curly}</C.ACCENT>
+          {title}
+          <C.ACCENT>{colors.brackets.right.curly}</C.ACCENT>
+        </T>
+        <T style={[styles.titleSep, { color: colors.accent }]}>
+          {title.replaceAll(/./g, '_')}_
+        </T>
+      </View>
     </>
   );
 };
@@ -78,7 +79,6 @@ export const Group = ({ title, children }:{ title:string; children?:React.ReactN
 
 const styles = StyleSheet.create({
   titleTextContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 17.5,
