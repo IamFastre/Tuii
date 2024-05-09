@@ -216,7 +216,7 @@ export default function HomePage() : React.JSX.Element {
             color: options.clock_foreground_color,
             dashes: options.clock_dashes_style,
             background: options.clock_background_style,
-            showNumbers: options.clock_show_numbers,
+            numerals: options.clock_numerals_style,
             showIcon: options.clock_show_icons,
             showDigital: options.clock_show_digital,
             showDigitalBackground: options.clock_show_digital_background,

@@ -6,7 +6,8 @@ import { Circle, G, Line, Path, Rect, Svg, SvgProps } from 'react-native-svg';
 
 import { useColors } from '@/constants/colors';
 import { C, T } from '@/components/basics';
-import { ClockBGStyle, ClockDHStyle, ClockFGColors, getTime, ITime } from '@/src/general';
+import { ClockBGStyle, ClockDHStyle, ClockFGColors, ClockNRStyle, getTime, ITime } from '@/src/general';
+import numerals from './numerals';
 
 export interface ClockProps {
   time: ITime;
@@ -15,10 +16,10 @@ export interface ClockProps {
   margin?: number;
   dashes: ClockDHStyle;
   background: ClockBGStyle;
+  numerals: ClockNRStyle;
   showDigital: boolean;
   showDigitalBackground: boolean;
   showIcon: boolean;
-  showNumbers: boolean;
   backgroundAffected: boolean;
 }
 
@@ -103,21 +104,21 @@ const Digit = ({ time, degree, dashes, color }:{ time:string; degree:number; das
   );
 };
 
-const Digits = ({ show, dashes, color }:{ show:boolean; dashes?:boolean; color:ColorValue; }) => {
-  return show ? (
+const Digits = ({ type, dashes, color }:{ type:ClockNRStyle; dashes?:boolean; color:ColorValue; }) => {
+  return type !== "none" ? (
     <>
-      <Digit time={"1"}  degree={30}  dashes={dashes} color={color} />
-      <Digit time={"2"}  degree={60}  dashes={dashes} color={color} />
-      <Digit time={"3"}  degree={90}  dashes={dashes} color={color} />
-      <Digit time={"4"}  degree={120} dashes={dashes} color={color} />
-      <Digit time={"5"}  degree={150} dashes={dashes} color={color} />
-      <Digit time={"6"}  degree={180} dashes={dashes} color={color} />
-      <Digit time={"7"}  degree={210} dashes={dashes} color={color} />
-      <Digit time={"8"}  degree={240} dashes={dashes} color={color} />
-      <Digit time={"9"}  degree={270} dashes={dashes} color={color} />
-      <Digit time={"10"} degree={300} dashes={dashes} color={color} />
-      <Digit time={"11"} degree={330} dashes={dashes} color={color} />
-      <Digit time={"12"} degree={0}   dashes={dashes} color={color} />
+      <Digit time={numerals[type]["1"]}  degree={30}  dashes={dashes} color={color} />
+      <Digit time={numerals[type]["2"]}  degree={60}  dashes={dashes} color={color} />
+      <Digit time={numerals[type]["3"]}  degree={90}  dashes={dashes} color={color} />
+      <Digit time={numerals[type]["4"]}  degree={120} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["5"]}  degree={150} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["6"]}  degree={180} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["7"]}  degree={210} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["8"]}  degree={240} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["9"]}  degree={270} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["10"]} degree={300} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["11"]} degree={330} dashes={dashes} color={color} />
+      <Digit time={numerals[type]["12"]} degree={0}   dashes={dashes} color={color} />
     </>
   ) : null;
 };
@@ -215,11 +216,11 @@ const Analogs = ({ time, color, other }:{ time:ITime; color:ColorValue; other:Co
   );
 };
 
-export const AnalogClock = ({ time, scale, color, margin, dashes, background, showDigital, showDigitalBackground, showIcon, showNumbers, backgroundAffected }:ClockProps) => {
+export const AnalogClock = ({ time, scale, color, margin, dashes, background, showDigital, showDigitalBackground, showIcon, numerals, backgroundAffected }:ClockProps) => {
   const colors = useColors();
 
   const showDashes = dashes !== "none";
-  const innerObjectsMargin  = showDashes && showNumbers ? 150 : showDashes || showNumbers ? 130 : 100;
+  const innerObjectsMargin  = showDashes && numerals !== "none" ? 150 : showDashes || numerals !== "none" ? 130 : 100;
 
   backgroundAffected = background !== "none" && backgroundAffected;
 
@@ -245,7 +246,7 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
       </Svg>
 
       <Digits
-        show={showNumbers}
+        type={numerals}
         color={high}
         dashes={showDashes}
       />
