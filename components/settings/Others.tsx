@@ -24,7 +24,7 @@ export const Title = ({ title }:{ title:string; }) => {
   );
 };
 
-export const Subtitle = ({ title, children }:{ title:string; children?:React.ReactNode; }) => {
+export const Group = ({ title, children }:{ title:string; children?:React.ReactNode; }) => {
   const colors = useColors();
   const height = useSharedValue(0);
   const progress = useSharedValue(1);
@@ -33,7 +33,7 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
   const [isSpread, setIsSpread] = useState<boolean>(true);
 
   const handleOnPress = () => {
-    rotate.value = withSpring(isSpread ? "90deg" : "0deg", { duration: 1500 });
+    rotate.value = withSpring(isSpread ? "180deg" : "0deg", { duration: 2500 });
     progress.value = withTiming(isSpread ? 0 : 1, { duration: 1000 });
     color.value  = withTiming(isSpread ? colors.accent : colors.secondary, { duration: 500 });
     setIsSpread(!isSpread);
@@ -51,7 +51,7 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
 
   return (
     <>
-      <Container style={[styles.titleTextContainer, { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }]} onPress={handleOnPress}>
+      <Container style={styles.titleTextContainer} onPress={handleOnPress}>
         <T style={[styles.titleText, { color }]} animated>
           {colors.brackets.left.square[colors.brackets.left.square.length - 2]}
           <C.TERTIARY> {title} </C.TERTIARY>
@@ -59,11 +59,7 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
         </T>
         {
           children ? 
-          <Animated.View style={styles.spreadIndicatorContainer}>
-            <Animated.Text style={[styles.spreadIndicator, { color, transform: [{ rotate }] }]}>
-              <Ionicons name={"chevron-down"} size={24} />
-            </Animated.Text>
-          </Animated.View>
+            <T style={[styles.spreadIndicator, { color, fontSize: 32, transform: [{ rotate }] }]} animated>{isSpread ? "-" : "+"}</T>
           : null
         }
       </Container>
@@ -82,8 +78,10 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
 
 const styles = StyleSheet.create({
   titleTextContainer: {
-    marginTop: 15,
-    marginBottom: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 17.5,
   },
 
   titleText: {
@@ -97,8 +95,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 20,
-    top: -16,
     lineHeight: 20,
+    top: -10,
   },
 
   spreadIndicatorContainer: {
@@ -110,5 +108,6 @@ const styles = StyleSheet.create({
 
   spreadIndicator: {
     position: "absolute",
+    right: 30,
   },
 });

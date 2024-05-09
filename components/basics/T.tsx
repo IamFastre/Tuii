@@ -2,12 +2,14 @@ import { Text, TextProps } from 'react-native';
 
 import general from '@/constants/general';
 import { useColors } from '@/constants/colors';
+import Animated, { AnimateProps } from 'react-native-reanimated';
 
 
-export const T = (props: TextProps & { plain?:boolean }) : React.JSX.Element => {
+export const T = (props: TextProps | AnimateProps<TextProps> & { plain?:boolean; animated?:boolean; }) : React.JSX.Element => {
   const colors = useColors();
+  const Field = props.animated ? Animated.Text : Text;
   return (
-    <Text
+    <Field
       {...props}
       selectable={props.selectable ?? false}
       selectionColor={colors.highlight}
