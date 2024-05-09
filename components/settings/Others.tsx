@@ -52,10 +52,10 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
   return (
     <>
       <Container style={[styles.titleTextContainer, { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }]} onPress={handleOnPress}>
-        <T style={styles.titleText}>
-          <C.ACCENT>{colors.brackets.left.square[colors.brackets.left.square.length - 2]} </C.ACCENT>
-          {title}
-          <C.ACCENT> {colors.brackets.right.square[1]}</C.ACCENT>
+        <T style={[styles.titleText, { color }]} animated>
+          {colors.brackets.left.square[colors.brackets.left.square.length - 2]}
+          <C.TERTIARY> {title} </C.TERTIARY>
+          {colors.brackets.right.square[1]}
         </T>
         {
           children ? 
