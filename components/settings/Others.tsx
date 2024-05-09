@@ -47,25 +47,35 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
     height: height === undefined ? "auto" : height.value * progress.value
   }));
 
+  const Container = children ? Pressable : View;
+
   return (
     <>
-      <Pressable style={[styles.titleTextContainer, { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }]} onPress={handleOnPress}>
+      <Container style={[styles.titleTextContainer, { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }]} onPress={handleOnPress}>
         <T style={styles.titleText}>
           <C.ACCENT>{colors.brackets.left.square[colors.brackets.left.square.length - 2]} </C.ACCENT>
           {title}
           <C.ACCENT> {colors.brackets.right.square[1]}</C.ACCENT>
         </T>
-        <Animated.View style={styles.spreadIndicatorContainer}>
-          <Animated.Text style={[styles.spreadIndicator, { color, transform: [{ rotate }] }]}>
-            <Ionicons name={"chevron-down"} size={24} />
-          </Animated.Text>
+        {
+          children ? 
+          <Animated.View style={styles.spreadIndicatorContainer}>
+            <Animated.Text style={[styles.spreadIndicator, { color, transform: [{ rotate }] }]}>
+              <Ionicons name={"chevron-down"} size={24} />
+            </Animated.Text>
+          </Animated.View>
+          : null
+        }
+      </Container>
+      {
+        children ? 
+        <Animated.View style={[animatedStyle, { overflow: 'scroll' }]}>
+          <View onLayout={handleOnLayout}>
+            {children}
+          </View>
         </Animated.View>
-      </Pressable>
-      <Animated.View style={[animatedStyle, { overflow: 'scroll' }]}>
-        <View onLayout={handleOnLayout}>
-          {children}
-        </View>
-      </Animated.View>
+        : null
+      }
     </>
   );
 };
