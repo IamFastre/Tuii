@@ -1,9 +1,6 @@
 import axios, { AxiosError } from 'axios';
+import { State, Units, Print, DefaultStored } from '@/src/general';
 import { IForecast } from "./interfaces"
-import { State } from '../general/types';
-import { Units } from '../general/interfaces';
-import { Print } from '../general/funcs';
-import { DefaultStored } from '../general/storage';
 
 var lastUpdated:number | undefined = undefined;
 
