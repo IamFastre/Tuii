@@ -32,7 +32,7 @@ export const DefaultSettings = {
     clock_foreground_color: "analogs",
     clock_dashes_style: "12-dashes",
     clock_background_style: "circle",
-    clock_show_numbers: true,
+    clock_numerals_style: "arabic",
     clock_show_icons: true,
     clock_show_digital: true,
     clock_show_digital_background: true,

@@ -11,6 +11,7 @@ export const ClockStyleOptions:ClockStyle[] = ["digital", "analog"];
 export const ClockFGOptions:ClockFGColors[] = ["analogs", "accent", "highlight"];
 export const ClockDHOptions:ClockDHStyle[]  = ["12-dashes", "60-dashes", "12-dots", "8-circle", "none"];
 export const ClockBGOptions:ClockBGStyle[]  = ["circle", "square", "hexagon", "none"];
+export const ClockNROptions:ClockNRStyle[]  = ["arabic", "roman", "indo-arabic", "braille", "none"];
 
 export const SudokuLevelOptions:SudokuLevel[] = ["easy", "medium", "hard", "max"];
 
@@ -23,8 +24,9 @@ export type Themes        = "system" | keyof typeof themes;
 export type WeatherIP     = "theme-default" | keyof typeof iconPacks;
 export type ClockStyle    = "digital" | "analog";
 export type ClockFGColors = "analogs" | "accent" | "highlight";
-export type ClockDHStyle  = "none" | "12-dashes" | "60-dashes" | "12-dots" | "8-circle";
-export type ClockBGStyle  = "none" | "circle" | "square" | "hexagon";
+export type ClockDHStyle  = "12-dashes" | "60-dashes" | "12-dots" | "8-circle" | "none";
+export type ClockBGStyle  = "circle" | "square" | "hexagon" | "none";
+export type ClockNRStyle  = "arabic" | "roman" | "indo-arabic" | "braille" | "none";
 
 export type SudokuLevel = "easy" | "medium" | "hard" | "max";
 
@@ -58,7 +60,7 @@ export interface IOptions {
   clock_foreground_color: ClockFGColors;
   clock_dashes_style: ClockDHStyle;
   clock_background_style: ClockBGStyle;
-  clock_show_numbers: boolean;
+  clock_numerals_style: ClockNRStyle;
   clock_show_icons: boolean;
   clock_show_digital: boolean;
   clock_show_digital_background: boolean;
