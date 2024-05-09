@@ -86,13 +86,13 @@ const Digit = ({ time, degree, dashes, color }:{ time:string; degree:number; das
       style={{
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center',
-        padding: dashes ? 100 : 75,
+        padding: dashes ? 105 : 70,
         transform: [{ rotate: `${degree}deg` }]
       }}
     >
       <T
         style={{
-          fontSize: dashes ? 18 : 24,
+          fontSize: dashes ? 20 : 28,
           color: color,
           fontFamily: useColors().others.fonts.S,
           transform: [{ rotate: `-${degree}deg` }]
@@ -205,7 +205,12 @@ const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
         strokeLinecap='round'
         strokeWidth={0.75}
       />
-      <Circle cx={50} cy={50} r={1.5} stroke={colors.hot} strokeWidth={0.75} />
+      <Circle
+        r={1.5}
+        cx={50} cy={50}
+        stroke={colors.hot}
+        strokeWidth={0.75}
+      />
     </>
   );
 };
@@ -245,37 +250,6 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
       <Svg {...props}>
         <Analogs time={time} color={analog} />
       </Svg>
-    </View>
-  );
-};
-
-
-export default function ClockPage() : React.JSX.Element {
-  const [time, setTime] = useState<ITime>(getTime());
-
-  useEffect(() => {
-    const int = setInterval(() => {
-      setTime(getTime());
-    }, 200);
-    return () => clearInterval(int);
-  }, [time]);
-
-  return (
-    <View style={{ flex:1 }}>
-      <Page title="CLOCK" containerStyle={{ alignItems: 'center', justifyContent: 'center' }}>
-        <AnalogClock
-          time={time}
-          color='analogs'
-          scale={0.8}
-          dashes='60-dashes'
-          background='circle'
-          showNumbers={true}
-          showDigital={true}
-          showDigitalBackground={true}
-          showIcon={true}
-          backgroundAffected={true}
-        />
-      </Page>
     </View>
   );
 };

@@ -5,7 +5,6 @@ import * as Haptics from 'expo-haptics';
 
 import { Section } from '@/components/basics';
 import { Exit } from '@/src/general/funcs';
-import { Href } from 'expo-router/build/link/href';
 import { useColors } from '@/constants/colors';
 import { useState } from 'react';
 import { TabsContext } from '@/components/Contexts';
@@ -15,8 +14,8 @@ SplashScreen.preventAutoHideAsync();
 interface TabIconProps {
   icon:string;
   selected:boolean;
-  path:Href;
-  other?:Href;
+  path:string;
+  other?:string;
   reclick?: () => void;
 }
 
@@ -73,9 +72,9 @@ export default function HomeLayout() {
           
           return (
             <Section title="Tabs" style={styles.tabs} containerStyle={styles.tabsContainer}>
-              <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home" other="/others/clock" reclick={handleReclick} />
+              <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home"        reclick={handleReclick} />
               <TabIcon icon="apps"     selected={state.routes[state.index].name === APPLETS}  path="/(tabs)/applet-list" reclick={handleReclick} />
-              <TabIcon icon="settings" selected={state.routes[state.index].name === SETTINGS} path="/(tabs)/settings" reclick={handleReclick} />
+              <TabIcon icon="settings" selected={state.routes[state.index].name === SETTINGS} path="/(tabs)/settings"    reclick={handleReclick} />
 
               <TouchableOpacity style={styles.tab} onPress={() => Exit()}>
                 <Ionicons name='exit-outline' size={30} color={colors.hot} />
