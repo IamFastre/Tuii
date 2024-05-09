@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { LayoutChangeEvent, Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import Animated,  { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 
@@ -26,11 +26,11 @@ export const Title = ({ title }:{ title:string; }) => {
 
 export const Subtitle = ({ title, children }:{ title:string; children?:React.ReactNode; }) => {
   const colors = useColors();
-  const progress = useSharedValue(1); 
+  const height = useSharedValue(0);
+  const progress = useSharedValue(1);
   const rotate = useSharedValue("0deg");
   const color  = useSharedValue(colors.secondary);
   const [isSpread, setIsSpread] = useState<boolean>(true);
-  const [height, setHeight] = useState<number | undefined>(undefined);
 
   const handleOnPress = () => {
     rotate.value = withSpring(isSpread ? "90deg" : "0deg", { duration: 1500 });
@@ -39,8 +39,12 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
     setIsSpread(!isSpread);
   };
 
+  const handleOnLayout = (e:LayoutChangeEvent) => {
+    height.value = withTiming(e.nativeEvent.layout.height, { duration: 400 });
+  };
+
   const animatedStyle = useAnimatedStyle(() => ({
-    height: height === undefined ? "auto" : height * progress.value
+    height: height === undefined ? "auto" : height.value * progress.value
   }));
 
   return (
@@ -57,11 +61,10 @@ export const Subtitle = ({ title, children }:{ title:string; children?:React.Rea
           </Animated.Text>
         </Animated.View>
       </Pressable>
-      <Animated.View
-        style={[animatedStyle, { overflow: 'hidden' }]}
-        onLayout={e => height === undefined ? setHeight(e.nativeEvent.layout.height) : null}
-      >
-        {children}
+      <Animated.View style={[animatedStyle, { overflow: 'scroll' }]}>
+        <View onLayout={handleOnLayout}>
+          {children}
+        </View>
       </Animated.View>
     </>
   );
