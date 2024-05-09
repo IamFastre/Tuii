@@ -2,7 +2,7 @@ import{ useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { C, L, Section, T, Button, Sep } from '@/components/basics';
-import { ClockBGOptions, ClockDHOptions, ClockFGOptions, ClockStyleOptions, ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
+import { ClockBGOptions, ClockDHOptions, ClockFGOptions, ClockNROptions, ClockStyleOptions, ThemeOptions, UnitsOptions, UserGenderOptions, WeatherIPsOptions } from '@/src/general/interfaces';
 import { OptionsSetting, TextInputSetting, Title, BoolSetting, Subtitle } from '@/components/settings';
 import { resetSettings, setStored } from '@/src/general/storage';
 import appConsts from '@/constants/consts';
@@ -234,16 +234,18 @@ export default function SettingsPage() {
                 size='medium'
                 showOptions
               />
-              {/* Clock number */}
-              <BoolSetting
-                title="Show Numbers"
-                description={"Show the numbers around the clock."}
-                current={options.clock_show_numbers}
-                onSubmit={() => {
-                  setStored('options', { ...options, clock_show_numbers: !options.clock_show_numbers });
+              {/* Clock numerals style */}
+              <OptionsSetting
+                title="Numerals Style"
+                description="The numerals used around the clock."
+                index={ClockNROptions.indexOf(options.clock_numerals_style)}
+                options={ClockNROptions}
+                onSubmit={(forward: boolean = true) => {
+                  setStored('options', { ...options, clock_numerals_style: move(forward)(ClockNROptions, options.clock_numerals_style) });
                   updateData();
                 }}
                 size='medium'
+                showOptions
               />
               {/* Clock day/night icon */}
               <BoolSetting
