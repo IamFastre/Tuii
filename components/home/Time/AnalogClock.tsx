@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Circle, G, Line, Path, Rect, Svg, SvgProps } from 'react-native-svg';
 
 import { useColors } from '@/constants/colors';
-import { Page } from '@/components/screens';
 import { C, T } from '@/components/basics';
 import { ClockBGStyle, ClockDHStyle, ClockFGColors, getTime, ITime } from '@/src/general';
 
@@ -221,6 +220,8 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
 
   const showDashes = dashes !== "none";
   const innerObjectsMargin  = showDashes && showNumbers ? 150 : showDashes || showNumbers ? 130 : 100;
+
+  backgroundAffected = background !== "none" && backgroundAffected;
 
   const isDay  = (18 > time.hour && time.hour >= 6);
   const light  = colors.statusbar === "light" ? colors.tertiary : colors.primary;

@@ -283,7 +283,7 @@ export default function SettingsPage() {
               <BoolSetting
                 title="Timely Background Color"
                 description={"The clock's background goes dark at night and light at day."}
-                current={options.clock_background_affected}
+                current={options.clock_background_style !== "none" && options.clock_background_affected}
                 onSubmit={() => {
                   setStored('options', { ...options, clock_background_affected: !options.clock_background_affected });
                   updateData();
