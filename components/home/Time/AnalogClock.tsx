@@ -139,7 +139,7 @@ const Icon = ({ show, isDay, margin }:{ show?:boolean; isDay:boolean; margin:num
   ) : null;
 };
 
-const DigitalClock = ({ show, time, hasBackground, color, backgroundColor, margin }:{ show?:boolean; time:ITime; hasBackground?:boolean; color:ColorValue; backgroundColor:ColorValue; margin:number; }) => {
+const DigitalClock = ({ show, time, hasBackground, color, other, margin }:{ show?:boolean; time:ITime; hasBackground?:boolean; color:ColorValue; other:ColorValue; margin:number; }) => {
   const colors = useColors();
   const [colonBlink, setColonBlink] = useState<boolean>(false);
 
@@ -163,7 +163,7 @@ const DigitalClock = ({ show, time, hasBackground, color, backgroundColor, margi
         style={{
           fontSize: hasBackground ? 28 : 32,
           fontFamily: colors.others.fonts.S,
-          color: hasBackground ? backgroundColor : color,
+          color: hasBackground ? other : color,
         }}
       >
         {time.hour < 10 ? `0${time.hour}` : time.hour}
@@ -174,7 +174,7 @@ const DigitalClock = ({ show, time, hasBackground, color, backgroundColor, margi
   ) : null;
 };
 
-const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
+const Analogs = ({ time, color, other }:{ time:ITime; color:ColorValue; other:ColorValue; }) => {
   const colors = useColors();
   return (
     <>
@@ -208,6 +208,7 @@ const Analogs = ({ time, color }:{ time:ITime; color:ColorValue; }) => {
       <Circle
         r={1.5}
         cx={50} cy={50}
+        fill={other}
         stroke={colors.hot}
         strokeWidth={0.75}
       />
@@ -225,7 +226,7 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
   const light  = colors.statusbar === "light" ? colors.tertiary : colors.primary;
   const dark   = colors.statusbar !== "light" ? colors.tertiary : colors.primary;
   const bgclr  = !backgroundAffected ? colors.primary  : isDay ? light : dark;
-  const analog = background === "none" ? bgclr : !backgroundAffected ? colors.tertiary : isDay ? dark : light;
+  const analog = background !== "none" ? bgclr : !backgroundAffected ? colors.tertiary : isDay ? dark : light;
   const high   = color === "analogs" ? analog : color === "accent" ? colors.accent : colors.highlight;
 
   const props:SvgProps = {
@@ -235,7 +236,6 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
     width: "100%",
   }
 
-
   return (
     <View style={{ aspectRatio: 1, width: 500, margin: -(500 * (1-scale) / 2 + (250 * scale * 0.2)) + (margin ?? 0), transform: [{ scale }] }}>
       <Svg {...props}>
@@ -243,12 +243,27 @@ export const AnalogClock = ({ time, scale, color, margin, dashes, background, sh
         <Dashes type={dashes} fill={high} />
       </Svg>
 
-      <Digits show={showNumbers} dashes={showDashes} color={high} />    
-      <Icon show={showIcon} isDay={isDay} margin={innerObjectsMargin} />
-      <DigitalClock show={showDigital} time={time} hasBackground={showDigitalBackground} color={analog} backgroundColor={bgclr} margin={innerObjectsMargin} />
+      <Digits
+        show={showNumbers}
+        color={high}
+        dashes={showDashes}
+      />
+      <Icon
+        show={showIcon}
+        isDay={isDay}
+        margin={innerObjectsMargin}
+      />
+      <DigitalClock
+        show={showDigital}
+        time={time}
+        color={analog}
+        other={bgclr}
+        hasBackground={showDigitalBackground}
+        margin={innerObjectsMargin}
+      />
 
       <Svg {...props}>
-        <Analogs time={time} color={analog} />
+        <Analogs time={time} color={analog} other={bgclr} />
       </Svg>
     </View>
   );
