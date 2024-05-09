@@ -7,8 +7,11 @@ import { DefaultStored } from '../general/storage';
 
 var lastUpdated:number | undefined = undefined;
 
-export async function fetchWeather(city:string, units:Units, set:State<IForecast | null>) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city ?? DefaultStored['metrics'].city}&units=${units ?? DefaultStored['metrics'].units}&appid=${process.env.EXPO_PUBLIC_WEATHER_KEY}`;
+export async function fetchWeather(city:string, units_system:Units, set:State<IForecast | null>) {
+  const q     = city ?? DefaultStored['metrics'].city,
+        units = units_system ?? DefaultStored['metrics'].units,
+        appid = process.env.EXPO_PUBLIC_WEATHER_KEY ?? "",
+        url   = `https://api.openweathermap.org/data/2.5/weather?q=${q}&units=${units}&appid=${appid}`;
 
   const now = Date.now();
   if (lastUpdated && (now - lastUpdated <= 2500)) {
