@@ -1,5 +1,6 @@
-import { getRandomInt } from "../general/funcs";
-import { TTTLevel } from "../general/interfaces";
+import { getRandomInt } from "@/src/general/funcs";
+import { TTTLevel } from "@/src/general/interfaces";
+
 import { TTTSlotType } from "./types";
 
 const winConditions:[number, number, number][] = [

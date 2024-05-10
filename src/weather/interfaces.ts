@@ -1,4 +1,4 @@
-import { Units } from "../general/interfaces";
+import { Units } from "@/src/general/interfaces";
 
 export interface IForecast {
   coord: ICoord;

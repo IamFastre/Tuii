@@ -1,8 +1,9 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Section, Sep } from '@/components/basics';
-import { Option } from '../../components/applets/Option';
-import { useColors } from '@/constants/colors';
 import { useContext } from 'react';
+import { ScrollView, View } from 'react-native';
+
+import { useColors } from '@/constants/colors';
+import { Section, Sep } from '@/components/basics';
+import { Option } from '@/components/applets/Option';
 import { TabsContext } from '@/components/Contexts';
 
 const icons = {

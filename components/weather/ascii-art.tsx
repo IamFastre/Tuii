@@ -1,5 +1,5 @@
 import { WeatherIconPack } from "@/src/weather";
-import { T, B, C } from "../basics";
+import { T, B, C } from "@/components/basics";
 import { useColors } from "@/constants/colors";
 
 export const ASCIIWeatherIcons = {
