@@ -72,7 +72,7 @@ export default function HomeLayout() {
           
           return (
             <Section title="Tabs" style={styles.tabs} containerStyle={styles.tabsContainer}>
-              <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home"        reclick={handleReclick} />
+              <TabIcon icon="home"     selected={state.routes[state.index].name === HOME}     path="/(tabs)/home"        reclick={handleReclick} other="/others/ILYB" />
               <TabIcon icon="apps"     selected={state.routes[state.index].name === APPLETS}  path="/(tabs)/applet-list" reclick={handleReclick} />
               <TabIcon icon="settings" selected={state.routes[state.index].name === SETTINGS} path="/(tabs)/settings"    reclick={handleReclick} />
 
