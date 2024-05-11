@@ -44,11 +44,12 @@ export function Button(props: ButtonProps): React.JSX.Element {
       borderWidth: 1,
       borderRadius: colors.others.section_radius * (props.radiusFactor ?? 1),
       borderColor: adptColor,
+      backgroundColor: props.opaque ? colors.primary : undefined,
       overflow: "hidden",
       ...props.style,
     },
     
-    button: {
+    pressable: {
       flex: 1,
       flexDirection: "row",
       alignItems: "center",
@@ -56,32 +57,30 @@ export function Button(props: ButtonProps): React.JSX.Element {
       backgroundColor: adptColor as string + colors.opacity.translucent,
       ...props.pressableStyle,
     },
-    
-    text: {
-      flex: props.icon ? 1 : undefined,
-      fontSize: 15,
-      color: isPressed ? colors.tertiary : mainColor,
-      textAlign: "center",
+
+    textView: {
+      flex: 3,
       alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
       ...props.textStyle
     },
 
+    text: {
+      fontSize: 15,
+      color: isPressed ? colors.tertiary : mainColor,
+      textAlign: "center",
+    },
+
     icon: {
-      flex: props.title ? undefined : 1,
+      flex: 1,
       height: "100%",
-      aspectRatio: props.title ? 1 : undefined,
+      aspectRatio: 1,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: colors.primary,
     },
 
-    opaque: {
-      display: props.opaque ? "flex" : "none",
-      position: "absolute",
-      height: "100%",
-      width: "100%",
-      backgroundColor: colors.primary,
-    }
   });
 
   let left  = (props.icon ? "" : "•") + (props.left  ?? "[");
@@ -91,9 +90,8 @@ export function Button(props: ButtonProps): React.JSX.Element {
 
   return (
     <View style={self.container}>
-      <View style={self.opaque} />
       <Pressable
-        style={self.button}
+        style={self.pressable}
         onPress={props.onPress}
         onLongPress={props.onLongPress}
         delayLongPress={props.delayLongPress}
@@ -114,13 +112,15 @@ export function Button(props: ButtonProps): React.JSX.Element {
         }
         {
           props.title 
-          ? <T style={self.text}>
-                {left}
-                <T plain style={{ color: isPressed ? mainColor : colors.tertiary }}>
-                  {` ${props.title} `}
-                </T>
-                {right}
-            </T>
+          ? <View style={self.textView}>
+              <T style={self.text}>
+                  {left}
+                  <T plain style={{ color: isPressed ? mainColor : colors.tertiary }}>
+                    {` ${props.title} `}
+                  </T>
+                  {right}
+              </T>
+            </View>
           : null
         }
       </Pressable>
